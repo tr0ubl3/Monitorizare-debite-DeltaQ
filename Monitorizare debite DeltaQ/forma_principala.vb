@@ -317,8 +317,24 @@ Public Class fereastra_principala_frm
         Dim reader As SqliteDataReader
         Dim id_masina As Integer
         Dim rand As DataGridViewRow
-        Dim comanda_executata As Integer
+        Dim comanda_executata As Double
+        Dim dq_vals(3) As Single
+        Dim debit_introdus(3) As String
+        Dim dif_max, dif_min, dq_max, dq_min, dif_dq_max, dif_dq_min As Int16
+        Dim dif_debit(3) As Single
+        Dim debit_masurat(3) As Single
 
+        debit_introdus(0) = z1_tb.Text
+        debit_introdus(1) = z2_tb.Text
+        debit_introdus(2) = z3_tb.Text
+        debit_introdus(3) = z4_tb.Text
+        For i = 0 To 3
+            If debit_introdus(i) = "*" Then
+            Else
+                debit_masurat(i) = tabel_valori_dgv.Item(4, tabel_valori_dgv.CurrentRow.Index + i).Value
+                dif_debit(i) = debit_introdus(i) - debit_masurat(i)
+            End If
+        Next
         'de scos id-ul din tabelul masini pentru a actualiza rowid-urile selectate mai sus cu id-ul masinilor
         rezultat_regex = testare_regex.Match(nr_masina_cb.Text)
         conexiune_bd.Open()
@@ -341,21 +357,133 @@ Public Class fereastra_principala_frm
         Next
 
         'salvare rezultat spc in bd
-        comanda.CommandText = "insert into spc_posalux (nr_marca, valoare_z1, valoare_z2, valoare_z3, valoare_z4, referinta, masina) values (" & nr_marca_tb.Text & ", " & If(z1_tb.Text = "*", "", z1_tb.Text) & ", " & If(z2_tb.Text = "*", "", z2_tb.Text) & ", " & If(z3_tb.Text = "*", "", z3_tb.Text) & ", " & If(z4_tb.Text = "*", "", z4_tb.Text) & ", '" & tabel_valori_dgv.Item(2, tabel_valori_dgv.CurrentRow.Index).Value & "'," & id_masina & ")"
+        'comanda.CommandText = "insert into spc_posalux (nr_marca, valoare_z1, valoare_z2, valoare_z3, valoare_z4, referinta, masina) values (" _
+        '                       & nr_marca_tb.Text & ", " & If(z1_tb.Text = "*", "", z1_tb.Text) & ", " & If(z2_tb.Text = "*", "", z2_tb.Text) _
+        '                      & ", " & If(z3_tb.Text = "*", "", z3_tb.Text) & ", " & If(z4_tb.Text = "*", "", z4_tb.Text) & ", '" _
+        '                       & tabel_valori_dgv.Item(2, tabel_valori_dgv.CurrentRow.Index).Value & "'," & id_masina & ")"
+        comanda.CommandText = "insert into spc_posalux (nr_marca, valoare_introdusa_z1, valoare_introdusa_z2, valoare_introdusa_z3, valoare_introdusa_z4, diferenta_calculata_z1,
+                               diferenta_calculata_z2, diferenta_calculata_z3, diferenta_calculata_z4, diferenta_calculata_min_max_delta_q, referinta, masina) values (@nr_marca, @val_z1, @val_z2,
+                                @val_z3, @val_z4, @dif_z1, @dif_z2, @dif_z3, @dif_z4, @dif_dq, @referinta, @masina)"
+        comanda.Parameters.AddWithValue("@nr_marca", nr_marca_tb.Text)
+        comanda.Parameters.AddWithValue("@val_z1", If(debit_introdus(0) = "*", DBNull.Value, CInt(debit_introdus(0))))
+        comanda.Parameters.AddWithValue("@val_z2", If(debit_introdus(1) = "*", DBNull.Value, CInt(debit_introdus(1))))
+        comanda.Parameters.AddWithValue("@val_z3", If(debit_introdus(2) = "*", DBNull.Value, CInt(debit_introdus(2))))
+        comanda.Parameters.AddWithValue("@val_z4", If(debit_introdus(3) = "*", DBNull.Value, CInt(debit_introdus(3))))
+        comanda.Parameters.AddWithValue("@dif_z1", If(debit_introdus(0) = "*", DBNull.Value, dif_debit(0)))
+        comanda.Parameters.AddWithValue("@dif_z2", If(debit_introdus(1) = "*", DBNull.Value, dif_debit(1)))
+        comanda.Parameters.AddWithValue("@dif_z3", If(debit_introdus(2) = "*", DBNull.Value, dif_debit(2)))
+        comanda.Parameters.AddWithValue("@dif_z4", If(debit_introdus(3) = "*", DBNull.Value, dif_debit(3)))
+        For i = 0 To 3
+            If debit_introdus(i) = "*" Then
+                'actions tbd
+            Else
+                dq_vals(i) = tabel_valori_dgv.Item(5, tabel_valori_dgv.CurrentRow.Index + i).Value
+            End If
+        Next
+        comanda.Parameters.AddWithValue("@dif_dq", dq_vals.Max - dq_vals.Min)
+        comanda.Parameters.AddWithValue("@referinta", tabel_valori_dgv.Item(2, tabel_valori_dgv.CurrentRow.Index).Value)
+        comanda.Parameters.AddWithValue("@masina", id_masina)
         'Debug.Print("insert into spc_posalux (nr_marca, valoare_z1, valoare_z2, valoare_z3, valoare_z4, referinta, masina) values (" & nr_marca_tb.Text & ", " & If(z1_tb.Text = "*", "", z1_tb.Text) & ", " & If(z2_tb.Text = "*", "", z2_tb.Text) & ", " & If(z3_tb.Text = "*", "", z3_tb.Text) & ", " & If(z4_tb.Text = "*", "", z4_tb.Text) & ", '" & tabel_valori_dgv.Item(2, tabel_valori_dgv.CurrentRow.Index).Value & "'," & id_masina & ")")
         comanda_executata = comanda.ExecuteNonQuery()
-        conexiune_bd.Close()
 
         If comanda_executata = 1 Then
             nr_marca_tb.Text = ""
             adauga_valori_pnl.Visible = False
-            grafice_pnl.Visible = True
+            'grafice_pnl.Visible = True
+
+            'extragere limite dif, dq si nominal pentru afisare pagina atentionari
+            comanda.CommandText = "select diferenta_max, diferenta_min, delta_q_max, delta_q_min, dif_dq_max, dif_dq_min from referinta where nume = '" & tabel_valori_dgv.Item(2, tabel_valori_dgv.CurrentRow.Index).Value & "'"
+            reader = comanda.ExecuteReader
+            Using reader
+                While reader.Read()
+                    dif_max = reader.GetInt16(0)
+                    dif_min = reader.GetInt16(1)
+                    dq_max = reader.GetInt16(2)
+                    dq_min = reader.GetInt16(3)
+                    dif_dq_max = reader.GetInt16(4)
+                    dif_dq_min = reader.GetInt16(5)
+                End While
+            End Using
+
+            lista_atentionari_pnl.Visible = True
+            'calcul diferenta debit maxima pentru a verificare daca e mai mare decat limita impusa in referinta
+            If dif_debit.Max > dif_max Or dif_debit.Min < dif_min Then
+                'actiune de implementat
+                lista_atentionari_lst.Items.Add("Diferente de debit mai mari decat " & dif_max & " sau " & dif_min)
+            End If
+
+            If dq_vals.Max > dq_max Or dq_vals.Min < dq_min Then
+                'actiune de implementat
+            End If
+
+            If (dq_vals.Max - dq_vals.Min) > dif_dq_max Then
+                'actiune de implementat
+            End If
+
         End If
+            conexiune_bd.Close()
     End Sub
 
     Private Sub grafice_pnl_VisibleChanged(sender As Object, e As EventArgs) Handles grafice_pnl.VisibleChanged
         If grafice_pnl.Visible = True Then
             'grafic = dif_z1_pb.CreateGraphics
+            'dif_debit_z1_chart.Visible = True
+            Dim limita_max As New DataVisualization.Charting.StripLine
+            Dim limita_min As New DataVisualization.Charting.StripLine
+            Dim nominal As New DataVisualization.Charting.StripLine
+            Dim punct As New DataVisualization.Charting.DataPoint
+
+            limita_max.BorderDashStyle = DataVisualization.Charting.ChartDashStyle.DashDot
+            limita_max.BorderColor = Color.Red
+            limita_max.BorderWidth = 2
+            limita_max.IntervalOffset = 5
+
+            limita_min.BorderDashStyle = DataVisualization.Charting.ChartDashStyle.DashDot
+            limita_min.BorderColor = Color.Red
+            limita_min.BorderWidth = 2
+            limita_min.IntervalOffset = -5
+
+            nominal.BorderDashStyle = DataVisualization.Charting.ChartDashStyle.DashDot
+            nominal.BorderColor = Color.Green
+            nominal.BorderWidth = 2
+            nominal.IntervalOffset = 0
+
+            dif_debit_z1_chart.ChartAreas(0).AxisY.Interval = 2.5
+            dif_debit_z1_chart.ChartAreas(0).AxisY.Minimum = -5 - 10 * 0.1 '666 - 72 * 0.1
+            dif_debit_z1_chart.ChartAreas(0).AxisY.Maximum = 5 + 10 * 0.1 '738 + 72 * 0.1
+            dif_debit_z1_chart.ChartAreas(0).AxisY.IntervalOffset = 1
+
+            dif_debit_z1_chart.ChartAreas(0).AxisY.StripLines.Add(limita_max)
+            dif_debit_z1_chart.ChartAreas(0).AxisY.StripLines.Add(limita_min)
+            dif_debit_z1_chart.ChartAreas(0).AxisY.StripLines.Add(nominal)
+
+            punct.SetValueY(-5)
+            punct.Color = Color.Blue
+            punct.ToolTip = "lol"
+
+            dif_debit_z1_chart.Series("valori").Points.Clear()
+
+            dif_debit_z1_chart.Series("valori").Points.Add(punct)
+            dif_debit_z1_chart.Series("valori").Points.AddY(-3)
+            dif_debit_z1_chart.Series("valori").Points.AddY(0)
+            dif_debit_z1_chart.Series("valori").Points.Add(punct)
+            dif_debit_z1_chart.Series("valori").Points.AddY(-3)
+            dif_debit_z1_chart.Series("valori").Points.AddY(0)
+            dif_debit_z1_chart.Series("valori").Points.Add(punct)
+            dif_debit_z1_chart.Series("valori").Points.AddY(-3)
+            dif_debit_z1_chart.Series("valori").Points.AddY(0)
+            dif_debit_z1_chart.Series("valori").Points.AddY(4)
+
+            dif_debit_z1_chart.Series("valori").Points.Add(punct)
+            dif_debit_z1_chart.Series("valori").Points.AddY(-3)
+            dif_debit_z1_chart.Series("valori").Points.AddY(0)
+            dif_debit_z1_chart.Series("valori").Points.Add(punct)
+            dif_debit_z1_chart.Series("valori").Points.AddY(-3)
+            dif_debit_z1_chart.Series("valori").Points.AddY(0)
+            dif_debit_z1_chart.Series("valori").Points.Add(punct)
+            dif_debit_z1_chart.Series("valori").Points.AddY(-3)
+            dif_debit_z1_chart.Series("valori").Points.AddY(0)
+            dif_debit_z1_chart.Series("valori").Points.AddY(4)
         End If
     End Sub
 
@@ -363,40 +491,9 @@ Public Class fereastra_principala_frm
         grafice_pnl.Visible = True
     End Sub
 
-    Private Sub grafice_pnl_Paint(sender As Object, e As PaintEventArgs) Handles grafice_pnl.Paint
-
-    End Sub
-
-    Private Sub dif_z1_pb_Paint(sender As Object, e As PaintEventArgs) Handles dif_z1_pb.Paint
-        Dim inaltime_pb As Int16
-        Dim latime_pb As Int16
-        Dim Pen As New Pen(Color.Red, 2)
-        Dim GraphContextZ1 As BufferedGraphicsContext
-        Dim graficZ1 As BufferedGraphics
-        Dim surfacePoint As New SolidBrush(Color.Black)
-
-        inaltime_pb = CInt(dif_z1_pb.Height)
-        latime_pb = CInt(dif_z1_pb.Width)
-
-        'Pen.DashCap = System.Drawing.Drawing2D.DashCap.Round
-        Pen.DashPattern = New Single() {5, 3, 2, 2}
-
-        GraphContextZ1 = BufferedGraphicsManager.Current
-        GraphContextZ1.MaximumBuffer = New Size(latime_pb + 1, inaltime_pb + 1)
-        graficZ1 = GraphContextZ1.Allocate(dif_z1_pb.CreateGraphics(), New Rectangle(0, 0, latime_pb, inaltime_pb))
-        graficZ1.Graphics.FillRectangle(Brushes.WhiteSmoke, 0, 0, latime_pb, inaltime_pb)
-
-        'afisare linie limita maxima diferenta
-        graficZ1.Graphics.DrawLine(Pen, New Point(20, inaltime_pb / 2), New Point(latime_pb, inaltime_pb / 2))
-        Pen.Color = Color.Green
-        graficZ1.Graphics.DrawLine(Pen, New Point(0, 0.1 * inaltime_pb), New Point(latime_pb, 0.1 * inaltime_pb))
-        graficZ1.Graphics.DrawLine(Pen, New Point(0, inaltime_pb - 0.1 * inaltime_pb), New Point(latime_pb, inaltime_pb - 0.1 * inaltime_pb))
-
-        'afisare linie nominala diferente debit
-        graficZ1.Graphics.DrawString("1", New Font("Consolas", 12, FontStyle.Bold), surfacePoint, New Point(0, inaltime_pb / 2 - 10))
-
-        'afisare puncte valori
-        graficZ1.Graphics.FillEllipse(surfacePoint, New Rectangle(25, inaltime_pb / 2.1, 7, 7))
-        graficZ1.Render(e.Graphics)
+    Private Sub lista_atentionari_btn_Click(sender As Object, e As EventArgs) Handles lista_atentionari_btn.Click
+        grafice_pnl.Visible = False
+        adauga_valori_pnl.Visible = False
+        lista_atentionari_pnl.Visible = True
     End Sub
 End Class
