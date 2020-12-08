@@ -406,10 +406,11 @@ Public Class fereastra_principala_frm
             End Using
 
             lista_atentionari_pnl.Visible = True
+            lista_atentionari_lst.Items.Clear()
             'calcul diferenta debit maxima pentru a verificare daca e mai mare decat limita impusa in referinta
             If dif_debit.Max > dif_max Or dif_debit.Min < dif_min Then
                 'actiune de implementat
-                lista_atentionari_lst.Items.Add("Diferente de debit mai mari decat " & dif_max & " sau " & dif_min)
+                lista_atentionari_lst.Items.Add("Diferente de debit mai mari decat " & dif_max & " sau " & dif_min).Group = lista_atentionari_lst.Groups("Verificare 1")
             End If
 
             If dq_vals.Max > dq_max Or dq_vals.Min < dq_min Then

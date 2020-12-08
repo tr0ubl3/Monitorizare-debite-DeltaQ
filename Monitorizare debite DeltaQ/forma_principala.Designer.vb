@@ -22,13 +22,13 @@ Partial Class fereastra_principala_frm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim ListViewGroup1 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Verificare 1", System.Windows.Forms.HorizontalAlignment.Left)
-        Dim ListViewGroup2 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Verificare 2", System.Windows.Forms.HorizontalAlignment.Left)
-        Dim ListViewItem1 As System.Windows.Forms.ListViewItem = New System.Windows.Forms.ListViewItem(New String() {"Sunt 50valori  in afara tolerantei", "test 2"}, -1, System.Drawing.Color.Empty, System.Drawing.Color.Empty, New System.Drawing.Font("Consolas", 15.0!))
+        Dim ChartArea4 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend4 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series4 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim ListViewGroup7 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Verificare 1", System.Windows.Forms.HorizontalAlignment.Left)
+        Dim ListViewGroup8 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Verificare 2", System.Windows.Forms.HorizontalAlignment.Left)
+        Dim ListViewItem4 As System.Windows.Forms.ListViewItem = New System.Windows.Forms.ListViewItem(New String() {"Sunt 50valori  in afara tolerantei", "test 2"}, -1, System.Drawing.Color.Empty, System.Drawing.Color.Empty, New System.Drawing.Font("Consolas", 15.0!))
         Me.panou_butoane_pnl = New System.Windows.Forms.Panel()
         Me.lista_atentionari_btn = New FontAwesome.Sharp.IconButton()
         Me.vizualizare_grafice_btn = New FontAwesome.Sharp.IconButton()
@@ -169,38 +169,38 @@ Partial Class fereastra_principala_frm
         '
         Me.dif_debit_z1_chart.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        ChartArea1.AxisX.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.[False]
-        ChartArea1.AxisX.MinorGrid.LineColor = System.Drawing.Color.White
-        ChartArea1.AxisX.ScaleView.Size = 40.0R
-        ChartArea1.AxisX2.LineColor = System.Drawing.Color.White
-        ChartArea1.AxisY.Interval = 18.0R
-        ChartArea1.AxisY.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number
-        ChartArea1.AxisY.IsLabelAutoFit = False
-        ChartArea1.AxisY.LineColor = System.Drawing.Color.White
-        ChartArea1.AxisY.MajorGrid.LineColor = System.Drawing.Color.Gainsboro
-        ChartArea1.AxisY.Maximum = 5.0R
-        ChartArea1.AxisY.MaximumAutoSize = 85.0!
-        ChartArea1.AxisY.Minimum = -5.0R
-        ChartArea1.AxisY.TitleFont = New System.Drawing.Font("Microsoft Sans Serif", 20.0!)
-        ChartArea1.AxisY2.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.[False]
-        ChartArea1.AxisY2.LineColor = System.Drawing.Color.White
-        ChartArea1.BackColor = System.Drawing.Color.WhiteSmoke
-        ChartArea1.Name = "ChartArea1"
-        Me.dif_debit_z1_chart.ChartAreas.Add(ChartArea1)
-        Legend1.Enabled = False
-        Legend1.Name = "Legend1"
-        Me.dif_debit_z1_chart.Legends.Add(Legend1)
+        ChartArea4.AxisX.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.[False]
+        ChartArea4.AxisX.MinorGrid.LineColor = System.Drawing.Color.White
+        ChartArea4.AxisX.ScaleView.Size = 40.0R
+        ChartArea4.AxisX2.LineColor = System.Drawing.Color.White
+        ChartArea4.AxisY.Interval = 18.0R
+        ChartArea4.AxisY.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number
+        ChartArea4.AxisY.IsLabelAutoFit = False
+        ChartArea4.AxisY.LineColor = System.Drawing.Color.White
+        ChartArea4.AxisY.MajorGrid.LineColor = System.Drawing.Color.Gainsboro
+        ChartArea4.AxisY.Maximum = 5.0R
+        ChartArea4.AxisY.MaximumAutoSize = 85.0!
+        ChartArea4.AxisY.Minimum = -5.0R
+        ChartArea4.AxisY.TitleFont = New System.Drawing.Font("Microsoft Sans Serif", 20.0!)
+        ChartArea4.AxisY2.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.[False]
+        ChartArea4.AxisY2.LineColor = System.Drawing.Color.White
+        ChartArea4.BackColor = System.Drawing.Color.WhiteSmoke
+        ChartArea4.Name = "ChartArea1"
+        Me.dif_debit_z1_chart.ChartAreas.Add(ChartArea4)
+        Legend4.Enabled = False
+        Legend4.Name = "Legend1"
+        Me.dif_debit_z1_chart.Legends.Add(Legend4)
         Me.dif_debit_z1_chart.Location = New System.Drawing.Point(216, 34)
         Me.dif_debit_z1_chart.Name = "dif_debit_z1_chart"
         Me.dif_debit_z1_chart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SemiTransparent
-        Series1.ChartArea = "ChartArea1"
-        Series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
-        Series1.Color = System.Drawing.Color.Black
-        Series1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
-        Series1.IsVisibleInLegend = False
-        Series1.Legend = "Legend1"
-        Series1.Name = "valori"
-        Me.dif_debit_z1_chart.Series.Add(Series1)
+        Series4.ChartArea = "ChartArea1"
+        Series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
+        Series4.Color = System.Drawing.Color.Black
+        Series4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Series4.IsVisibleInLegend = False
+        Series4.Legend = "Legend1"
+        Series4.Name = "valori"
+        Me.dif_debit_z1_chart.Series.Add(Series4)
         Me.dif_debit_z1_chart.Size = New System.Drawing.Size(764, 261)
         Me.dif_debit_z1_chart.TabIndex = 10
         Me.dif_debit_z1_chart.Text = "Chart1"
@@ -412,14 +412,14 @@ Partial Class fereastra_principala_frm
         Me.tabel_valori_dgv.Location = New System.Drawing.Point(210, 225)
         Me.tabel_valori_dgv.Name = "tabel_valori_dgv"
         Me.tabel_valori_dgv.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.[Single]
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Consolas", 10.0!, System.Drawing.FontStyle.Bold)
-        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.tabel_valori_dgv.RowHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Consolas", 10.0!, System.Drawing.FontStyle.Bold)
+        DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.tabel_valori_dgv.RowHeadersDefaultCellStyle = DataGridViewCellStyle4
         Me.tabel_valori_dgv.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
         Me.tabel_valori_dgv.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.tabel_valori_dgv.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
@@ -577,15 +577,15 @@ Partial Class fereastra_principala_frm
         Me.lista_atentionari_lst.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.lista_atentionari_lst.FullRowSelect = True
         Me.lista_atentionari_lst.GridLines = True
-        ListViewGroup1.Header = "Verificare 1"
-        ListViewGroup1.Name = "ListViewGroup1"
-        ListViewGroup2.Header = "Verificare 2"
-        ListViewGroup2.Name = "ListViewGroup2"
-        Me.lista_atentionari_lst.Groups.AddRange(New System.Windows.Forms.ListViewGroup() {ListViewGroup1, ListViewGroup2})
+        ListViewGroup7.Header = "Verificare 1"
+        ListViewGroup7.Name = "ListViewGroup1"
+        ListViewGroup8.Header = "Verificare 2"
+        ListViewGroup8.Name = "ListViewGroup2"
+        Me.lista_atentionari_lst.Groups.AddRange(New System.Windows.Forms.ListViewGroup() {ListViewGroup7, ListViewGroup8})
         Me.lista_atentionari_lst.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable
         Me.lista_atentionari_lst.HideSelection = False
-        ListViewItem1.Group = ListViewGroup1
-        Me.lista_atentionari_lst.Items.AddRange(New System.Windows.Forms.ListViewItem() {ListViewItem1})
+        ListViewItem4.Group = ListViewGroup7
+        Me.lista_atentionari_lst.Items.AddRange(New System.Windows.Forms.ListViewItem() {ListViewItem4})
         Me.lista_atentionari_lst.LabelWrap = False
         Me.lista_atentionari_lst.Location = New System.Drawing.Point(216, 107)
         Me.lista_atentionari_lst.MultiSelect = False
@@ -601,9 +601,9 @@ Partial Class fereastra_principala_frm
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1024, 651)
         Me.Controls.Add(Me.panou_butoane_pnl)
-        Me.Controls.Add(Me.lista_atentionari_pnl)
         Me.Controls.Add(Me.grafice_pnl)
         Me.Controls.Add(Me.adauga_valori_pnl)
+        Me.Controls.Add(Me.lista_atentionari_pnl)
         Me.MinimumSize = New System.Drawing.Size(1040, 690)
         Me.Name = "fereastra_principala_frm"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
