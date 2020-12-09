@@ -183,7 +183,7 @@ Public Class fereastra_principala_frm
     Private Sub tabel_valori_dgv_VisibleChanged(sender As Object, e As EventArgs) Handles tabel_valori_dgv.VisibleChanged
         'executare doar daca forma e vizibila
         If tabel_valori_dgv.Visible Then
-            Dim conexiune_bd As New SqliteConnection("data source=D:\working\delphi\OP140\Monitorizare debite DeltaQ\Monitorizare debite DeltaQ\DeltaQValues.db")
+            Dim conexiune_bd As New SqliteConnection("data source=C:\Users\qzcd5g\Documents\documente\Posalux\OP140\monitorizare debite\BD Test\DeltaQValues.db")
             Dim continut_bd As New DataSet
             Dim datacurenta As String = String.Format("{0:yyyy-MM-dd}", DateTime.Now)
             conexiune_bd.Open()
@@ -312,7 +312,7 @@ Public Class fereastra_principala_frm
     Private Sub salveaza_valori_btn_Click(sender As Object, e As EventArgs) Handles salveaza_valori_btn.Click
         Dim testare_regex As New Regex("140\.\d{1,2}")
         Dim rezultat_regex As Match
-        Dim conexiune_bd As New SqliteConnection("data source=D:\working\delphi\OP140\Monitorizare debite DeltaQ\Monitorizare debite DeltaQ\DeltaQValues.db")
+        Dim conexiune_bd As New SqliteConnection("data source=C:\Users\qzcd5g\Documents\documente\Posalux\OP140\monitorizare debite\BD Test\DeltaQValues.db")
         Dim comanda = conexiune_bd.CreateCommand
         Dim reader As SqliteDataReader
         Dim id_masina As Integer
