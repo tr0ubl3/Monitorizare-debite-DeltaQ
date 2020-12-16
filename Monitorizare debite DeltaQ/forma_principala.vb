@@ -323,6 +323,7 @@ Public Class fereastra_principala_frm
         Dim dif_max, dif_min, dq_max, dq_min, dif_dq_max, dif_dq_min As Int16
         Dim dif_debit(3) As Single
         Dim debit_masurat(3) As Single
+        Dim spc_id As Double
 
         debit_introdus(0) = z1_tb.Text
         debit_introdus(1) = z2_tb.Text
@@ -387,6 +388,10 @@ Public Class fereastra_principala_frm
         comanda_executata = comanda.ExecuteNonQuery()
 
         If comanda_executata = 1 Then
+            'extrage id-ul spc-ului
+            comanda.CommandText = "select last_insert_rowid()"
+            spc_id = comanda.ExecuteScalar()
+            MsgBox(spc_id)
             nr_marca_tb.Text = ""
             adauga_valori_pnl.Visible = False
             'grafice_pnl.Visible = True
@@ -422,7 +427,7 @@ Public Class fereastra_principala_frm
             End If
 
         End If
-            conexiune_bd.Close()
+        conexiune_bd.Close()
     End Sub
 
     Private Sub grafice_pnl_VisibleChanged(sender As Object, e As EventArgs) Handles grafice_pnl.VisibleChanged
