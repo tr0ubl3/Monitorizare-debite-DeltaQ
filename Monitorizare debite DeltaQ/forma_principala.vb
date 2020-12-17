@@ -183,7 +183,7 @@ Public Class fereastra_principala_frm
     Private Sub tabel_valori_dgv_VisibleChanged(sender As Object, e As EventArgs) Handles tabel_valori_dgv.VisibleChanged
         'executare doar daca forma e vizibila
         If tabel_valori_dgv.Visible Then
-            Dim conexiune_bd As New SqliteConnection("data source=C:\Users\qzcd5g\Documents\documente\Posalux\OP140\monitorizare debite\BD Test\DeltaQValues.db")
+            Dim conexiune_bd As New SqliteConnection("data source=C:\Users\qzcd5g\Documents\documente\Posalux\OP140\monitorizare debite\Monitorizare debite DeltaQ\Monitorizare debite DeltaQ\DeltaQValues.db")
             Dim continut_bd As New DataSet
             Dim datacurenta As String = String.Format("{0:yyyy-MM-dd}", DateTime.Now)
             conexiune_bd.Open()
@@ -312,7 +312,7 @@ Public Class fereastra_principala_frm
     Private Sub salveaza_valori_btn_Click(sender As Object, e As EventArgs) Handles salveaza_valori_btn.Click
         Dim testare_regex As New Regex("140\.\d{1,2}")
         Dim rezultat_regex As Match
-        Dim conexiune_bd As New SqliteConnection("data source=C:\Users\qzcd5g\Documents\documente\Posalux\OP140\monitorizare debite\BD Test\DeltaQValues.db")
+        Dim conexiune_bd As New SqliteConnection("data source=C:\Users\qzcd5g\Documents\documente\Posalux\OP140\monitorizare debite\Monitorizare debite DeltaQ\Monitorizare debite DeltaQ\DeltaQValues.db")
         Dim comanda = conexiune_bd.CreateCommand
         Dim reader As SqliteDataReader
         Dim id_masina As Integer
@@ -324,6 +324,7 @@ Public Class fereastra_principala_frm
         Dim dif_debit(3) As Single
         Dim debit_masurat(3) As Single
         Dim spc_id As Double
+        Dim atentionare_activa As Boolean
 
         debit_introdus(0) = z1_tb.Text
         debit_introdus(1) = z2_tb.Text
@@ -364,7 +365,7 @@ Public Class fereastra_principala_frm
         '                       & tabel_valori_dgv.Item(2, tabel_valori_dgv.CurrentRow.Index).Value & "'," & id_masina & ")"
         comanda.CommandText = "insert into spc_posalux (nr_marca, valoare_introdusa_z1, valoare_introdusa_z2, valoare_introdusa_z3, valoare_introdusa_z4, diferenta_calculata_z1,
                                diferenta_calculata_z2, diferenta_calculata_z3, diferenta_calculata_z4, diferenta_calculata_min_max_delta_q, referinta, masina) values (@nr_marca, @val_z1, @val_z2,
-                                @val_z3, @val_z4, @dif_z1, @dif_z2, @dif_z3, @dif_z4, @dif_dq, @referinta, @masina)"
+                               @val_z3, @val_z4, @dif_z1, @dif_z2, @dif_z3, @dif_z4, @dif_dq, @referinta, @masina)"
         comanda.Parameters.AddWithValue("@nr_marca", nr_marca_tb.Text)
         comanda.Parameters.AddWithValue("@val_z1", If(debit_introdus(0) = "*", DBNull.Value, CInt(debit_introdus(0))))
         comanda.Parameters.AddWithValue("@val_z2", If(debit_introdus(1) = "*", DBNull.Value, CInt(debit_introdus(1))))
@@ -391,7 +392,9 @@ Public Class fereastra_principala_frm
             'extrage id-ul spc-ului
             comanda.CommandText = "select last_insert_rowid()"
             spc_id = comanda.ExecuteScalar()
-            MsgBox(spc_id)
+
+            'MsgBox(spc_id)
+
             nr_marca_tb.Text = ""
             adauga_valori_pnl.Visible = False
             'grafice_pnl.Visible = True
@@ -412,20 +415,125 @@ Public Class fereastra_principala_frm
 
             lista_atentionari_pnl.Visible = True
             lista_atentionari_lst.Items.Clear()
+
+            'creare comanda pentru inserare linie in tabelul atentionare
+            comanda.CommandText = "insert into atentionare (spc_id, atentionare_activa, z1_atentionare_1, z1_atentionare_2, z1_atentionare_3, z2_atentionare_1, z2_atentionare_2, z2_atentionare_3,
+                                   z3_atentionare_1, z3_atentionare_2, z3_atentionare_3, z4_atentionare_1, z4_atentionare_2, z4_atentionare_3) values (@spc_id, @atentionare_activa, @z1_atentionare_1,
+                                   @z1_atentionare_2, @z1_atentionare_3, @z2_atentionare_1, @z2_atentionare_2, @z2_atentionare_3, @z3_atentionare_1, @z3_atentionare_2, @z3_atentionare_3,
+                                   @z4_atentionare_1, @z4_atentionare_2, @z4_atentionare_3)"
+
+            comanda.Parameters.AddWithValue("@spc_id", spc_id)
+
             'calcul diferenta debit maxima pentru a verificare daca e mai mare decat limita impusa in referinta
             If dif_debit.Max > dif_max Or dif_debit.Min < dif_min Then
+                atentionare_activa = True
+                'comanda.Parameters.AddWithValue("@atentionare_activa", True)
                 'actiune de implementat
-                lista_atentionari_lst.Items.Add("Diferente de debit mai mari decat " & dif_max & " sau " & dif_min).Group = lista_atentionari_lst.Groups("Verificare 1")
+                'lista_atentionari_lst.Items.Add("Diferente de debit mai mari decat " & dif_max & " sau " & dif_min).Group = lista_atentionari_lst.Groups("Verificare 1")
+                If dif_debit(0) > dif_max Or dif_debit(0) < dif_min Then
+                    comanda.Parameters.AddWithValue("@z1_atentionare_1", True)
+                Else
+                    comanda.Parameters.AddWithValue("@z1_atentionare_1", False)
+                End If
+
+                If dif_debit(1) > dif_max Or dif_debit(1) < dif_min Then
+                    comanda.Parameters.AddWithValue("@z2_atentionare_1", True)
+                Else
+                    comanda.Parameters.AddWithValue("@z2_atentionare_1", False)
+                End If
+
+                If dif_debit(2) > dif_max Or dif_debit(2) < dif_min Then
+                    comanda.Parameters.AddWithValue("@z3_atentionare_1", True)
+                Else
+                    comanda.Parameters.AddWithValue("@z3_atentionare_1", False)
+                End If
+
+                If dif_debit(3) > dif_max Or dif_debit(3) < dif_min Then
+                    comanda.Parameters.AddWithValue("@z4_atentionare_1", True)
+                Else
+                    comanda.Parameters.AddWithValue("@z4_atentionare_1", False)
+                End If
+            Else
+                comanda.Parameters.AddWithValue("@z1_atentionare_1", False)
+                comanda.Parameters.AddWithValue("@z2_atentionare_1", False)
+                comanda.Parameters.AddWithValue("@z3_atentionare_1", False)
+                comanda.Parameters.AddWithValue("@z4_atentionare_1", False)
             End If
 
             If dq_vals.Max > dq_max Or dq_vals.Min < dq_min Then
-                'actiune de implementat
+                atentionare_activa = True
+                'actiune de implementat atunci cand delta q-urile sunt in afara limitei
+                If dq_vals(0) > dq_max Or dq_vals(0) < dq_min Then
+                    comanda.Parameters.AddWithValue("@z1_atentionare_2", True)
+                Else
+                    comanda.Parameters.AddWithValue("@z1_atentionare_2", False)
+                End If
+
+                If dq_vals(1) > dq_max Or dq_vals(1) < dq_min Then
+                    comanda.Parameters.AddWithValue("@z2_atentionare_2", True)
+                Else
+                    comanda.Parameters.AddWithValue("@z2_atentionare_2", False)
+                End If
+
+                If dq_vals(2) > dq_max Or dq_vals(2) < dq_min Then
+                    comanda.Parameters.AddWithValue("@z3_atentionare_2", True)
+                Else
+                    comanda.Parameters.AddWithValue("@z3_atentionare_2", False)
+                End If
+
+                If dq_vals(3) > dq_max Or dq_vals(3) < dq_min Then
+                    comanda.Parameters.AddWithValue("@z4_atentionare_2", True)
+                Else
+                    comanda.Parameters.AddWithValue("@z4_atentionare_2", False)
+                End If
+            Else
+                comanda.Parameters.AddWithValue("@z1_atentionare_2", False)
+                comanda.Parameters.AddWithValue("@z2_atentionare_2", False)
+                comanda.Parameters.AddWithValue("@z3_atentionare_2", False)
+                comanda.Parameters.AddWithValue("@z4_atentionare_2", False)
             End If
 
             If (dq_vals.Max - dq_vals.Min) > dif_dq_max Then
-                'actiune de implementat
+                atentionare_activa = True
+                'actiune de implementat atunci cand diferenta intre delta q-uri este mai mare decat limita impusa
+                'afiseaza z-urile cu valoarea minima si maxima
+                If dq_vals(0) = dq_vals.Max Or dq_vals(0) = dq_vals.Min Then
+                    comanda.Parameters.AddWithValue("@z1_atentionare_3", True)
+                Else
+                    comanda.Parameters.AddWithValue("@z1_atentionare_3", False)
+                End If
+
+                If dq_vals(1) = dq_vals.Max Or dq_vals(1) = dq_vals.Min Then
+                    comanda.Parameters.AddWithValue("@z2_atentionare_3", True)
+                Else
+                    comanda.Parameters.AddWithValue("@z2_atentionare_3", False)
+                End If
+
+                If dq_vals(2) = dq_vals.Max Or dq_vals(2) = dq_vals.Min Then
+                    comanda.Parameters.AddWithValue("@z3_atentionare_3", True)
+                Else
+                    comanda.Parameters.AddWithValue("@z3_atentionare_3", False)
+                End If
+
+                If dq_vals(3) = dq_vals.Max Or dq_vals(3) = dq_vals.Min Then
+                    comanda.Parameters.AddWithValue("@z4_atentionare_3", True)
+                Else
+                    comanda.Parameters.AddWithValue("@z4_atentionare_3", False)
+                End If
+            Else
+                comanda.Parameters.AddWithValue("@z1_atentionare_3", False)
+                comanda.Parameters.AddWithValue("@z2_atentionare_3", False)
+                comanda.Parameters.AddWithValue("@z3_atentionare_3", False)
+                comanda.Parameters.AddWithValue("@z4_atentionare_3", False)
             End If
 
+            If atentionare_activa Then
+                comanda.Parameters.AddWithValue("@atentionare_activa", True)
+            Else
+                comanda.Parameters.AddWithValue("@atentionare_activa", False)
+            End If
+
+            comanda_executata = comanda.ExecuteNonQuery()
         End If
         conexiune_bd.Close()
     End Sub
