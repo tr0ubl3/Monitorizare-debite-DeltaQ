@@ -328,6 +328,8 @@ Public Class fereastra_principala_frm
         Dim atentionare_activa As Boolean
         Dim id_atent As Double
         Dim atentionare_1, atentionare_2, atentionare_3 As Boolean
+        Dim item_lista_1, item_lista_2, item_lista_3 As New ListViewItem
+        Dim atentionare(11) As Boolean
 
         debit_introdus(0) = z1_tb.Text
         debit_introdus(1) = z2_tb.Text
@@ -428,24 +430,28 @@ Public Class fereastra_principala_frm
                 'actiune de implementat
                 'lista_atentionari_lst.Items.Add("Diferente de debit mai mari decat " & dif_max & " sau " & dif_min).Group = lista_atentionari_lst.Groups("Verificare 1")
                 If dif_debit(0) > dif_max Or dif_debit(0) < dif_min Then
+                    atentionare(0) = True
                     comanda.Parameters.AddWithValue("@z1_atentionare_1", True)
                 Else
                     comanda.Parameters.AddWithValue("@z1_atentionare_1", False)
                 End If
 
                 If dif_debit(1) > dif_max Or dif_debit(1) < dif_min Then
+                    atentionare(1) = True
                     comanda.Parameters.AddWithValue("@z2_atentionare_1", True)
                 Else
                     comanda.Parameters.AddWithValue("@z2_atentionare_1", False)
                 End If
 
                 If dif_debit(2) > dif_max Or dif_debit(2) < dif_min Then
+                    atentionare(2) = True
                     comanda.Parameters.AddWithValue("@z3_atentionare_1", True)
                 Else
                     comanda.Parameters.AddWithValue("@z3_atentionare_1", False)
                 End If
 
                 If dif_debit(3) > dif_max Or dif_debit(3) < dif_min Then
+                    atentionare(3) = True
                     comanda.Parameters.AddWithValue("@z4_atentionare_1", True)
                 Else
                     comanda.Parameters.AddWithValue("@z4_atentionare_1", False)
@@ -461,24 +467,28 @@ Public Class fereastra_principala_frm
                 atentionare_2 = True
                 'actiune de implementat atunci cand delta q-urile sunt in afara limitei
                 If dq_vals(0) > dq_max Or dq_vals(0) < dq_min Then
+                    atentionare(4) = True
                     comanda.Parameters.AddWithValue("@z1_atentionare_2", True)
                 Else
                     comanda.Parameters.AddWithValue("@z1_atentionare_2", False)
                 End If
 
                 If dq_vals(1) > dq_max Or dq_vals(1) < dq_min Then
+                    atentionare(5) = True
                     comanda.Parameters.AddWithValue("@z2_atentionare_2", True)
                 Else
                     comanda.Parameters.AddWithValue("@z2_atentionare_2", False)
                 End If
 
                 If dq_vals(2) > dq_max Or dq_vals(2) < dq_min Then
+                    atentionare(6) = True
                     comanda.Parameters.AddWithValue("@z3_atentionare_2", True)
                 Else
                     comanda.Parameters.AddWithValue("@z3_atentionare_2", False)
                 End If
 
                 If dq_vals(3) > dq_max Or dq_vals(3) < dq_min Then
+                    atentionare(7) = True
                     comanda.Parameters.AddWithValue("@z4_atentionare_2", True)
                 Else
                     comanda.Parameters.AddWithValue("@z4_atentionare_2", False)
@@ -495,24 +505,28 @@ Public Class fereastra_principala_frm
                 'actiune de implementat atunci cand diferenta intre delta q-uri este mai mare decat limita impusa
                 'afiseaza z-urile cu valoarea minima si maxima
                 If dq_vals(0) = dq_vals.Max Or dq_vals(0) = dq_vals.Min Then
+                    atentionare(8) = True
                     comanda.Parameters.AddWithValue("@z1_atentionare_3", True)
                 Else
                     comanda.Parameters.AddWithValue("@z1_atentionare_3", False)
                 End If
 
                 If dq_vals(1) = dq_vals.Max Or dq_vals(1) = dq_vals.Min Then
+                    atentionare(9) = True
                     comanda.Parameters.AddWithValue("@z2_atentionare_3", True)
                 Else
                     comanda.Parameters.AddWithValue("@z2_atentionare_3", False)
                 End If
 
                 If dq_vals(2) = dq_vals.Max Or dq_vals(2) = dq_vals.Min Then
+                    atentionare(10) = True
                     comanda.Parameters.AddWithValue("@z3_atentionare_3", True)
                 Else
                     comanda.Parameters.AddWithValue("@z3_atentionare_3", False)
                 End If
 
                 If dq_vals(3) = dq_vals.Max Or dq_vals(3) = dq_vals.Min Then
+                    atentionare(11) = True
                     comanda.Parameters.AddWithValue("@z4_atentionare_3", True)
                 Else
                     comanda.Parameters.AddWithValue("@z4_atentionare_3", False)
@@ -549,23 +563,78 @@ Public Class fereastra_principala_frm
 
                 lista_atentionari_pnl.Visible = True
                 lista_atentionari_lst.Items.Clear()
-                Dim item_lista_1, item_lista_2, item_lista_3 As New ListViewItem
                 If atentionare_1 Then
+                    'examinare z1
+                    If atentionare(0) Then
+                        'item_lista_1.BackColor = Color.Red
+                        item_lista_1.Text = "Z1 diferența de "
+                        item_lista_1.SubItems.Add(dif_debit(0) & " ml")
+                        item_lista_1.Group = lista_atentionari_lst.Groups(0)
+                        lista_atentionari_lst.Items.Add(item_lista_1)
+                    End If
 
-                    item_lista_1.Text = "Test1"
-                    item_lista_1.Group = lista_atentionari_lst.Groups(0)
-                    lista_atentionari_lst.Items.Add(item_lista_1)
-                    'lista_atentionari_lst.Groups(0).ListView.Items.Add("test1")
-                    'MsgBox(lista_atentionari_lst.Groups(0).Header)
+                    If atentionare(1) Then
+                        ' item_lista_1.BackColor = Color.Red
+                        item_lista_1 = New ListViewItem
+                        item_lista_1.Text = "Z2 diferența de "
+                        item_lista_1.SubItems.Add(dif_debit(1) & " ml")
+                        item_lista_1.Group = lista_atentionari_lst.Groups(0)
+                        lista_atentionari_lst.Items.Add(item_lista_1)
+                    End If
+
+                    If atentionare(2) Then
+                        'item_lista_1.BackColor = Color.Red
+                        item_lista_1 = New ListViewItem
+                        item_lista_1.Text = "Z3 diferența de "
+                        item_lista_1.SubItems.Add(dif_debit(2) & " ml")
+                        item_lista_1.Group = lista_atentionari_lst.Groups(0)
+                        lista_atentionari_lst.Items.Add(item_lista_1)
+                    End If
+
+                    If atentionare(3) Then
+                        'item_lista_1.BackColor = Color.Red
+                        item_lista_1 = New ListViewItem
+                        item_lista_1.Text = "Z4 diferența de "
+                        item_lista_1.SubItems.Add(dif_debit(3) & " ml")
+                        item_lista_1.Group = lista_atentionari_lst.Groups(0)
+                        lista_atentionari_lst.Items.Add(item_lista_1)
+                    End If
                 End If
 
                 If atentionare_2 Then
-                    item_lista_2.Text = "Test2"
-                    item_lista_2.Group = lista_atentionari_lst.Groups(1)
-                    lista_atentionari_lst.Items.Add(item_lista_2)
+                    If atentionare(4) Then
+                        item_lista_2.Text = "Z1"
+                        item_lista_2.SubItems.Add(dq_vals(0) & " ml")
+                        item_lista_2.Group = lista_atentionari_lst.Groups(1)
+                        lista_atentionari_lst.Items.Add(item_lista_2)
+                    End If
+
+                    If atentionare(5) Then
+                        item_lista_2 = New ListViewItem
+                        item_lista_2.Text = "Z2"
+                        item_lista_2.SubItems.Add(dq_vals(1) & " ml")
+                        item_lista_2.Group = lista_atentionari_lst.Groups(1)
+                        lista_atentionari_lst.Items.Add(item_lista_2)
+                    End If
+
+                    If atentionare(6) Then
+                        item_lista_2 = New ListViewItem
+                        item_lista_2.Text = "Z3"
+                        item_lista_2.SubItems.Add(dq_vals(2) & " ml")
+                        item_lista_2.Group = lista_atentionari_lst.Groups(1)
+                        lista_atentionari_lst.Items.Add(item_lista_2)
+                    End If
+
+                    If atentionare(7) Then
+                        item_lista_2 = New ListViewItem
+                        item_lista_2.Text = "Z4"
+                        item_lista_2.SubItems.Add(dq_vals(3) & " ml")
+                        item_lista_2.Group = lista_atentionari_lst.Groups(1)
+                        lista_atentionari_lst.Items.Add(item_lista_2)
+                    End If
                 End If
 
-                If atentionare_3 Then
+                    If atentionare_3 Then
                     item_lista_3.Text = "Test3"
                     item_lista_3.Group = lista_atentionari_lst.Groups(2)
                     lista_atentionari_lst.Items.Add(item_lista_3)
@@ -652,11 +721,6 @@ Public Class fereastra_principala_frm
 
     Private Sub lista_atentionari_pnl_VisibleChanged(sender As Object, e As EventArgs) Handles lista_atentionari_pnl.VisibleChanged
         If lista_atentionari_pnl.Visible = True Then
-            Dim atentionare As Integer
-            Dim conexiune_bd As New SqliteConnection("data source=C:\Users\qzcd5g\Documents\documente\Posalux\OP140\monitorizare debite\Monitorizare debite DeltaQ\Monitorizare debite DeltaQ\DeltaQValues.db")
-            Dim comanda = conexiune_bd.CreateCommand
-            Dim reader As SqliteDataReader
-
 
         End If
     End Sub

@@ -29,7 +29,8 @@ Partial Class fereastra_principala_frm
         Dim ListViewGroup1 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Diferente debit între Posalux si Delta Q", System.Windows.Forms.HorizontalAlignment.Left)
         Dim ListViewGroup2 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Delta Q in afara toleranței", System.Windows.Forms.HorizontalAlignment.Left)
         Dim ListViewGroup3 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Diferența Delta Q mai mare decat limita impusă", System.Windows.Forms.HorizontalAlignment.Left)
-        Dim ListViewItem1 As System.Windows.Forms.ListViewItem = New System.Windows.Forms.ListViewItem(New String() {"Test1", "rwar"}, -1, System.Drawing.Color.Empty, System.Drawing.Color.Empty, New System.Drawing.Font("Consolas", 15.0!))
+        Dim ListViewItem1 As System.Windows.Forms.ListViewItem = New System.Windows.Forms.ListViewItem(New String() {"Test1", "yytyrtyrtyrt"}, -1, System.Drawing.Color.Empty, System.Drawing.Color.Empty, New System.Drawing.Font("Consolas", 15.0!))
+        Dim ListViewGroup4 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Diferente debit între Posalux si Delta Q", System.Windows.Forms.HorizontalAlignment.Left)
         Me.panou_butoane_pnl = New System.Windows.Forms.Panel()
         Me.lista_atentionari_btn = New FontAwesome.Sharp.IconButton()
         Me.vizualizare_grafice_btn = New FontAwesome.Sharp.IconButton()
@@ -67,6 +68,8 @@ Partial Class fereastra_principala_frm
         Me.lista_atentionari_pnl = New System.Windows.Forms.Panel()
         Me.id_atentionare = New System.Windows.Forms.Label()
         Me.lista_atentionari_lst = New System.Windows.Forms.ListView()
+        Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.panou_butoane_pnl.SuspendLayout()
         Me.grafice_pnl.SuspendLayout()
         CType(Me.dif_debit_z1_chart, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -587,6 +590,7 @@ Partial Class fereastra_principala_frm
         Me.lista_atentionari_lst.Alignment = System.Windows.Forms.ListViewAlignment.[Default]
         Me.lista_atentionari_lst.AutoArrange = False
         Me.lista_atentionari_lst.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.lista_atentionari_lst.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2})
         Me.lista_atentionari_lst.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.lista_atentionari_lst.FullRowSelect = True
         Me.lista_atentionari_lst.GridLines = True
@@ -599,7 +603,10 @@ Partial Class fereastra_principala_frm
         Me.lista_atentionari_lst.Groups.AddRange(New System.Windows.Forms.ListViewGroup() {ListViewGroup1, ListViewGroup2, ListViewGroup3})
         Me.lista_atentionari_lst.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable
         Me.lista_atentionari_lst.HideSelection = False
-        ListViewItem1.Group = ListViewGroup1
+        ListViewGroup4.Header = "Diferente debit între Posalux si Delta Q"
+        ListViewGroup4.Name = "dif_debit"
+        ListViewItem1.Group = ListViewGroup4
+        ListViewItem1.IndentCount = 1
         Me.lista_atentionari_lst.Items.AddRange(New System.Windows.Forms.ListViewItem() {ListViewItem1})
         Me.lista_atentionari_lst.LabelWrap = False
         Me.lista_atentionari_lst.Location = New System.Drawing.Point(216, 87)
@@ -608,7 +615,17 @@ Partial Class fereastra_principala_frm
         Me.lista_atentionari_lst.Size = New System.Drawing.Size(748, 367)
         Me.lista_atentionari_lst.TabIndex = 0
         Me.lista_atentionari_lst.UseCompatibleStateImageBehavior = False
-        Me.lista_atentionari_lst.View = System.Windows.Forms.View.SmallIcon
+        Me.lista_atentionari_lst.View = System.Windows.Forms.View.Details
+        '
+        'ColumnHeader1
+        '
+        Me.ColumnHeader1.Text = "Spindle"
+        Me.ColumnHeader1.Width = 140
+        '
+        'ColumnHeader2
+        '
+        Me.ColumnHeader2.Text = "Rezolutie"
+        Me.ColumnHeader2.Width = 240
         '
         'fereastra_principala_frm
         '
@@ -675,4 +692,6 @@ Partial Class fereastra_principala_frm
     Friend WithEvents lista_atentionari_pnl As Panel
     Friend WithEvents lista_atentionari_lst As ListView
     Friend WithEvents id_atentionare As Label
+    Friend WithEvents ColumnHeader1 As ColumnHeader
+    Friend WithEvents ColumnHeader2 As ColumnHeader
 End Class
