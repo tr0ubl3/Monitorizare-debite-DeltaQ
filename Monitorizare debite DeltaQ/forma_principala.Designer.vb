@@ -22,13 +22,14 @@ Partial Class fereastra_principala_frm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend2 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series2 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim ListViewGroup3 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Verificare 1", System.Windows.Forms.HorizontalAlignment.Left)
-        Dim ListViewGroup4 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Verificare 2", System.Windows.Forms.HorizontalAlignment.Left)
-        Dim ListViewItem2 As System.Windows.Forms.ListViewItem = New System.Windows.Forms.ListViewItem(New String() {"Sunt 50valori  in afara tolerantei", "test 2"}, -1, System.Drawing.Color.Empty, System.Drawing.Color.Empty, New System.Drawing.Font("Consolas", 15.0!))
+        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim ListViewGroup1 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Diferente debit între Posalux si Delta Q", System.Windows.Forms.HorizontalAlignment.Left)
+        Dim ListViewGroup2 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Delta Q in afara toleranței", System.Windows.Forms.HorizontalAlignment.Left)
+        Dim ListViewGroup3 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Diferența Delta Q mai mare decat limita impusă", System.Windows.Forms.HorizontalAlignment.Left)
+        Dim ListViewItem1 As System.Windows.Forms.ListViewItem = New System.Windows.Forms.ListViewItem(New String() {"Test1", "rwar"}, -1, System.Drawing.Color.Empty, System.Drawing.Color.Empty, New System.Drawing.Font("Consolas", 15.0!))
         Me.panou_butoane_pnl = New System.Windows.Forms.Panel()
         Me.lista_atentionari_btn = New FontAwesome.Sharp.IconButton()
         Me.vizualizare_grafice_btn = New FontAwesome.Sharp.IconButton()
@@ -64,6 +65,7 @@ Partial Class fereastra_principala_frm
         Me.nr_marca_tb = New System.Windows.Forms.TextBox()
         Me.salveaza_valori_btn = New FontAwesome.Sharp.IconButton()
         Me.lista_atentionari_pnl = New System.Windows.Forms.Panel()
+        Me.id_atentionare = New System.Windows.Forms.Label()
         Me.lista_atentionari_lst = New System.Windows.Forms.ListView()
         Me.panou_butoane_pnl.SuspendLayout()
         Me.grafice_pnl.SuspendLayout()
@@ -169,38 +171,38 @@ Partial Class fereastra_principala_frm
         '
         Me.dif_debit_z1_chart.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        ChartArea2.AxisX.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.[False]
-        ChartArea2.AxisX.MinorGrid.LineColor = System.Drawing.Color.White
-        ChartArea2.AxisX.ScaleView.Size = 40.0R
-        ChartArea2.AxisX2.LineColor = System.Drawing.Color.White
-        ChartArea2.AxisY.Interval = 18.0R
-        ChartArea2.AxisY.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number
-        ChartArea2.AxisY.IsLabelAutoFit = False
-        ChartArea2.AxisY.LineColor = System.Drawing.Color.White
-        ChartArea2.AxisY.MajorGrid.LineColor = System.Drawing.Color.Gainsboro
-        ChartArea2.AxisY.Maximum = 5.0R
-        ChartArea2.AxisY.MaximumAutoSize = 85.0!
-        ChartArea2.AxisY.Minimum = -5.0R
-        ChartArea2.AxisY.TitleFont = New System.Drawing.Font("Microsoft Sans Serif", 20.0!)
-        ChartArea2.AxisY2.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.[False]
-        ChartArea2.AxisY2.LineColor = System.Drawing.Color.White
-        ChartArea2.BackColor = System.Drawing.Color.WhiteSmoke
-        ChartArea2.Name = "ChartArea1"
-        Me.dif_debit_z1_chart.ChartAreas.Add(ChartArea2)
-        Legend2.Enabled = False
-        Legend2.Name = "Legend1"
-        Me.dif_debit_z1_chart.Legends.Add(Legend2)
+        ChartArea1.AxisX.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.[False]
+        ChartArea1.AxisX.MinorGrid.LineColor = System.Drawing.Color.White
+        ChartArea1.AxisX.ScaleView.Size = 40.0R
+        ChartArea1.AxisX2.LineColor = System.Drawing.Color.White
+        ChartArea1.AxisY.Interval = 18.0R
+        ChartArea1.AxisY.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number
+        ChartArea1.AxisY.IsLabelAutoFit = False
+        ChartArea1.AxisY.LineColor = System.Drawing.Color.White
+        ChartArea1.AxisY.MajorGrid.LineColor = System.Drawing.Color.Gainsboro
+        ChartArea1.AxisY.Maximum = 5.0R
+        ChartArea1.AxisY.MaximumAutoSize = 85.0!
+        ChartArea1.AxisY.Minimum = -5.0R
+        ChartArea1.AxisY.TitleFont = New System.Drawing.Font("Microsoft Sans Serif", 20.0!)
+        ChartArea1.AxisY2.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.[False]
+        ChartArea1.AxisY2.LineColor = System.Drawing.Color.White
+        ChartArea1.BackColor = System.Drawing.Color.WhiteSmoke
+        ChartArea1.Name = "ChartArea1"
+        Me.dif_debit_z1_chart.ChartAreas.Add(ChartArea1)
+        Legend1.Enabled = False
+        Legend1.Name = "Legend1"
+        Me.dif_debit_z1_chart.Legends.Add(Legend1)
         Me.dif_debit_z1_chart.Location = New System.Drawing.Point(216, 34)
         Me.dif_debit_z1_chart.Name = "dif_debit_z1_chart"
         Me.dif_debit_z1_chart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SemiTransparent
-        Series2.ChartArea = "ChartArea1"
-        Series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
-        Series2.Color = System.Drawing.Color.Black
-        Series2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
-        Series2.IsVisibleInLegend = False
-        Series2.Legend = "Legend1"
-        Series2.Name = "valori"
-        Me.dif_debit_z1_chart.Series.Add(Series2)
+        Series1.ChartArea = "ChartArea1"
+        Series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
+        Series1.Color = System.Drawing.Color.Black
+        Series1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Series1.IsVisibleInLegend = False
+        Series1.Legend = "Legend1"
+        Series1.Name = "valori"
+        Me.dif_debit_z1_chart.Series.Add(Series1)
         Me.dif_debit_z1_chart.Size = New System.Drawing.Size(764, 261)
         Me.dif_debit_z1_chart.TabIndex = 10
         Me.dif_debit_z1_chart.Text = "Chart1"
@@ -412,14 +414,14 @@ Partial Class fereastra_principala_frm
         Me.tabel_valori_dgv.Location = New System.Drawing.Point(210, 225)
         Me.tabel_valori_dgv.Name = "tabel_valori_dgv"
         Me.tabel_valori_dgv.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.[Single]
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Consolas", 10.0!, System.Drawing.FontStyle.Bold)
-        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.tabel_valori_dgv.RowHeadersDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Consolas", 10.0!, System.Drawing.FontStyle.Bold)
+        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.tabel_valori_dgv.RowHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.tabel_valori_dgv.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
         Me.tabel_valori_dgv.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.tabel_valori_dgv.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
@@ -562,12 +564,23 @@ Partial Class fereastra_principala_frm
         'lista_atentionari_pnl
         '
         Me.lista_atentionari_pnl.BackColor = System.Drawing.Color.LightSkyBlue
+        Me.lista_atentionari_pnl.Controls.Add(Me.id_atentionare)
         Me.lista_atentionari_pnl.Controls.Add(Me.lista_atentionari_lst)
         Me.lista_atentionari_pnl.Dock = System.Windows.Forms.DockStyle.Fill
         Me.lista_atentionari_pnl.Location = New System.Drawing.Point(0, 0)
         Me.lista_atentionari_pnl.Name = "lista_atentionari_pnl"
         Me.lista_atentionari_pnl.Size = New System.Drawing.Size(1024, 651)
         Me.lista_atentionari_pnl.TabIndex = 11
+        '
+        'id_atentionare
+        '
+        Me.id_atentionare.AutoSize = True
+        Me.id_atentionare.BackColor = System.Drawing.Color.LightSkyBlue
+        Me.id_atentionare.Location = New System.Drawing.Point(213, 21)
+        Me.id_atentionare.Name = "id_atentionare"
+        Me.id_atentionare.Size = New System.Drawing.Size(61, 13)
+        Me.id_atentionare.TabIndex = 1
+        Me.id_atentionare.Text = "Atenționare"
         '
         'lista_atentionari_lst
         '
@@ -577,20 +590,22 @@ Partial Class fereastra_principala_frm
         Me.lista_atentionari_lst.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.lista_atentionari_lst.FullRowSelect = True
         Me.lista_atentionari_lst.GridLines = True
-        ListViewGroup3.Header = "Verificare 1"
-        ListViewGroup3.Name = "ListViewGroup1"
-        ListViewGroup4.Header = "Verificare 2"
-        ListViewGroup4.Name = "ListViewGroup2"
-        Me.lista_atentionari_lst.Groups.AddRange(New System.Windows.Forms.ListViewGroup() {ListViewGroup3, ListViewGroup4})
+        ListViewGroup1.Header = "Diferente debit între Posalux si Delta Q"
+        ListViewGroup1.Name = "dif_debit"
+        ListViewGroup2.Header = "Delta Q in afara toleranței"
+        ListViewGroup2.Name = "dq_val"
+        ListViewGroup3.Header = "Diferența Delta Q mai mare decat limita impusă"
+        ListViewGroup3.Name = "dif_dq"
+        Me.lista_atentionari_lst.Groups.AddRange(New System.Windows.Forms.ListViewGroup() {ListViewGroup1, ListViewGroup2, ListViewGroup3})
         Me.lista_atentionari_lst.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable
         Me.lista_atentionari_lst.HideSelection = False
-        ListViewItem2.Group = ListViewGroup3
-        Me.lista_atentionari_lst.Items.AddRange(New System.Windows.Forms.ListViewItem() {ListViewItem2})
+        ListViewItem1.Group = ListViewGroup1
+        Me.lista_atentionari_lst.Items.AddRange(New System.Windows.Forms.ListViewItem() {ListViewItem1})
         Me.lista_atentionari_lst.LabelWrap = False
-        Me.lista_atentionari_lst.Location = New System.Drawing.Point(216, 107)
+        Me.lista_atentionari_lst.Location = New System.Drawing.Point(216, 87)
         Me.lista_atentionari_lst.MultiSelect = False
         Me.lista_atentionari_lst.Name = "lista_atentionari_lst"
-        Me.lista_atentionari_lst.Size = New System.Drawing.Size(748, 253)
+        Me.lista_atentionari_lst.Size = New System.Drawing.Size(748, 367)
         Me.lista_atentionari_lst.TabIndex = 0
         Me.lista_atentionari_lst.UseCompatibleStateImageBehavior = False
         Me.lista_atentionari_lst.View = System.Windows.Forms.View.SmallIcon
@@ -601,9 +616,9 @@ Partial Class fereastra_principala_frm
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1024, 651)
         Me.Controls.Add(Me.panou_butoane_pnl)
+        Me.Controls.Add(Me.lista_atentionari_pnl)
         Me.Controls.Add(Me.grafice_pnl)
         Me.Controls.Add(Me.adauga_valori_pnl)
-        Me.Controls.Add(Me.lista_atentionari_pnl)
         Me.MinimumSize = New System.Drawing.Size(1040, 690)
         Me.Name = "fereastra_principala_frm"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
@@ -618,6 +633,7 @@ Partial Class fereastra_principala_frm
         Me.TableLayoutPanel1.PerformLayout()
         CType(Me.tabel_valori_dgv, System.ComponentModel.ISupportInitialize).EndInit()
         Me.lista_atentionari_pnl.ResumeLayout(False)
+        Me.lista_atentionari_pnl.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -658,4 +674,5 @@ Partial Class fereastra_principala_frm
     Friend WithEvents lista_atentionari_btn As FontAwesome.Sharp.IconButton
     Friend WithEvents lista_atentionari_pnl As Panel
     Friend WithEvents lista_atentionari_lst As ListView
+    Friend WithEvents id_atentionare As Label
 End Class

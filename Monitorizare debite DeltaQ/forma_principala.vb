@@ -33,6 +33,7 @@ Public Class fereastra_principala_frm
         'buton salvare
         Me.salveaza_valori_btn.Visible = False
         grafice_pnl.Visible = False
+        lista_atentionari_pnl.Visible = False
 
     End Sub
 
@@ -325,7 +326,8 @@ Public Class fereastra_principala_frm
         Dim debit_masurat(3) As Single
         Dim spc_id As Double
         Dim atentionare_activa As Boolean
-        Dim id_atentionare As Double
+        Dim id_atent As Double
+        Dim atentionare_1, atentionare_2, atentionare_3 As Boolean
 
         debit_introdus(0) = z1_tb.Text
         debit_introdus(1) = z2_tb.Text
@@ -411,9 +413,6 @@ Public Class fereastra_principala_frm
                 End While
             End Using
 
-            lista_atentionari_pnl.Visible = True
-            lista_atentionari_lst.Items.Clear()
-
             'creare comanda pentru inserare linie in tabelul atentionare
             comanda.CommandText = "insert into atentionare (spc_id, atentionare_activa, z1_atentionare_1, z1_atentionare_2, z1_atentionare_3, z2_atentionare_1, z2_atentionare_2, z2_atentionare_3,
                                    z3_atentionare_1, z3_atentionare_2, z3_atentionare_3, z4_atentionare_1, z4_atentionare_2, z4_atentionare_3) values (@spc_id, @atentionare_activa, @z1_atentionare_1,
@@ -424,7 +423,7 @@ Public Class fereastra_principala_frm
 
             'calcul diferenta debit maxima pentru a verificare daca e mai mare decat limita impusa in referinta
             If dif_debit.Max > dif_max Or dif_debit.Min < dif_min Then
-                atentionare_activa = True
+                atentionare_1 = True
                 'comanda.Parameters.AddWithValue("@atentionare_activa", True)
                 'actiune de implementat
                 'lista_atentionari_lst.Items.Add("Diferente de debit mai mari decat " & dif_max & " sau " & dif_min).Group = lista_atentionari_lst.Groups("Verificare 1")
@@ -459,7 +458,7 @@ Public Class fereastra_principala_frm
             End If
 
             If dq_vals.Max > dq_max Or dq_vals.Min < dq_min Then
-                atentionare_activa = True
+                atentionare_2 = True
                 'actiune de implementat atunci cand delta q-urile sunt in afara limitei
                 If dq_vals(0) > dq_max Or dq_vals(0) < dq_min Then
                     comanda.Parameters.AddWithValue("@z1_atentionare_2", True)
@@ -492,7 +491,7 @@ Public Class fereastra_principala_frm
             End If
 
             If (dq_vals.Max - dq_vals.Min) > dif_dq_max Then
-                atentionare_activa = True
+                atentionare_3 = True
                 'actiune de implementat atunci cand diferenta intre delta q-uri este mai mare decat limita impusa
                 'afiseaza z-urile cu valoarea minima si maxima
                 If dq_vals(0) = dq_vals.Max Or dq_vals(0) = dq_vals.Min Then
@@ -525,7 +524,8 @@ Public Class fereastra_principala_frm
                 comanda.Parameters.AddWithValue("@z4_atentionare_3", False)
             End If
 
-            If atentionare_activa Then
+            If atentionare_1 Or atentionare_2 Or atentionare_3 Then
+                atentionare_activa = True
                 comanda.Parameters.AddWithValue("@atentionare_activa", True)
             Else
                 comanda.Parameters.AddWithValue("@atentionare_activa", False)
@@ -535,11 +535,44 @@ Public Class fereastra_principala_frm
 
             If comanda_executata = 1 Then
                 comanda.CommandText = "select last_insert_rowid()"
-                id_atentionare = comanda.ExecuteScalar()
+                id_atent = comanda.ExecuteScalar()
+
+                id_atentionare.Text = "Atenționare " & id_atent
+                comanda.CommandText = "select * from spc_posalux s inner join atentionare a on s.spc_id = a.spc_id where a.id_atentionare = " & id_atent
+                reader = comanda.ExecuteReader
+
+                Using reader
+                    While reader.Read()
+                        'MsgBox(reader.GetString(1))
+                    End While
+                End Using
+
+                lista_atentionari_pnl.Visible = True
+                lista_atentionari_lst.Items.Clear()
+                Dim item_lista_1, item_lista_2, item_lista_3 As New ListViewItem
+                If atentionare_1 Then
+
+                    item_lista_1.Text = "Test1"
+                    item_lista_1.Group = lista_atentionari_lst.Groups(0)
+                    lista_atentionari_lst.Items.Add(item_lista_1)
+                    'lista_atentionari_lst.Groups(0).ListView.Items.Add("test1")
+                    'MsgBox(lista_atentionari_lst.Groups(0).Header)
+                End If
+
+                If atentionare_2 Then
+                    item_lista_2.Text = "Test2"
+                    item_lista_2.Group = lista_atentionari_lst.Groups(1)
+                    lista_atentionari_lst.Items.Add(item_lista_2)
+                End If
+
+                If atentionare_3 Then
+                    item_lista_3.Text = "Test3"
+                    item_lista_3.Group = lista_atentionari_lst.Groups(2)
+                    lista_atentionari_lst.Items.Add(item_lista_3)
+                End If
             End If
         End If
         conexiune_bd.Close()
-        MsgBox(id_atentionare)
     End Sub
 
     Private Sub grafice_pnl_VisibleChanged(sender As Object, e As EventArgs) Handles grafice_pnl.VisibleChanged
@@ -607,11 +640,24 @@ Public Class fereastra_principala_frm
 
     Private Sub vizualizare_grafice_btn_Click(sender As Object, e As EventArgs) Handles vizualizare_grafice_btn.Click
         grafice_pnl.Visible = True
+        lista_atentionari_pnl.Visible = False
+        adauga_valori_pnl.Visible = False
     End Sub
 
     Private Sub lista_atentionari_btn_Click(sender As Object, e As EventArgs) Handles lista_atentionari_btn.Click
         grafice_pnl.Visible = False
         adauga_valori_pnl.Visible = False
         lista_atentionari_pnl.Visible = True
+    End Sub
+
+    Private Sub lista_atentionari_pnl_VisibleChanged(sender As Object, e As EventArgs) Handles lista_atentionari_pnl.VisibleChanged
+        If lista_atentionari_pnl.Visible = True Then
+            Dim atentionare As Integer
+            Dim conexiune_bd As New SqliteConnection("data source=C:\Users\qzcd5g\Documents\documente\Posalux\OP140\monitorizare debite\Monitorizare debite DeltaQ\Monitorizare debite DeltaQ\DeltaQValues.db")
+            Dim comanda = conexiune_bd.CreateCommand
+            Dim reader As SqliteDataReader
+
+
+        End If
     End Sub
 End Class
