@@ -2,6 +2,7 @@
 Imports Microsoft.Data.Sqlite
 Public Class fereastra_principala_frm
     Dim nr_marca_valid As Boolean
+    Dim locatie_bd As String = Replace(Application.StartupPath, "bin\Debug", "") & "DeltaQValues.db"
     Private Function testare_regex(regex_text As String, text As String) As Boolean
         Dim regex_test As New Regex(regex_text)
 
@@ -34,7 +35,6 @@ Public Class fereastra_principala_frm
         Me.salveaza_valori_btn.Visible = False
         grafice_pnl.Visible = False
         lista_atentionari_pnl.Visible = False
-
     End Sub
 
     Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs)
@@ -184,7 +184,7 @@ Public Class fereastra_principala_frm
     Private Sub tabel_valori_dgv_VisibleChanged(sender As Object, e As EventArgs) Handles tabel_valori_dgv.VisibleChanged
         'executare doar daca forma e vizibila
         If tabel_valori_dgv.Visible Then
-            Dim conexiune_bd As New SqliteConnection("data source=C:\Users\qzcd5g\Documents\documente\Posalux\OP140\monitorizare debite\Monitorizare debite DeltaQ\Monitorizare debite DeltaQ\DeltaQValues.db")
+            Dim conexiune_bd As New SqliteConnection("data source=" & locatie_bd)
             Dim continut_bd As New DataSet
             Dim datacurenta As String = String.Format("{0:yyyy-MM-dd}", DateTime.Now)
             conexiune_bd.Open()
@@ -313,7 +313,7 @@ Public Class fereastra_principala_frm
     Private Sub salveaza_valori_btn_Click(sender As Object, e As EventArgs) Handles salveaza_valori_btn.Click
         Dim testare_regex As New Regex("140\.\d{1,2}")
         Dim rezultat_regex As Match
-        Dim conexiune_bd As New SqliteConnection("data source=C:\Users\qzcd5g\Documents\documente\Posalux\OP140\monitorizare debite\Monitorizare debite DeltaQ\Monitorizare debite DeltaQ\DeltaQValues.db")
+        Dim conexiune_bd As New SqliteConnection("data source=" & locatie_bd)
         Dim comanda = conexiune_bd.CreateCommand
         Dim reader As SqliteDataReader
         Dim id_masina As Integer
@@ -634,10 +634,38 @@ Public Class fereastra_principala_frm
                     End If
                 End If
 
-                    If atentionare_3 Then
-                    item_lista_3.Text = "Test3"
-                    item_lista_3.Group = lista_atentionari_lst.Groups(2)
-                    lista_atentionari_lst.Items.Add(item_lista_3)
+                If atentionare_3 Then
+                    lista_atentionari_lst.Groups(2).Header = "Diferența Delta Q este de " & Math.Round(dq_vals.Max - dq_vals.Min, 1) & " fata de maxim " & dif_dq_max
+                    If atentionare(8) Then
+                        item_lista_3.Text = "Z1"
+                        item_lista_3.Group = lista_atentionari_lst.Groups(2)
+                        item_lista_3.SubItems.Add(dq_vals(0) & " ml")
+                        lista_atentionari_lst.Items.Add(item_lista_3)
+                    End If
+
+                    If atentionare(9) Then
+                        item_lista_3 = New ListViewItem
+                        item_lista_3.Text = "Z2"
+                        item_lista_3.Group = lista_atentionari_lst.Groups(2)
+                        item_lista_3.SubItems.Add(dq_vals(1) & " ml")
+                        lista_atentionari_lst.Items.Add(item_lista_3)
+                    End If
+
+                    If atentionare(10) Then
+                        item_lista_3 = New ListViewItem
+                        item_lista_3.Text = "Z3"
+                        item_lista_3.Group = lista_atentionari_lst.Groups(2)
+                        item_lista_3.SubItems.Add(dq_vals(2) & " ml")
+                        lista_atentionari_lst.Items.Add(item_lista_3)
+                    End If
+
+                    If atentionare(11) Then
+                        item_lista_3 = New ListViewItem
+                        item_lista_3.Text = "Z4"
+                        item_lista_3.Group = lista_atentionari_lst.Groups(2)
+                        item_lista_3.SubItems.Add(dq_vals(3) & " ml")
+                        lista_atentionari_lst.Items.Add(item_lista_3)
+                    End If
                 End If
             End If
         End If
