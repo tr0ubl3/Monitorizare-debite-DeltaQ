@@ -635,7 +635,7 @@ Public Class fereastra_principala_frm
                 End If
 
                 If atentionare_3 Then
-                    lista_atentionari_lst.Groups(2).Header = "Diferența Delta Q este de " & Math.Round(dq_vals.Max - dq_vals.Min, 1) & " fata de maxim " & dif_dq_max
+                    lista_atentionari_lst.Groups(2).Header = "Diferența Delta Q este de " & Math.Round(dq_vals.Max - dq_vals.Min, 1) & " față de maxim " & dif_dq_max
                     If atentionare(8) Then
                         item_lista_3.Text = "Z1"
                         item_lista_3.Group = lista_atentionari_lst.Groups(2)
