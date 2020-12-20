@@ -752,4 +752,8 @@ Public Class fereastra_principala_frm
 
         End If
     End Sub
+
+    Private Sub lista_atentionari_pnl_Paint(sender As Object, e As PaintEventArgs) Handles lista_atentionari_pnl.Paint
+
+    End Sub
 End Class
