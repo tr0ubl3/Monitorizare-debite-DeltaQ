@@ -744,7 +744,8 @@ Public Class fereastra_principala_frm
     Private Sub lista_atentionari_btn_Click(sender As Object, e As EventArgs) Handles lista_atentionari_btn.Click
         grafice_pnl.Visible = False
         adauga_valori_pnl.Visible = False
-        lista_atentionari_pnl.Visible = True
+        lista_atentionari_pnl.Visible = False
+        lista_masini_pnl.Visible = True
     End Sub
 
     Private Sub lista_atentionari_pnl_VisibleChanged(sender As Object, e As EventArgs) Handles lista_atentionari_pnl.VisibleChanged
