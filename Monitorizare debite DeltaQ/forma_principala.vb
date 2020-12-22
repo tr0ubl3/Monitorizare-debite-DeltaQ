@@ -35,6 +35,7 @@ Public Class fereastra_principala_frm
         Me.salveaza_valori_btn.Visible = False
         grafice_pnl.Visible = False
         lista_atentionari_pnl.Visible = False
+        lista_masini_pnl.Visible = False
     End Sub
 
     Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs)
@@ -552,14 +553,14 @@ Public Class fereastra_principala_frm
                 id_atent = comanda.ExecuteScalar()
 
                 id_atentionare.Text = "Atenționare " & id_atent
-                comanda.CommandText = "select * from spc_posalux s inner join atentionare a on s.spc_id = a.spc_id where a.id_atentionare = " & id_atent
-                reader = comanda.ExecuteReader
+                'comanda.CommandText = "select * from spc_posalux s inner join atentionare a on s.spc_id = a.spc_id where a.id_atentionare = " & id_atent
+                'reader = comanda.ExecuteReader
 
-                Using reader
-                    While reader.Read()
-                        'MsgBox(reader.GetString(1))
-                    End While
-                End Using
+                'Using reader
+                '    While reader.Read()
+                '        'MsgBox(reader.GetString(1))
+                '    End While
+                'End Using
 
                 lista_atentionari_pnl.Visible = True
                 lista_atentionari_lst.Items.Clear()
@@ -739,22 +740,92 @@ Public Class fereastra_principala_frm
         grafice_pnl.Visible = True
         lista_atentionari_pnl.Visible = False
         adauga_valori_pnl.Visible = False
+        lista_masini_pnl.Visible = False
     End Sub
 
     Private Sub lista_atentionari_btn_Click(sender As Object, e As EventArgs) Handles lista_atentionari_btn.Click
+        Dim conexiune_bd As New SqliteConnection("data source=" & locatie_bd)
+        Dim comanda = conexiune_bd.CreateCommand
+        Dim reader As SqliteDataReader
+        Dim nr_producator(), nr_operatie() As String
+        Dim id_masina() As Int16
+        Dim buton As Button
+        Dim subelement As Button
+        Dim incr As Int16 = 0
+        Dim atentionare_activa As Boolean
+
+        conexiune_bd.Open()
+        comanda.CommandText = "select nr_producator, nr_operatie, id_masina from masini m where
+                                producator = 'Posalux'
+                                order by id_masina asc"
+        reader = comanda.ExecuteReader()
+
         grafice_pnl.Visible = False
         adauga_valori_pnl.Visible = False
         lista_atentionari_pnl.Visible = False
         lista_masini_pnl.Visible = True
+        If button_flow_pnl.Controls.Count = 0 Then
+            Using reader
+                While reader.Read()
+                    ReDim Preserve nr_producator(incr), nr_operatie(incr), id_masina(incr)
+                    buton = New Button
+                    nr_producator(incr) = reader.GetString(0)
+                    nr_operatie(incr) = reader.GetString(1)
+                    id_masina(incr) = reader.GetInt16(2)
+                    buton.Text = nr_operatie(incr) & Environment.NewLine & "MH." & nr_producator(incr).Substring(nr_producator(incr).Length - 3)
+                    buton.Name = id_masina(incr) & "_btn"
+                    buton.Tag = id_masina(incr)
+                    buton.BackColor = Color.CadetBlue
+                    buton.Location = New System.Drawing.Point(3, 3)
+                    buton.Size = New System.Drawing.Size(140, 66)
+                    buton.FlatStyle = FlatStyle.Flat
+                    'buton.UseVisualStyleBackColor = True
+                    Me.button_flow_pnl.Controls.Add(buton)
+                    AddHandler buton.Click, AddressOf buton_masini_click
+                    incr += 1
+                End While
+            End Using
+
+            For Each subelement In Me.button_flow_pnl.Controls
+                comanda.CommandText = "select atentionare_activa from atentionare a
+		                            inner join spc_posalux s on s.spc_id = a.spc_id
+		                            where
+		                            masina = " & subelement.Tag & " group by masina"
+
+                reader = comanda.ExecuteReader()
+
+                Using reader
+                    While reader.Read()
+                        atentionare_activa = reader.GetValue(0)
+                    End While
+                End Using
+
+                If atentionare_activa Then
+                    subelement.BackColor = Color.Red
+                Else
+                    subelement.BackColor = Color.Green
+                End If
+            Next
+
+        End If
+        conexiune_bd.Close()
+    End Sub
+
+    Private Sub buton_masini_click(sender As Object, e As EventArgs)
+        MsgBox(CType(sender, Control).Tag)
+        'lista_atentionari_pnl.Visible = True
+
     End Sub
 
     Private Sub lista_atentionari_pnl_VisibleChanged(sender As Object, e As EventArgs) Handles lista_atentionari_pnl.VisibleChanged
-        If lista_atentionari_pnl.Visible = True Then
 
-        End If
     End Sub
 
     Private Sub lista_atentionari_pnl_Paint(sender As Object, e As PaintEventArgs) Handles lista_atentionari_pnl.Paint
+
+    End Sub
+
+    Private Sub panou_butoane_pnl_Paint(sender As Object, e As PaintEventArgs) Handles panou_butoane_pnl.Paint
 
     End Sub
 End Class
