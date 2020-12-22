@@ -787,12 +787,8 @@ Public Class fereastra_principala_frm
             End Using
 
             For Each subelement In Me.button_flow_pnl.Controls
-                comanda.CommandText = "select atentionare_activa from atentionare a
-		                            inner join spc_posalux s on s.spc_id = a.spc_id
-		                            where
-		                            masina = " & subelement.Tag & " group by masina"
-
-                reader = comanda.ExecuteReader()
+                comanda.CommandText = "select atentionare_activa from atentionare a where spc_id = (select rowid from spc_posalux where masina=" & subelement.Tag & " order by data_creare desc limit 1)"
+                reader = comanda.ExecuteReader
 
                 Using reader
                     While reader.Read()
