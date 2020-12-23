@@ -191,7 +191,7 @@ Public Class fereastra_principala_frm
             Dim datacurenta As String = String.Format("{0:yyyy-MM-dd}", DateTime.Now)
             conexiune_bd.Open()
             Dim comanda = conexiune_bd.CreateCommand
-            comanda.CommandText = "select data, dm, referinta, nr_caseta, debit, delta_q, nr_cuib, rowid from valori where data like'" & "16.05.2019" & "%' order by data asc"
+            comanda.CommandText = "select data, dm, referinta, nr_caseta, debit, delta_q, nr_cuib, rowid from valori where data like'" & "16.05.2019" & "%' and spc_id is null order by data asc"
             Dim reader As SqliteDataReader = comanda.ExecuteReader
             Dim rand As String()
 
