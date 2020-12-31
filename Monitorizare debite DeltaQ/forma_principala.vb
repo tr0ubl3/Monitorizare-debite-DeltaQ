@@ -822,6 +822,7 @@ Public Class fereastra_principala_frm
         Dim comanda = conexiune_bd.CreateCommand
         Dim reader As SqliteDataReader
         Dim id_atent, id_spc As Integer
+        Dim id_masina As Integer = CType(sender, Control).Tag
         Dim atentionare_activa As Boolean
         Dim atentionare(11) As Boolean
         Dim item_lista_1, item_lista_2, item_lista_3 As New ListViewItem
@@ -836,7 +837,7 @@ Public Class fereastra_principala_frm
         comanda.CommandText = "select id_atentionare, spc_id, atentionare_activa, z1_atentionare_1, z2_atentionare_1, z3_atentionare_1, z4_atentionare_1,
                                       z1_atentionare_2, z2_atentionare_2, z3_atentionare_2, z4_atentionare_2, z1_atentionare_3, z2_atentionare_3,
                                       z3_atentionare_3, z4_atentionare_3 from atentionare a where 
-                                      spc_id = (select rowid from spc_posalux where masina=" & CType(sender, Control).Tag & " order by data_creare desc limit 1)"
+                                      spc_id = (select rowid from spc_posalux where masina=" & id_masina & " order by data_creare desc limit 1)"
         reader = comanda.ExecuteReader
 
         Using reader
