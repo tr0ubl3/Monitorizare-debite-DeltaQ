@@ -828,6 +828,7 @@ Public Class fereastra_principala_frm
         Dim dif_debit(3), dif_dq, dq_vals(3), dif_dq_max As Double
         Dim incr As Integer = 0
         Dim referinta As String = ""
+        Dim data_spc As Date
 
         'MsgBox(CType(sender, Control).Tag)
         'lista_atentionari_pnl.Visible = True
@@ -859,7 +860,7 @@ Public Class fereastra_principala_frm
         End Using
         reader.Close()
 
-        comanda.CommandText = "select diferenta_calculata_z1, diferenta_calculata_z2, diferenta_calculata_z3, diferenta_calculata_z4, diferenta_calculata_min_max_delta_q, referinta
+        comanda.CommandText = "select diferenta_calculata_z1, diferenta_calculata_z2, diferenta_calculata_z3, diferenta_calculata_z4, diferenta_calculata_min_max_delta_q, referinta, datetime(data_creare, 'localtime')
                                from spc_posalux where spc_id=" & id_spc
         reader = comanda.ExecuteReader
 
@@ -883,6 +884,7 @@ Public Class fereastra_principala_frm
 
                 dif_dq = reader.GetDouble(4)
                 referinta = reader.GetString(5)
+                data_spc = reader.GetDateTime(6)
             End While
         End Using
 
@@ -910,7 +912,8 @@ Public Class fereastra_principala_frm
         End Using
 
 
-        id_atentionare.Text = "Atenționare " & id_atent
+        id_atentionare.Text = "Atenționare " & id_atent & " spc masurat acum " & durata(data_spc) & " " & data_spc
+
         'comanda.CommandText = "select * from spc_posalux s inner join atentionare a on s.spc_id = a.spc_id where a.id_atentionare = " & id_atent
         'reader = comanda.ExecuteReader
 
@@ -1040,4 +1043,31 @@ Public Class fereastra_principala_frm
     Private Sub panou_butoane_pnl_Paint(sender As Object, e As PaintEventArgs) Handles panou_butoane_pnl.Paint
 
     End Sub
+
+    Private Function durata(ByRef data_ora As DateTime) As String
+        Dim moment_curent As DateTime = DateTime.Now
+        Dim ts As TimeSpan
+        Dim secunda As Integer = 1
+        Dim minut As Integer = 60 * secunda
+        Dim ora As Integer = 60 * minut
+        Dim zi As Integer = 24 * ora
+        Dim secunde As Double
+
+        ts = moment_curent - data_ora
+        secunde = ts.TotalSeconds
+
+        Select Case secunde
+            Case Is < minut
+                Return ts.Seconds & " secunde"
+            Case Is < 1 * ora
+                Return ts.Minutes & " minute"
+            Case Is < 1 * zi
+                Return ts.Hours & " ore și " & (ts.Hours * minut - ts.Minutes) & " minute"
+            Case Is < 30 * zi
+                Return ts.Days & " zile și " & ts.Hours & " ore"
+        End Select
+
+        Return ts.TotalSeconds
+    End Function
 End Class
+
