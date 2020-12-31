@@ -763,6 +763,8 @@ Public Class fereastra_principala_frm
         Dim subelement As Button
         Dim incr As Int16 = 0
         Dim atentionare_activa As Boolean
+        Dim referinta As String = ""
+        Dim spc_id As Integer
 
         conexiune_bd.Open()
         comanda.CommandText = "select nr_producator, nr_operatie, id_masina from masini m where
@@ -796,9 +798,24 @@ Public Class fereastra_principala_frm
                 End While
             End Using
 
+            reader.Close()
+
+
             For Each subelement In Me.button_flow_pnl.Controls
+                comanda.CommandText = "select rowid, referinta from spc_posalux where masina=" & subelement.Tag & " order by data_creare desc limit 1"
+
+                reader = comanda.ExecuteReader
+
+                Using reader
+                    While reader.Read
+                        spc_id = reader.GetValue(0)
+                        referinta = reader.GetValue(1)
+                    End While
+                End Using
+
+                reader.Close()
                 comanda.CommandText = "select atentionare_activa from atentionare a where 
-                                        spc_id = (select rowid from spc_posalux where masina=" & subelement.Tag & " order by data_creare desc limit 1)"
+                                        spc_id = " & spc_id
                 reader = comanda.ExecuteReader
 
                 Using reader
@@ -812,6 +829,7 @@ Public Class fereastra_principala_frm
                 Else
                     subelement.BackColor = Color.Green
                 End If
+                subelement.Text += Environment.NewLine & referinta
             Next
         End If
         conexiune_bd.Close()
