@@ -927,7 +927,7 @@ Public Class fereastra_principala_frm
             If atentionare(0) Then
                 'item_lista_1.BackColor = Color.Red
                 item_lista_1.Text = "Z1 diferența de "
-                item_lista_1.SubItems.Add(dif_debit(0) & " ml")
+                item_lista_1.SubItems.Add(Math.Round(dif_debit(0), 1) & " ml")
                 item_lista_1.Group = lista_atentionari_lst.Groups(0)
                 lista_atentionari_lst.Items.Add(item_lista_1)
             End If
@@ -936,7 +936,7 @@ Public Class fereastra_principala_frm
                 ' item_lista_1.BackColor = Color.Red
                 item_lista_1 = New ListViewItem
                 item_lista_1.Text = "Z2 diferența de "
-                item_lista_1.SubItems.Add(dif_debit(1) & " ml")
+                item_lista_1.SubItems.Add(Math.Round(dif_debit(1), 1) & " ml")
                 item_lista_1.Group = lista_atentionari_lst.Groups(0)
                 lista_atentionari_lst.Items.Add(item_lista_1)
             End If
@@ -945,7 +945,7 @@ Public Class fereastra_principala_frm
                 'item_lista_1.BackColor = Color.Red
                 item_lista_1 = New ListViewItem
                 item_lista_1.Text = "Z3 diferența de "
-                item_lista_1.SubItems.Add(dif_debit(2) & " ml")
+                item_lista_1.SubItems.Add(Math.Round(dif_debit(2), 1) & " ml")
                 item_lista_1.Group = lista_atentionari_lst.Groups(0)
                 lista_atentionari_lst.Items.Add(item_lista_1)
             End If
@@ -954,7 +954,7 @@ Public Class fereastra_principala_frm
                 'item_lista_1.BackColor = Color.Red
                 item_lista_1 = New ListViewItem
                 item_lista_1.Text = "Z4 diferența de "
-                item_lista_1.SubItems.Add(dif_debit(3) & " ml")
+                item_lista_1.SubItems.Add(Math.Round(dif_debit(3), 1) & " ml")
                 item_lista_1.Group = lista_atentionari_lst.Groups(0)
                 lista_atentionari_lst.Items.Add(item_lista_1)
             End If
