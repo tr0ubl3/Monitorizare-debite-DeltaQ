@@ -913,7 +913,7 @@ Public Class fereastra_principala_frm
         End Using
 
 
-        id_atentionare.Text = "Atenționare " & id_atent & " spc masurat acum " & durata(data_spc) & " " & data_spc
+        id_atentionare.Text = "Atenționare " & id_atent & " spc masurat acum " & durata(data_spc)
 
         'comanda.CommandText = "select * from spc_posalux s inner join atentionare a on s.spc_id = a.spc_id where a.id_atentionare = " & id_atent
         'reader = comanda.ExecuteReader
