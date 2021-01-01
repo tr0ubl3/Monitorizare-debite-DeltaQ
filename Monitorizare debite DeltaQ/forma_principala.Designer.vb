@@ -576,7 +576,7 @@ Partial Class fereastra_principala_frm
         '
         'lista_atentionari_pnl
         '
-        Me.lista_atentionari_pnl.BackColor = System.Drawing.Color.LightSkyBlue
+        Me.lista_atentionari_pnl.BackColor = System.Drawing.Color.FromArgb(CType(CType(217, Byte), Integer), CType(CType(214, Byte), Integer), CType(CType(211, Byte), Integer))
         Me.lista_atentionari_pnl.Controls.Add(Me.id_atentionare)
         Me.lista_atentionari_pnl.Controls.Add(Me.lista_atentionari_lst)
         Me.lista_atentionari_pnl.Dock = System.Windows.Forms.DockStyle.Fill
@@ -588,7 +588,7 @@ Partial Class fereastra_principala_frm
         'id_atentionare
         '
         Me.id_atentionare.AutoSize = True
-        Me.id_atentionare.BackColor = System.Drawing.Color.LightSkyBlue
+        Me.id_atentionare.BackColor = System.Drawing.Color.FromArgb(CType(CType(217, Byte), Integer), CType(CType(214, Byte), Integer), CType(CType(211, Byte), Integer))
         Me.id_atentionare.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.id_atentionare.Location = New System.Drawing.Point(213, 21)
         Me.id_atentionare.Name = "id_atentionare"
@@ -600,6 +600,7 @@ Partial Class fereastra_principala_frm
         '
         Me.lista_atentionari_lst.Alignment = System.Windows.Forms.ListViewAlignment.[Default]
         Me.lista_atentionari_lst.AutoArrange = False
+        Me.lista_atentionari_lst.BackColor = System.Drawing.SystemColors.Window
         Me.lista_atentionari_lst.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.lista_atentionari_lst.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2})
         Me.lista_atentionari_lst.Font = New System.Drawing.Font("Consolas", 10.0!)
