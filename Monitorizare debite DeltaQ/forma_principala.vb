@@ -984,5 +984,11 @@ Public Class fereastra_principala_frm
             End If
         Next
     End Sub
+
+    Private Sub lista_masini_pnl_VisibleChanged(sender As Object, e As EventArgs) Handles lista_masini_pnl.VisibleChanged
+        If lista_masini_pnl.Visible = False Then
+            button_flow_pnl.Controls.Clear()
+        End If
+    End Sub
 End Class
 
