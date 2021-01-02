@@ -747,8 +747,12 @@ Public Class fereastra_principala_frm
         secunde = ts.TotalSeconds
 
         Select Case secunde
+            Case Is < secunda
+                Return "câteva momente"
             Case Is < minut
                 Return ts.Seconds & " secunde"
+            Case Is < 2 * minut
+                Return ts.Minutes & " minut"
             Case Is < 1 * ora
                 Return ts.Minutes & " minute"
             Case Is < 1 * zi
