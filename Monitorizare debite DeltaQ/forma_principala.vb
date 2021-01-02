@@ -203,6 +203,7 @@ Public Class fereastra_principala_frm
                     tabel_valori_dgv.Rows.Add(rand)
                 End While
             End Using
+            comanda.Dispose()
             conexiune_bd.Close()
         End If
         tabel_valori_dgv.ClearSelection()
@@ -359,13 +360,14 @@ Public Class fereastra_principala_frm
                 id_masina = reader.GetInt16(0)
             End While
         End Using
+        comanda.Dispose()
 
         'salvare id masina in rezultatele selectatate
         For Each rand In tabel_valori_dgv.SelectedRows
             comanda.CommandText = "update valori set masina = " & id_masina & " where rowid = " & rand.Cells(7).Value
             comanda.ExecuteNonQuery()
         Next
-
+        comanda.Dispose()
         'salvare rezultat spc in bd
         'comanda.CommandText = "insert into spc_posalux (nr_marca, valoare_z1, valoare_z2, valoare_z3, valoare_z4, referinta, masina) values (" _
         '                       & nr_marca_tb.Text & ", " & If(z1_tb.Text = "*", "", z1_tb.Text) & ", " & If(z2_tb.Text = "*", "", z2_tb.Text) _
@@ -408,6 +410,7 @@ Public Class fereastra_principala_frm
                 comanda.CommandText = "update valori set spc_id = " & spc_id & " where rowid = " & rand.Cells(7).Value
                 comanda.ExecuteNonQuery()
             Next
+            comanda.Dispose()
 
             nr_marca_tb.Text = ""
             adauga_valori_pnl.Visible = False
@@ -425,6 +428,7 @@ Public Class fereastra_principala_frm
                     dif_dq_min = reader.GetInt16(5)
                 End While
             End Using
+            comanda.Dispose()
 
             'creare comanda pentru inserare linie in tabelul atentionare
             comanda.CommandText = "insert into atentionare (spc_id, atentionare_activa, z1_atentionare_1, z1_atentionare_2, z1_atentionare_3, z2_atentionare_1, z2_atentionare_2, z2_atentionare_3,
@@ -557,7 +561,7 @@ Public Class fereastra_principala_frm
             End If
 
             comanda_executata = comanda.ExecuteNonQuery()
-
+            comanda.Dispose()
             If comanda_executata = 1 Then
                 lista_atentionari_pnl.Tag = id_masina
                 lista_atentionari_pnl.Visible = True
@@ -632,6 +636,7 @@ Public Class fereastra_principala_frm
     Private Sub vizualizare_grafice_btn_Click(sender As Object, e As EventArgs) Handles vizualizare_grafice_btn.Click
         grafice_pnl.Visible = True
         lista_atentionari_pnl.Visible = False
+        button_flow_pnl.Controls.Clear()
         adauga_valori_pnl.Visible = False
         lista_masini_pnl.Visible = False
     End Sub
@@ -680,7 +685,7 @@ Public Class fereastra_principala_frm
                     incr += 1
                 End While
             End Using
-
+            comanda.Dispose()
             reader.Close()
 
 
@@ -697,6 +702,8 @@ Public Class fereastra_principala_frm
                 End Using
 
                 reader.Close()
+                comanda.Dispose()
+
                 comanda.CommandText = "select atentionare_activa from atentionare a where 
                                         spc_id = " & spc_id
                 reader = comanda.ExecuteReader
@@ -706,6 +713,8 @@ Public Class fereastra_principala_frm
                         atentionare_activa = reader.GetValue(0)
                     End While
                 End Using
+                reader.Close()
+                comanda.Dispose()
 
                 If atentionare_activa Then
                     subelement.BackColor = Color.Red
@@ -841,7 +850,7 @@ Public Class fereastra_principala_frm
                 date_atentionare.Add("dif_dq_max", reader.GetDouble(0))
             End While
         End Using
-
+        comanda.Dispose()
         conexiune_bd.Close()
     End Function
 
