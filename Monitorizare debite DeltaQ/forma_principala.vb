@@ -9,7 +9,8 @@ Public Class fereastra_principala_frm
         Return regex_test.IsMatch(text)
     End Function
     Private Sub adauga_valori_btn_Click(sender As Object, e As EventArgs) Handles adauga_valori_btn.Click
-        Me.adauga_valori_pnl.Visible = True
+        vizibilitate_panou(adauga_valori_pnl)
+
         'setare initiala elemente din panou
         Me.nr_marca_tb.Focus()
         'nr masina eticheta si camp
@@ -34,13 +35,6 @@ Public Class fereastra_principala_frm
 
         'buton salvare
         Me.salveaza_valori_btn.Visible = False
-        grafice_pnl.Visible = False
-        lista_atentionari_pnl.Visible = False
-        lista_masini_pnl.Visible = False
-    End Sub
-
-    Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs)
-
     End Sub
 
     Private Sub nr_marca_tb_TextChanged(sender As Object, e As EventArgs) Handles nr_marca_tb.TextChanged
@@ -330,7 +324,6 @@ Public Class fereastra_principala_frm
         Dim debit_masurat(3) As Single
         Dim spc_id As Double
         Dim atentionare_activa As Boolean
-        Dim id_atent As Double
         Dim atentionare_1, atentionare_2, atentionare_3 As Boolean
         Dim item_lista_1, item_lista_2, item_lista_3 As New ListViewItem
         Dim atentionare(11) As Boolean
@@ -564,7 +557,7 @@ Public Class fereastra_principala_frm
             comanda.Dispose()
             If comanda_executata = 1 Then
                 lista_atentionari_pnl.Tag = id_masina
-                lista_atentionari_pnl.Visible = True
+                vizibilitate_panou(lista_atentionari_pnl)
             End If
         End If
         conexiune_bd.Close()
@@ -634,11 +627,12 @@ Public Class fereastra_principala_frm
     End Sub
 
     Private Sub vizualizare_grafice_btn_Click(sender As Object, e As EventArgs) Handles vizualizare_grafice_btn.Click
-        grafice_pnl.Visible = True
-        lista_atentionari_pnl.Visible = False
-        button_flow_pnl.Controls.Clear()
-        adauga_valori_pnl.Visible = False
-        lista_masini_pnl.Visible = False
+        vizibilitate_panou(grafice_pnl)
+        'grafice_pnl.Visible = True
+        'lista_atentionari_pnl.Visible = False
+        'button_flow_pnl.Controls.Clear()
+        'adauga_valori_pnl.Visible = False
+        'lista_masini_pnl.Visible = False
     End Sub
 
     Private Sub lista_atentionari_btn_Click(sender As Object, e As EventArgs) Handles lista_atentionari_btn.Click
@@ -660,10 +654,7 @@ Public Class fereastra_principala_frm
                                 order by id_masina asc"
         reader = comanda.ExecuteReader()
 
-        grafice_pnl.Visible = False
-        adauga_valori_pnl.Visible = False
-        lista_atentionari_pnl.Visible = False
-        lista_masini_pnl.Visible = True
+        vizibilitate_panou(lista_masini_pnl)
         If button_flow_pnl.Controls.Count = 0 Then
             Using reader
                 While reader.Read()
@@ -731,7 +722,8 @@ Public Class fereastra_principala_frm
         Dim id_masina As Integer = CType(sender, Control).Tag
 
         lista_atentionari_pnl.Tag = id_masina
-        lista_atentionari_pnl.Visible = True
+        'lista_atentionari_pnl.Visible = True
+        vizibilitate_panou(lista_atentionari_pnl)
     End Sub
 
     Private Function durata(ByRef data_ora As DateTime) As String
@@ -975,9 +967,22 @@ Public Class fereastra_principala_frm
                         lista_atentionari_lst.Items.Add(item_lista_3)
                     End If
                 End If
-
             End If
         End If
+    End Sub
+
+    Private Sub vizibilitate_panou(panou As Panel)
+        Dim element As Panel
+
+        For Each element In Me.Controls
+            If element.Name = panou.Name Then
+                panou.Visible = True
+            ElseIf element.Name = "panou_butoane_pnl" Then
+                element.Visible = True
+            Else
+                element.Visible = False
+            End If
+        Next
     End Sub
 End Class
 
