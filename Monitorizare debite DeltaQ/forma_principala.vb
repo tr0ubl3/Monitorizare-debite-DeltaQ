@@ -747,8 +747,10 @@ Public Class fereastra_principala_frm
                 Return ts.Minutes & " minut"
             Case Is < 1 * ora
                 Return ts.Minutes & " minute"
+            Case Is < 2 * ora
+                Return "o oră și " & ts.Minutes & " minute"
             Case Is < 1 * zi
-                Return ts.Hours & " ore și " & (ts.Hours * minut - ts.Minutes) & " minute"
+                Return ts.Hours & " ore și " & ts.Minutes & " minute"
             Case Is < 2 * zi
                 Return "o zi și " & ts.Hours & " ore"
             Case Is < 30 * zi
