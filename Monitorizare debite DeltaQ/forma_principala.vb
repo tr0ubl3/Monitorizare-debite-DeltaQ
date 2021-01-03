@@ -750,9 +750,17 @@ Public Class fereastra_principala_frm
             Case Is < 2 * ora
                 Return "o oră și " & ts.Minutes & " minute"
             Case Is < 1 * zi
-                Return ts.Hours & " ore și " & ts.Minutes & " minute"
+                If ts.Minutes = 1 Then
+                    Return ts.Hours & " ore și " & ts.Minutes & " minut"
+                Else
+                    Return ts.Hours & " ore și " & ts.Minutes & " minute"
+                End If
             Case Is < 2 * zi
-                Return "o zi și " & ts.Hours & " ore"
+                If ts.Hours = 1 Then
+                    Return "o zi și " & ts.Hours & " oră"
+                Else
+                    Return "o zi și " & ts.Hours & " ore"
+                End If
             Case Is < 30 * zi
                 Return ts.Days & " zile și " & ts.Hours & " ore"
         End Select
@@ -976,7 +984,7 @@ Public Class fereastra_principala_frm
     Private Sub vizibilitate_panou(panou As Panel)
         Dim element As Panel
 
-        For Each element In Me.Controls
+        For Each element In Me.Controls.OfType(Of Panel)
             If element.Name = panou.Name Then
                 panou.Visible = True
             ElseIf element.Name = "panou_butoane_pnl" Then
