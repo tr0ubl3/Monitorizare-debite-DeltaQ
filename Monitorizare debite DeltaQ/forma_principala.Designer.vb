@@ -190,7 +190,7 @@ Partial Class fereastra_principala_frm
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         ChartArea1.AxisX.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.[False]
         ChartArea1.AxisX.MinorGrid.LineColor = System.Drawing.Color.White
-        ChartArea1.AxisX.ScaleView.Size = 40.0R
+        ChartArea1.AxisX.ScaleView.Size = 30.0R
         ChartArea1.AxisX2.LineColor = System.Drawing.Color.White
         ChartArea1.AxisY.Interval = 18.0R
         ChartArea1.AxisY.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number
@@ -831,10 +831,10 @@ Partial Class fereastra_principala_frm
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1024, 651)
         Me.Controls.Add(Me.panou_butoane_pnl)
-        Me.Controls.Add(Me.lista_atentionari_pnl)
         Me.Controls.Add(Me.grafice_pnl)
         Me.Controls.Add(Me.adauga_valori_pnl)
         Me.Controls.Add(Me.lista_masini_pnl)
+        Me.Controls.Add(Me.lista_atentionari_pnl)
         Me.MinimumSize = New System.Drawing.Size(1040, 690)
         Me.Name = "fereastra_principala_frm"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen

@@ -571,58 +571,109 @@ Public Class fereastra_principala_frm
             Dim limita_min As New DataVisualization.Charting.StripLine
             Dim nominal As New DataVisualization.Charting.StripLine
             Dim punct As New DataVisualization.Charting.DataPoint
+            'de implementat intr-o functie
+            Dim conexiune_bd As New SqliteConnection("data source=" & locatie_bd)
+            Dim comanda = conexiune_bd.CreateCommand
+            Dim reader As SqliteDataReader
+            Dim lim_max, lim_min, lim_nom, interval_tol, incr As Integer
+            Dim dif(), diferenta As Double
+
+            conexiune_bd.Open()
+            comanda.CommandText = "select diferenta_max, diferenta_min, diferenta_nominala from referinta where id_referinta = 1"
+            reader = comanda.ExecuteReader
+
+            Using reader
+                While reader.Read
+                    lim_max = reader.GetValue(0)
+                    lim_min = reader.GetValue(1)
+                    lim_nom = reader.GetValue(2)
+                End While
+            End Using
+            reader.Close()
 
             limita_max.BorderDashStyle = DataVisualization.Charting.ChartDashStyle.DashDot
             limita_max.BorderColor = Color.Red
             limita_max.BorderWidth = 2
-            limita_max.IntervalOffset = 5
+            limita_max.IntervalOffset = lim_max
 
             limita_min.BorderDashStyle = DataVisualization.Charting.ChartDashStyle.DashDot
             limita_min.BorderColor = Color.Red
             limita_min.BorderWidth = 2
-            limita_min.IntervalOffset = -5
+            limita_min.IntervalOffset = lim_min
 
             nominal.BorderDashStyle = DataVisualization.Charting.ChartDashStyle.DashDot
             nominal.BorderColor = Color.Green
             nominal.BorderWidth = 2
-            nominal.IntervalOffset = 0
-
-            dif_debit_z1_chart.ChartAreas(0).AxisY.Interval = 2.5
-            dif_debit_z1_chart.ChartAreas(0).AxisY.Minimum = -5 - 10 * 0.1 '666 - 72 * 0.1
-            dif_debit_z1_chart.ChartAreas(0).AxisY.Maximum = 5 + 10 * 0.1 '738 + 72 * 0.1
+            nominal.IntervalOffset = lim_nom
+            interval_tol = (lim_max - lim_min)
+            dif_debit_z1_chart.ChartAreas(0).AxisY.Interval = interval_tol / 4
+            dif_debit_z1_chart.ChartAreas(0).AxisY.Minimum = lim_min - interval_tol * 0.1 '666 - 72 * 0.1
+            dif_debit_z1_chart.ChartAreas(0).AxisY.Maximum = lim_max + interval_tol * 0.1 '738 + 72 * 0.1
             dif_debit_z1_chart.ChartAreas(0).AxisY.IntervalOffset = 1
 
             dif_debit_z1_chart.ChartAreas(0).AxisY.StripLines.Add(limita_max)
             dif_debit_z1_chart.ChartAreas(0).AxisY.StripLines.Add(limita_min)
             dif_debit_z1_chart.ChartAreas(0).AxisY.StripLines.Add(nominal)
 
-            punct.SetValueY(-5)
-            punct.Color = Color.Blue
-            punct.ToolTip = "lol"
 
+            comanda.CommandText = "select printf('%.1f', diferenta_calculata_z1) from spc_posalux where masina = 7 order by data_creare desc limit 30"
+            reader = comanda.ExecuteReader
+
+            Using reader
+                While reader.Read
+                    ReDim Preserve dif(incr)
+                    dif(incr) = reader.GetValue(0)
+                    incr += 1
+                End While
+            End Using
+            reader.Close()
             dif_debit_z1_chart.Series("valori").Points.Clear()
 
-            dif_debit_z1_chart.Series("valori").Points.Add(punct)
-            dif_debit_z1_chart.Series("valori").Points.AddY(-3)
-            dif_debit_z1_chart.Series("valori").Points.AddY(0)
-            dif_debit_z1_chart.Series("valori").Points.Add(punct)
-            dif_debit_z1_chart.Series("valori").Points.AddY(-3)
-            dif_debit_z1_chart.Series("valori").Points.AddY(0)
-            dif_debit_z1_chart.Series("valori").Points.Add(punct)
-            dif_debit_z1_chart.Series("valori").Points.AddY(-3)
-            dif_debit_z1_chart.Series("valori").Points.AddY(0)
-            dif_debit_z1_chart.Series("valori").Points.AddY(4)
+            For Each diferenta In dif
+                'punct.IsValueShownAsLabel = True
+                punct.SetValueY(diferenta)
+                punct.ToolTip = diferenta
+                If diferenta > lim_max Then
+                    punct.Color = Color.Red
+                    punct.SetValueY(5.5)
+                ElseIf diferenta < lim_min Then
+                    punct.Color = Color.Red
+                    punct.SetValueY(-5.5)
+                ElseIf lim_max > diferenta And diferenta > lim_min Then
+                    punct.Color = Color.Black
+                End If
+                dif_debit_z1_chart.Series("valori").Points.Add(punct)
+                punct = New DataVisualization.Charting.DataPoint
+            Next
 
-            dif_debit_z1_chart.Series("valori").Points.Add(punct)
-            dif_debit_z1_chart.Series("valori").Points.AddY(-3)
-            dif_debit_z1_chart.Series("valori").Points.AddY(0)
-            dif_debit_z1_chart.Series("valori").Points.Add(punct)
-            dif_debit_z1_chart.Series("valori").Points.AddY(-3)
-            dif_debit_z1_chart.Series("valori").Points.AddY(0)
-            dif_debit_z1_chart.Series("valori").Points.Add(punct)
-            dif_debit_z1_chart.Series("valori").Points.AddY(-3)
-            dif_debit_z1_chart.Series("valori").Points.AddY(0)
-            dif_debit_z1_chart.Series("valori").Points.AddY(4)
+            'punct.SetValueY(-5)
+            'punct.Color = Color.Blue
+            'punct.ToolTip = "lol"
+
+
+
+            'dif_debit_z1_chart.Series("valori").Points.Add(punct)
+            'dif_debit_z1_chart.Series("valori").Points.AddY(-3)
+            'dif_debit_z1_chart.Series("valori").Points.AddY(0)
+            'dif_debit_z1_chart.Series("valori").Points.Add(punct)
+            'dif_debit_z1_chart.Series("valori").Points.AddY(-3)
+            'dif_debit_z1_chart.Series("valori").Points.AddY(0)
+            'dif_debit_z1_chart.Series("valori").Points.Add(punct)
+            'dif_debit_z1_chart.Series("valori").Points.AddY(-3)
+            'dif_debit_z1_chart.Series("valori").Points.AddY(0)
+            'dif_debit_z1_chart.Series("valori").Points.AddY(4)
+
+            'dif_debit_z1_chart.Series("valori").Points.Add(punct)
+            'dif_debit_z1_chart.Series("valori").Points.AddY(-3)
+            'dif_debit_z1_chart.Series("valori").Points.AddY(0)
+            'dif_debit_z1_chart.Series("valori").Points.Add(punct)
+            'dif_debit_z1_chart.Series("valori").Points.AddY(-3)
+            'dif_debit_z1_chart.Series("valori").Points.AddY(0)
+            'dif_debit_z1_chart.Series("valori").Points.Add(punct)
+            'dif_debit_z1_chart.Series("valori").Points.AddY(-3)
+            'dif_debit_z1_chart.Series("valori").Points.AddY(0)
+            'dif_debit_z1_chart.Series("valori").Points.AddY(4)
+            conexiune_bd.Close()
         End If
     End Sub
 
