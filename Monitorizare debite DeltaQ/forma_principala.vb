@@ -808,7 +808,7 @@ Public Class fereastra_principala_frm
             Exit Function
         End If
 
-        comanda.CommandText = "select diferenta_calculata_z1, diferenta_calculata_z2, diferenta_calculata_z3, diferenta_calculata_z4, diferenta_calculata_min_max_delta_q, referinta, datetime(data_creare, 'localtime')
+        comanda.CommandText = "select diferenta_calculata_z1, diferenta_calculata_z2, diferenta_calculata_z3, diferenta_calculata_z4, diferenta_calculata_min_max_delta_q, referinta, nr_marca, datetime(data_creare, 'localtime')
                                from spc_posalux where spc_id=" & date_atentionare.Item("id_spc")
         reader = comanda.ExecuteReader
 
@@ -832,7 +832,8 @@ Public Class fereastra_principala_frm
 
                 date_atentionare.Add("dif_dq", reader.GetDouble(4))
                 date_atentionare.Add("referinta", reader.GetString(5))
-                date_atentionare.Add("data_spc", reader.GetDateTime(6))
+                date_atentionare.Add("nr_marca", reader.GetString(6))
+                date_atentionare.Add("data_spc", reader.GetDateTime(7))
             End While
         End Using
         reader.Close()
@@ -857,6 +858,26 @@ Public Class fereastra_principala_frm
             End While
         End Using
         comanda.Dispose()
+
+        comanda.CommandText = "select nr_operatie from masini where id_masina=" & id_masina
+        reader = comanda.ExecuteReader()
+
+        Using reader
+            While reader.Read
+                date_atentionare.Add("nr_operatie", reader.GetString(0))
+            End While
+        End Using
+        comanda.Dispose()
+
+        comanda.CommandText = "select nume from utilizator where nr_marca=" & date_atentionare.Item("nr_marca")
+        reader = comanda.ExecuteReader()
+
+        Using reader
+            While reader.Read
+                date_atentionare.Add("nume_operator", reader.GetString(0))
+            End While
+        End Using
+        comanda.Dispose()
         conexiune_bd.Close()
     End Function
 
@@ -870,115 +891,123 @@ Public Class fereastra_principala_frm
 
                 date_extrase = date_atentionare(id_masina)
 
-                id_atentionare.Text = "Atenționare " & date_extrase.Item("id_atent") & " spc masurat acum " & durata(date_extrase.Item("data_spc"))
+                id_atentionare_lbl.Text = date_extrase.Item("id_atent") '"Atenționare " & date_extrase.Item("id_atent") & " spc masurat acum " & durata(date_extrase.Item("data_spc"))
+                data_ora_atentionare_lbl.Text = date_extrase.Item("data_spc") & " " & "(" & durata(date_extrase.Item("data_spc")) & ")"
+                referinta_atentionare_lbl.Text = date_extrase.Item("referinta")
+                masina_atentionare_lbl.Text = date_extrase.Item("nr_operatie")
+                If date_extrase.Item("nume_operator") = Nothing Then
+                    date_operator_atentionare_lbl.Text = date_extrase.Item("nr_marca") & " - Nume necunoscut"
+                Else
+                    date_operator_atentionare_lbl.Text = date_extrase.Item("nr_marca") & " - " & date_extrase.Item("nume_operator")
+                End If
 
                 lista_atentionari_lst.Items.Clear()
-                If date_extrase.Item("atentionare_0") Or date_extrase.Item("atentionare_1") Or date_extrase.Item("atentionare_2") Or date_extrase.Item("atentionare_3") Then
-                    'examinare z1
-                    If date_extrase.Item("atentionare_0") Then
-                        'item_lista_1.BackColor = Color.Red
-                        item_lista_1.Text = "Z1 diferența de "
-                        item_lista_1.SubItems.Add(Math.Round(date_extrase.Item("dif_debit_0"), 1) & " ml")
-                        item_lista_1.Group = lista_atentionari_lst.Groups(0)
-                        lista_atentionari_lst.Items.Add(item_lista_1)
+                    If date_extrase.Item("atentionare_0") Or date_extrase.Item("atentionare_1") Or date_extrase.Item("atentionare_2") Or date_extrase.Item("atentionare_3") Then
+                        'examinare z1
+                        If date_extrase.Item("atentionare_0") Then
+                            'item_lista_1.BackColor = Color.Red
+                            item_lista_1.Text = "Z1 diferența de "
+                            item_lista_1.SubItems.Add(Math.Round(date_extrase.Item("dif_debit_0"), 1) & " ml")
+                            item_lista_1.Group = lista_atentionari_lst.Groups(0)
+                            lista_atentionari_lst.Items.Add(item_lista_1)
+                        End If
+
+                        If date_extrase.Item("atentionare_1") Then
+                            ' item_lista_1.BackColor = Color.Red
+                            item_lista_1 = New ListViewItem
+                            item_lista_1.Text = "Z2 diferența de "
+                            item_lista_1.SubItems.Add(Math.Round(date_extrase.Item("dif_debit_1"), 1) & " ml")
+                            item_lista_1.Group = lista_atentionari_lst.Groups(0)
+                            lista_atentionari_lst.Items.Add(item_lista_1)
+                        End If
+
+                        If date_extrase.Item("atentionare_2") Then
+                            'item_lista_1.BackColor = Color.Red
+                            item_lista_1 = New ListViewItem
+                            item_lista_1.Text = "Z3 diferența de "
+                            item_lista_1.SubItems.Add(Math.Round(date_extrase.Item("dif_debit_2"), 1) & " ml")
+                            item_lista_1.Group = lista_atentionari_lst.Groups(0)
+                            lista_atentionari_lst.Items.Add(item_lista_1)
+                        End If
+
+                        If date_extrase.Item("atentionare_3") Then
+                            'item_lista_1.BackColor = Color.Red
+                            item_lista_1 = New ListViewItem
+                            item_lista_1.Text = "Z4 diferența de "
+                            item_lista_1.SubItems.Add(Math.Round(date_extrase.Item("dif_debit_3"), 1) & " ml")
+                            item_lista_1.Group = lista_atentionari_lst.Groups(0)
+                            lista_atentionari_lst.Items.Add(item_lista_1)
+                        End If
                     End If
 
-                    If date_extrase.Item("atentionare_1") Then
-                        ' item_lista_1.BackColor = Color.Red
-                        item_lista_1 = New ListViewItem
-                        item_lista_1.Text = "Z2 diferența de "
-                        item_lista_1.SubItems.Add(Math.Round(date_extrase.Item("dif_debit_1"), 1) & " ml")
-                        item_lista_1.Group = lista_atentionari_lst.Groups(0)
-                        lista_atentionari_lst.Items.Add(item_lista_1)
+                    If date_extrase.Item("atentionare_4") Or date_extrase.Item("atentionare_5") Or date_extrase.Item("atentionare_6") Or date_extrase.Item("atentionare_7") Then
+                        If date_extrase.Item("atentionare_4") Then
+                            item_lista_2.Text = "Z1"
+                            item_lista_2.SubItems.Add(date_extrase.Item("dq_vals_0") & " ml")
+                            item_lista_2.Group = lista_atentionari_lst.Groups(1)
+                            lista_atentionari_lst.Items.Add(item_lista_2)
+                        End If
+
+                        If date_extrase.Item("atentionare_5") Then
+                            item_lista_2 = New ListViewItem
+                            item_lista_2.Text = "Z2"
+                            item_lista_2.SubItems.Add(date_extrase.Item("dq_vals_1") & " ml")
+                            item_lista_2.Group = lista_atentionari_lst.Groups(1)
+                            lista_atentionari_lst.Items.Add(item_lista_2)
+                        End If
+
+                        If date_extrase.Item("atentionare_6") Then
+                            item_lista_2 = New ListViewItem
+                            item_lista_2.Text = "Z3"
+                            item_lista_2.SubItems.Add(date_extrase.Item("dq_vals_2") & " ml")
+                            item_lista_2.Group = lista_atentionari_lst.Groups(1)
+                            lista_atentionari_lst.Items.Add(item_lista_2)
+                        End If
+
+                        If date_extrase.Item("atentionare_7") Then
+                            item_lista_2 = New ListViewItem
+                            item_lista_2.Text = "Z4"
+                            item_lista_2.SubItems.Add(date_extrase.Item("dq_vals_3") & " ml")
+                            item_lista_2.Group = lista_atentionari_lst.Groups(1)
+                            lista_atentionari_lst.Items.Add(item_lista_2)
+                        End If
                     End If
 
-                    If date_extrase.Item("atentionare_2") Then
-                        'item_lista_1.BackColor = Color.Red
-                        item_lista_1 = New ListViewItem
-                        item_lista_1.Text = "Z3 diferența de "
-                        item_lista_1.SubItems.Add(Math.Round(date_extrase.Item("dif_debit_2"), 1) & " ml")
-                        item_lista_1.Group = lista_atentionari_lst.Groups(0)
-                        lista_atentionari_lst.Items.Add(item_lista_1)
-                    End If
+                    If date_extrase.Item("atentionare_8") Or date_extrase.Item("atentionare_9") Or date_extrase.Item("atentionare_10") Or date_extrase.Item("atentionare_11") Then
+                        lista_atentionari_lst.Groups(2).Header = "Diferența Delta Q este de " & Math.Round(date_extrase.Item("dif_dq"), 1) & " față de maxim " & date_extrase.Item("dif_dq_max")
+                        If date_extrase.Item("atentionare_8") Then
+                            item_lista_3.Text = "Z1"
+                            item_lista_3.Group = lista_atentionari_lst.Groups(2)
+                            item_lista_3.SubItems.Add(date_extrase.Item("dq_vals_0") & " ml")
+                            lista_atentionari_lst.Items.Add(item_lista_3)
+                        End If
 
-                    If date_extrase.Item("atentionare_3") Then
-                        'item_lista_1.BackColor = Color.Red
-                        item_lista_1 = New ListViewItem
-                        item_lista_1.Text = "Z4 diferența de "
-                        item_lista_1.SubItems.Add(Math.Round(date_extrase.Item("dif_debit_3"), 1) & " ml")
-                        item_lista_1.Group = lista_atentionari_lst.Groups(0)
-                        lista_atentionari_lst.Items.Add(item_lista_1)
-                    End If
-                End If
+                        If date_extrase.Item("atentionare_9") Then
+                            item_lista_3 = New ListViewItem
+                            item_lista_3.Text = "Z2"
+                            item_lista_3.Group = lista_atentionari_lst.Groups(2)
+                            item_lista_3.SubItems.Add(date_extrase.Item("dq_vals_1") & " ml")
+                            lista_atentionari_lst.Items.Add(item_lista_3)
+                        End If
 
-                If date_extrase.Item("atentionare_4") Or date_extrase.Item("atentionare_5") Or date_extrase.Item("atentionare_6") Or date_extrase.Item("atentionare_7") Then
-                    If date_extrase.Item("atentionare_4") Then
-                        item_lista_2.Text = "Z1"
-                        item_lista_2.SubItems.Add(date_extrase.Item("dq_vals_0") & " ml")
-                        item_lista_2.Group = lista_atentionari_lst.Groups(1)
-                        lista_atentionari_lst.Items.Add(item_lista_2)
-                    End If
+                        If date_extrase.Item("atentionare_10") Then
+                            item_lista_3 = New ListViewItem
+                            item_lista_3.Text = "Z3"
+                            item_lista_3.Group = lista_atentionari_lst.Groups(2)
+                            item_lista_3.SubItems.Add(date_extrase.Item("dq_vals_2") & " ml")
+                            lista_atentionari_lst.Items.Add(item_lista_3)
+                        End If
 
-                    If date_extrase.Item("atentionare_5") Then
-                        item_lista_2 = New ListViewItem
-                        item_lista_2.Text = "Z2"
-                        item_lista_2.SubItems.Add(date_extrase.Item("dq_vals_1") & " ml")
-                        item_lista_2.Group = lista_atentionari_lst.Groups(1)
-                        lista_atentionari_lst.Items.Add(item_lista_2)
-                    End If
-
-                    If date_extrase.Item("atentionare_6") Then
-                        item_lista_2 = New ListViewItem
-                        item_lista_2.Text = "Z3"
-                        item_lista_2.SubItems.Add(date_extrase.Item("dq_vals_2") & " ml")
-                        item_lista_2.Group = lista_atentionari_lst.Groups(1)
-                        lista_atentionari_lst.Items.Add(item_lista_2)
-                    End If
-
-                    If date_extrase.Item("atentionare_7") Then
-                        item_lista_2 = New ListViewItem
-                        item_lista_2.Text = "Z4"
-                        item_lista_2.SubItems.Add(date_extrase.Item("dq_vals_3") & " ml")
-                        item_lista_2.Group = lista_atentionari_lst.Groups(1)
-                        lista_atentionari_lst.Items.Add(item_lista_2)
-                    End If
-                End If
-
-                If date_extrase.Item("atentionare_8") Or date_extrase.Item("atentionare_9") Or date_extrase.Item("atentionare_10") Or date_extrase.Item("atentionare_11") Then
-                    lista_atentionari_lst.Groups(2).Header = "Diferența Delta Q este de " & Math.Round(date_extrase.Item("dif_dq"), 1) & " față de maxim " & date_extrase.Item("dif_dq_max")
-                    If date_extrase.Item("atentionare_8") Then
-                        item_lista_3.Text = "Z1"
-                        item_lista_3.Group = lista_atentionari_lst.Groups(2)
-                        item_lista_3.SubItems.Add(date_extrase.Item("dq_vals_0") & " ml")
-                        lista_atentionari_lst.Items.Add(item_lista_3)
-                    End If
-
-                    If date_extrase.Item("atentionare_9") Then
-                        item_lista_3 = New ListViewItem
-                        item_lista_3.Text = "Z2"
-                        item_lista_3.Group = lista_atentionari_lst.Groups(2)
-                        item_lista_3.SubItems.Add(date_extrase.Item("dq_vals_1") & " ml")
-                        lista_atentionari_lst.Items.Add(item_lista_3)
-                    End If
-
-                    If date_extrase.Item("atentionare_10") Then
-                        item_lista_3 = New ListViewItem
-                        item_lista_3.Text = "Z3"
-                        item_lista_3.Group = lista_atentionari_lst.Groups(2)
-                        item_lista_3.SubItems.Add(date_extrase.Item("dq_vals_2") & " ml")
-                        lista_atentionari_lst.Items.Add(item_lista_3)
-                    End If
-
-                    If date_extrase.Item("atentionare_11") Then
-                        item_lista_3 = New ListViewItem
-                        item_lista_3.Text = "Z4"
-                        item_lista_3.Group = lista_atentionari_lst.Groups(2)
-                        item_lista_3.SubItems.Add(date_extrase.Item("dq_vals_3") & " ml")
-                        lista_atentionari_lst.Items.Add(item_lista_3)
+                        If date_extrase.Item("atentionare_11") Then
+                            item_lista_3 = New ListViewItem
+                            item_lista_3.Text = "Z4"
+                            item_lista_3.Group = lista_atentionari_lst.Groups(2)
+                            item_lista_3.SubItems.Add(date_extrase.Item("dq_vals_3") & " ml")
+                            lista_atentionari_lst.Items.Add(item_lista_3)
+                        End If
                     End If
                 End If
             End If
-        End If
     End Sub
 
     Private Sub vizibilitate_panou(panou As Panel)
