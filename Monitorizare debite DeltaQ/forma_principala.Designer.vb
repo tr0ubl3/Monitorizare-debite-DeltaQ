@@ -65,6 +65,7 @@ Partial Class fereastra_principala_frm
         Me.nr_marca_tb = New System.Windows.Forms.TextBox()
         Me.salveaza_valori_btn = New FontAwesome.Sharp.IconButton()
         Me.lista_atentionari_pnl = New System.Windows.Forms.Panel()
+        Me.Label4 = New System.Windows.Forms.Label()
         Me.id_atentionare = New System.Windows.Forms.Label()
         Me.lista_atentionari_lst = New System.Windows.Forms.ListView()
         Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
@@ -72,6 +73,12 @@ Partial Class fereastra_principala_frm
         Me.lista_masini_pnl = New System.Windows.Forms.Panel()
         Me.masini_posalux_lbl = New System.Windows.Forms.Label()
         Me.button_flow_pnl = New System.Windows.Forms.FlowLayoutPanel()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
+        Me.operator_lbl = New System.Windows.Forms.Label()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.Label7 = New System.Windows.Forms.Label()
         Me.panou_butoane_pnl.SuspendLayout()
         Me.grafice_pnl.SuspendLayout()
         CType(Me.dif_debit_z1_chart, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -80,6 +87,7 @@ Partial Class fereastra_principala_frm
         CType(Me.tabel_valori_dgv, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.lista_atentionari_pnl.SuspendLayout()
         Me.lista_masini_pnl.SuspendLayout()
+        Me.TableLayoutPanel2.SuspendLayout()
         Me.SuspendLayout()
         '
         'panou_butoane_pnl
@@ -578,7 +586,7 @@ Partial Class fereastra_principala_frm
         'lista_atentionari_pnl
         '
         Me.lista_atentionari_pnl.BackColor = System.Drawing.Color.FromArgb(CType(CType(217, Byte), Integer), CType(CType(214, Byte), Integer), CType(CType(211, Byte), Integer))
-        Me.lista_atentionari_pnl.Controls.Add(Me.id_atentionare)
+        Me.lista_atentionari_pnl.Controls.Add(Me.TableLayoutPanel2)
         Me.lista_atentionari_pnl.Controls.Add(Me.lista_atentionari_lst)
         Me.lista_atentionari_pnl.Dock = System.Windows.Forms.DockStyle.Fill
         Me.lista_atentionari_pnl.Location = New System.Drawing.Point(0, 0)
@@ -586,16 +594,32 @@ Partial Class fereastra_principala_frm
         Me.lista_atentionari_pnl.Size = New System.Drawing.Size(1024, 651)
         Me.lista_atentionari_pnl.TabIndex = 11
         '
+        'Label4
+        '
+        Me.Label4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label4.AutoSize = True
+        Me.Label4.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.Label4.Location = New System.Drawing.Point(3, 0)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(127, 19)
+        Me.Label4.TabIndex = 2
+        Me.Label4.Text = "Referința"
+        Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
         'id_atentionare
         '
+        Me.id_atentionare.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.id_atentionare.AutoSize = True
         Me.id_atentionare.BackColor = System.Drawing.Color.FromArgb(CType(CType(217, Byte), Integer), CType(CType(214, Byte), Integer), CType(CType(211, Byte), Integer))
         Me.id_atentionare.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.id_atentionare.Location = New System.Drawing.Point(213, 21)
+        Me.id_atentionare.Location = New System.Drawing.Point(3, 87)
         Me.id_atentionare.Name = "id_atentionare"
-        Me.id_atentionare.Size = New System.Drawing.Size(108, 19)
+        Me.id_atentionare.Size = New System.Drawing.Size(127, 19)
         Me.id_atentionare.TabIndex = 1
         Me.id_atentionare.Text = "Atenționare"
+        Me.id_atentionare.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'lista_atentionari_lst
         '
@@ -619,7 +643,7 @@ Partial Class fereastra_principala_frm
         Me.lista_atentionari_lst.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable
         Me.lista_atentionari_lst.HideSelection = False
         Me.lista_atentionari_lst.LabelWrap = False
-        Me.lista_atentionari_lst.Location = New System.Drawing.Point(216, 87)
+        Me.lista_atentionari_lst.Location = New System.Drawing.Point(210, 163)
         Me.lista_atentionari_lst.MultiSelect = False
         Me.lista_atentionari_lst.Name = "lista_atentionari_lst"
         Me.lista_atentionari_lst.Size = New System.Drawing.Size(748, 367)
@@ -667,6 +691,95 @@ Partial Class fereastra_principala_frm
         Me.button_flow_pnl.Size = New System.Drawing.Size(763, 427)
         Me.button_flow_pnl.TabIndex = 0
         '
+        'Label5
+        '
+        Me.Label5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label5.AutoSize = True
+        Me.Label5.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.Label5.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.Label5.Location = New System.Drawing.Point(3, 29)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(127, 19)
+        Me.Label5.TabIndex = 3
+        Me.Label5.Text = "Mașina"
+        Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'Label6
+        '
+        Me.Label6.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label6.AutoSize = True
+        Me.Label6.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.Label6.Location = New System.Drawing.Point(3, 58)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(127, 19)
+        Me.Label6.TabIndex = 4
+        Me.Label6.Text = "Data și ora"
+        Me.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'TableLayoutPanel2
+        '
+        Me.TableLayoutPanel2.ColumnCount = 2
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 66.66666!))
+        Me.TableLayoutPanel2.Controls.Add(Me.Label8, 0, 4)
+        Me.TableLayoutPanel2.Controls.Add(Me.Label4, 0, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.Label5, 0, 1)
+        Me.TableLayoutPanel2.Controls.Add(Me.id_atentionare, 0, 3)
+        Me.TableLayoutPanel2.Controls.Add(Me.Label6, 0, 2)
+        Me.TableLayoutPanel2.Controls.Add(Me.operator_lbl, 1, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.Label7, 1, 1)
+        Me.TableLayoutPanel2.Location = New System.Drawing.Point(210, 12)
+        Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
+        Me.TableLayoutPanel2.RowCount = 5
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel2.Size = New System.Drawing.Size(402, 136)
+        Me.TableLayoutPanel2.TabIndex = 5
+        '
+        'operator_lbl
+        '
+        Me.operator_lbl.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.operator_lbl.AutoSize = True
+        Me.operator_lbl.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.operator_lbl.Location = New System.Drawing.Point(136, 0)
+        Me.operator_lbl.Name = "operator_lbl"
+        Me.operator_lbl.Size = New System.Drawing.Size(263, 19)
+        Me.operator_lbl.TabIndex = 5
+        Me.operator_lbl.Text = "N/A"
+        Me.operator_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'Label8
+        '
+        Me.Label8.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label8.AutoSize = True
+        Me.Label8.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.Label8.Location = New System.Drawing.Point(3, 116)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(127, 19)
+        Me.Label8.TabIndex = 6
+        Me.Label8.Text = "Referința"
+        Me.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'Label7
+        '
+        Me.Label7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label7.AutoSize = True
+        Me.Label7.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.Label7.Location = New System.Drawing.Point(136, 29)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(263, 19)
+        Me.Label7.TabIndex = 7
+        Me.Label7.Text = "N/A"
+        Me.Label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
         'fereastra_principala_frm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -691,9 +804,10 @@ Partial Class fereastra_principala_frm
         Me.TableLayoutPanel1.PerformLayout()
         CType(Me.tabel_valori_dgv, System.ComponentModel.ISupportInitialize).EndInit()
         Me.lista_atentionari_pnl.ResumeLayout(False)
-        Me.lista_atentionari_pnl.PerformLayout()
         Me.lista_masini_pnl.ResumeLayout(False)
         Me.lista_masini_pnl.PerformLayout()
+        Me.TableLayoutPanel2.ResumeLayout(False)
+        Me.TableLayoutPanel2.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -741,4 +855,11 @@ Partial Class fereastra_principala_frm
     Friend WithEvents lista_masini_pnl As Panel
     Friend WithEvents button_flow_pnl As FlowLayoutPanel
     Friend WithEvents masini_posalux_lbl As Label
+    Friend WithEvents Label4 As Label
+    Friend WithEvents TableLayoutPanel2 As TableLayoutPanel
+    Friend WithEvents Label6 As Label
+    Friend WithEvents Label5 As Label
+    Friend WithEvents operator_lbl As Label
+    Friend WithEvents Label8 As Label
+    Friend WithEvents Label7 As Label
 End Class
