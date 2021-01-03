@@ -1000,5 +1000,9 @@ Public Class fereastra_principala_frm
             button_flow_pnl.Controls.Clear()
         End If
     End Sub
+
+    Private Sub fereastra_principala_frm_LocationChanged(sender As Object, e As EventArgs) Handles Me.LocationChanged
+        vizibilitate_panou(New Panel)
+    End Sub
 End Class
 
