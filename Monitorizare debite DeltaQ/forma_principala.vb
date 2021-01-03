@@ -1001,7 +1001,7 @@ Public Class fereastra_principala_frm
         End If
     End Sub
 
-    Private Sub fereastra_principala_frm_LocationChanged(sender As Object, e As EventArgs) Handles Me.LocationChanged
+    Private Sub fereastra_principala_frm_Load(sender As Object, e As EventArgs) Handles Me.Load
         vizibilitate_panou(New Panel)
     End Sub
 End Class
