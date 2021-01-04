@@ -22,13 +22,13 @@ Partial Class fereastra_principala_frm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim ChartArea7 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend7 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series7 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim ListViewGroup19 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Diferențe debit între Posalux și Delta Q", System.Windows.Forms.HorizontalAlignment.Left)
-        Dim ListViewGroup20 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Delta Q în afara toleranței", System.Windows.Forms.HorizontalAlignment.Left)
-        Dim ListViewGroup21 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Diferența Delta Q mai mare decât limita impusă", System.Windows.Forms.HorizontalAlignment.Left)
+        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim ListViewGroup1 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Diferențe debit între Posalux și Delta Q", System.Windows.Forms.HorizontalAlignment.Left)
+        Dim ListViewGroup2 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Delta Q în afara toleranței", System.Windows.Forms.HorizontalAlignment.Left)
+        Dim ListViewGroup3 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Diferența Delta Q mai mare decât limita impusă", System.Windows.Forms.HorizontalAlignment.Left)
         Me.panou_butoane_pnl = New System.Windows.Forms.Panel()
         Me.lista_atentionari_btn = New FontAwesome.Sharp.IconButton()
         Me.vizualizare_grafice_btn = New FontAwesome.Sharp.IconButton()
@@ -65,11 +65,22 @@ Partial Class fereastra_principala_frm
         Me.nr_marca_tb = New System.Windows.Forms.TextBox()
         Me.salveaza_valori_btn = New FontAwesome.Sharp.IconButton()
         Me.lista_atentionari_pnl = New System.Windows.Forms.Panel()
+        Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
+        Me.operator_lbl = New System.Windows.Forms.Label()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
         Me.id_atentionare = New System.Windows.Forms.Label()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.referinta_atentionare_lbl = New System.Windows.Forms.Label()
+        Me.masina_atentionare_lbl = New System.Windows.Forms.Label()
+        Me.data_ora_atentionare_lbl = New System.Windows.Forms.Label()
+        Me.id_atentionare_lbl = New System.Windows.Forms.Label()
+        Me.date_operator_atentionare_lbl = New System.Windows.Forms.Label()
         Me.lista_atentionari_lst = New System.Windows.Forms.ListView()
         Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.lista_masini_pnl = New System.Windows.Forms.Panel()
+        Me.masini_posalux_lbl = New System.Windows.Forms.Label()
         Me.button_flow_pnl = New System.Windows.Forms.FlowLayoutPanel()
         Me.panou_butoane_pnl.SuspendLayout()
         Me.grafice_pnl.SuspendLayout()
@@ -78,6 +89,7 @@ Partial Class fereastra_principala_frm
         Me.TableLayoutPanel1.SuspendLayout()
         CType(Me.tabel_valori_dgv, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.lista_atentionari_pnl.SuspendLayout()
+        Me.TableLayoutPanel2.SuspendLayout()
         Me.lista_masini_pnl.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -176,38 +188,38 @@ Partial Class fereastra_principala_frm
         '
         Me.dif_debit_z1_chart.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        ChartArea7.AxisX.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.[False]
-        ChartArea7.AxisX.MinorGrid.LineColor = System.Drawing.Color.White
-        ChartArea7.AxisX.ScaleView.Size = 40.0R
-        ChartArea7.AxisX2.LineColor = System.Drawing.Color.White
-        ChartArea7.AxisY.Interval = 18.0R
-        ChartArea7.AxisY.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number
-        ChartArea7.AxisY.IsLabelAutoFit = False
-        ChartArea7.AxisY.LineColor = System.Drawing.Color.White
-        ChartArea7.AxisY.MajorGrid.LineColor = System.Drawing.Color.Gainsboro
-        ChartArea7.AxisY.Maximum = 5.0R
-        ChartArea7.AxisY.MaximumAutoSize = 85.0!
-        ChartArea7.AxisY.Minimum = -5.0R
-        ChartArea7.AxisY.TitleFont = New System.Drawing.Font("Microsoft Sans Serif", 20.0!)
-        ChartArea7.AxisY2.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.[False]
-        ChartArea7.AxisY2.LineColor = System.Drawing.Color.White
-        ChartArea7.BackColor = System.Drawing.Color.WhiteSmoke
-        ChartArea7.Name = "ChartArea1"
-        Me.dif_debit_z1_chart.ChartAreas.Add(ChartArea7)
-        Legend7.Enabled = False
-        Legend7.Name = "Legend1"
-        Me.dif_debit_z1_chart.Legends.Add(Legend7)
+        ChartArea1.AxisX.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.[False]
+        ChartArea1.AxisX.MinorGrid.LineColor = System.Drawing.Color.White
+        ChartArea1.AxisX.ScaleView.Size = 30.0R
+        ChartArea1.AxisX2.LineColor = System.Drawing.Color.White
+        ChartArea1.AxisY.Interval = 18.0R
+        ChartArea1.AxisY.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number
+        ChartArea1.AxisY.IsLabelAutoFit = False
+        ChartArea1.AxisY.LineColor = System.Drawing.Color.White
+        ChartArea1.AxisY.MajorGrid.LineColor = System.Drawing.Color.Gainsboro
+        ChartArea1.AxisY.Maximum = 5.0R
+        ChartArea1.AxisY.MaximumAutoSize = 85.0!
+        ChartArea1.AxisY.Minimum = -5.0R
+        ChartArea1.AxisY.TitleFont = New System.Drawing.Font("Microsoft Sans Serif", 20.0!)
+        ChartArea1.AxisY2.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.[False]
+        ChartArea1.AxisY2.LineColor = System.Drawing.Color.White
+        ChartArea1.BackColor = System.Drawing.Color.WhiteSmoke
+        ChartArea1.Name = "ChartArea1"
+        Me.dif_debit_z1_chart.ChartAreas.Add(ChartArea1)
+        Legend1.Enabled = False
+        Legend1.Name = "Legend1"
+        Me.dif_debit_z1_chart.Legends.Add(Legend1)
         Me.dif_debit_z1_chart.Location = New System.Drawing.Point(216, 34)
         Me.dif_debit_z1_chart.Name = "dif_debit_z1_chart"
         Me.dif_debit_z1_chart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SemiTransparent
-        Series7.ChartArea = "ChartArea1"
-        Series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
-        Series7.Color = System.Drawing.Color.Black
-        Series7.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
-        Series7.IsVisibleInLegend = False
-        Series7.Legend = "Legend1"
-        Series7.Name = "valori"
-        Me.dif_debit_z1_chart.Series.Add(Series7)
+        Series1.ChartArea = "ChartArea1"
+        Series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
+        Series1.Color = System.Drawing.Color.Black
+        Series1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Series1.IsVisibleInLegend = False
+        Series1.Legend = "Legend1"
+        Series1.Name = "valori"
+        Me.dif_debit_z1_chart.Series.Add(Series1)
         Me.dif_debit_z1_chart.Size = New System.Drawing.Size(764, 261)
         Me.dif_debit_z1_chart.TabIndex = 10
         Me.dif_debit_z1_chart.Text = "Chart1"
@@ -427,14 +439,14 @@ Partial Class fereastra_principala_frm
         Me.tabel_valori_dgv.Location = New System.Drawing.Point(210, 225)
         Me.tabel_valori_dgv.Name = "tabel_valori_dgv"
         Me.tabel_valori_dgv.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.[Single]
-        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle7.Font = New System.Drawing.Font("Consolas", 10.0!, System.Drawing.FontStyle.Bold)
-        DataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.tabel_valori_dgv.RowHeadersDefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Consolas", 10.0!, System.Drawing.FontStyle.Bold)
+        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.tabel_valori_dgv.RowHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.tabel_valori_dgv.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
         Me.tabel_valori_dgv.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.tabel_valori_dgv.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
@@ -576,8 +588,8 @@ Partial Class fereastra_principala_frm
         '
         'lista_atentionari_pnl
         '
-        Me.lista_atentionari_pnl.BackColor = System.Drawing.Color.LightSkyBlue
-        Me.lista_atentionari_pnl.Controls.Add(Me.id_atentionare)
+        Me.lista_atentionari_pnl.BackColor = System.Drawing.Color.FromArgb(CType(CType(217, Byte), Integer), CType(CType(214, Byte), Integer), CType(CType(211, Byte), Integer))
+        Me.lista_atentionari_pnl.Controls.Add(Me.TableLayoutPanel2)
         Me.lista_atentionari_pnl.Controls.Add(Me.lista_atentionari_lst)
         Me.lista_atentionari_pnl.Dock = System.Windows.Forms.DockStyle.Fill
         Me.lista_atentionari_pnl.Location = New System.Drawing.Point(0, 0)
@@ -585,37 +597,187 @@ Partial Class fereastra_principala_frm
         Me.lista_atentionari_pnl.Size = New System.Drawing.Size(1024, 651)
         Me.lista_atentionari_pnl.TabIndex = 11
         '
+        'TableLayoutPanel2
+        '
+        Me.TableLayoutPanel2.ColumnCount = 2
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 66.66666!))
+        Me.TableLayoutPanel2.Controls.Add(Me.operator_lbl, 0, 4)
+        Me.TableLayoutPanel2.Controls.Add(Me.Label4, 0, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.Label5, 0, 1)
+        Me.TableLayoutPanel2.Controls.Add(Me.id_atentionare, 0, 3)
+        Me.TableLayoutPanel2.Controls.Add(Me.Label6, 0, 2)
+        Me.TableLayoutPanel2.Controls.Add(Me.referinta_atentionare_lbl, 1, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.masina_atentionare_lbl, 1, 1)
+        Me.TableLayoutPanel2.Controls.Add(Me.data_ora_atentionare_lbl, 1, 2)
+        Me.TableLayoutPanel2.Controls.Add(Me.id_atentionare_lbl, 1, 3)
+        Me.TableLayoutPanel2.Controls.Add(Me.date_operator_atentionare_lbl, 1, 4)
+        Me.TableLayoutPanel2.Location = New System.Drawing.Point(210, 12)
+        Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
+        Me.TableLayoutPanel2.RowCount = 5
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel2.Size = New System.Drawing.Size(748, 136)
+        Me.TableLayoutPanel2.TabIndex = 5
+        '
+        'operator_lbl
+        '
+        Me.operator_lbl.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.operator_lbl.AutoSize = True
+        Me.operator_lbl.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.operator_lbl.Location = New System.Drawing.Point(3, 116)
+        Me.operator_lbl.Name = "operator_lbl"
+        Me.operator_lbl.Size = New System.Drawing.Size(243, 19)
+        Me.operator_lbl.TabIndex = 6
+        Me.operator_lbl.Text = "Operator"
+        Me.operator_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'Label4
+        '
+        Me.Label4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label4.AutoSize = True
+        Me.Label4.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.Label4.Location = New System.Drawing.Point(3, 0)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(243, 19)
+        Me.Label4.TabIndex = 2
+        Me.Label4.Text = "Referința"
+        Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'Label5
+        '
+        Me.Label5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label5.AutoSize = True
+        Me.Label5.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.Label5.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.Label5.Location = New System.Drawing.Point(3, 29)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(243, 19)
+        Me.Label5.TabIndex = 3
+        Me.Label5.Text = "Mașina"
+        Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
         'id_atentionare
         '
+        Me.id_atentionare.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.id_atentionare.AutoSize = True
-        Me.id_atentionare.BackColor = System.Drawing.Color.LightSkyBlue
+        Me.id_atentionare.BackColor = System.Drawing.Color.FromArgb(CType(CType(217, Byte), Integer), CType(CType(214, Byte), Integer), CType(CType(211, Byte), Integer))
         Me.id_atentionare.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.id_atentionare.Location = New System.Drawing.Point(213, 21)
+        Me.id_atentionare.Location = New System.Drawing.Point(3, 87)
         Me.id_atentionare.Name = "id_atentionare"
-        Me.id_atentionare.Size = New System.Drawing.Size(108, 19)
+        Me.id_atentionare.Size = New System.Drawing.Size(243, 19)
         Me.id_atentionare.TabIndex = 1
         Me.id_atentionare.Text = "Atenționare"
+        Me.id_atentionare.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'Label6
+        '
+        Me.Label6.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label6.AutoSize = True
+        Me.Label6.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.Label6.Location = New System.Drawing.Point(3, 58)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(243, 19)
+        Me.Label6.TabIndex = 4
+        Me.Label6.Text = "Data și ora"
+        Me.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'referinta_atentionare_lbl
+        '
+        Me.referinta_atentionare_lbl.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.referinta_atentionare_lbl.AutoSize = True
+        Me.referinta_atentionare_lbl.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.referinta_atentionare_lbl.Location = New System.Drawing.Point(252, 0)
+        Me.referinta_atentionare_lbl.Name = "referinta_atentionare_lbl"
+        Me.referinta_atentionare_lbl.Size = New System.Drawing.Size(493, 19)
+        Me.referinta_atentionare_lbl.TabIndex = 5
+        Me.referinta_atentionare_lbl.Text = "N/A"
+        Me.referinta_atentionare_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'masina_atentionare_lbl
+        '
+        Me.masina_atentionare_lbl.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.masina_atentionare_lbl.AutoSize = True
+        Me.masina_atentionare_lbl.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.masina_atentionare_lbl.Location = New System.Drawing.Point(252, 29)
+        Me.masina_atentionare_lbl.Name = "masina_atentionare_lbl"
+        Me.masina_atentionare_lbl.Size = New System.Drawing.Size(493, 19)
+        Me.masina_atentionare_lbl.TabIndex = 7
+        Me.masina_atentionare_lbl.Text = "N/A"
+        Me.masina_atentionare_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'data_ora_atentionare_lbl
+        '
+        Me.data_ora_atentionare_lbl.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.data_ora_atentionare_lbl.AutoSize = True
+        Me.data_ora_atentionare_lbl.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.data_ora_atentionare_lbl.Location = New System.Drawing.Point(252, 58)
+        Me.data_ora_atentionare_lbl.Name = "data_ora_atentionare_lbl"
+        Me.data_ora_atentionare_lbl.Size = New System.Drawing.Size(493, 19)
+        Me.data_ora_atentionare_lbl.TabIndex = 8
+        Me.data_ora_atentionare_lbl.Text = "N/A"
+        Me.data_ora_atentionare_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'id_atentionare_lbl
+        '
+        Me.id_atentionare_lbl.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.id_atentionare_lbl.AutoSize = True
+        Me.id_atentionare_lbl.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.id_atentionare_lbl.Location = New System.Drawing.Point(252, 87)
+        Me.id_atentionare_lbl.Name = "id_atentionare_lbl"
+        Me.id_atentionare_lbl.Size = New System.Drawing.Size(493, 19)
+        Me.id_atentionare_lbl.TabIndex = 9
+        Me.id_atentionare_lbl.Text = "N/A"
+        Me.id_atentionare_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'date_operator_atentionare_lbl
+        '
+        Me.date_operator_atentionare_lbl.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.date_operator_atentionare_lbl.AutoSize = True
+        Me.date_operator_atentionare_lbl.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.date_operator_atentionare_lbl.Location = New System.Drawing.Point(252, 116)
+        Me.date_operator_atentionare_lbl.Name = "date_operator_atentionare_lbl"
+        Me.date_operator_atentionare_lbl.Size = New System.Drawing.Size(493, 19)
+        Me.date_operator_atentionare_lbl.TabIndex = 10
+        Me.date_operator_atentionare_lbl.Text = "N/A"
+        Me.date_operator_atentionare_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'lista_atentionari_lst
         '
         Me.lista_atentionari_lst.Alignment = System.Windows.Forms.ListViewAlignment.[Default]
+        Me.lista_atentionari_lst.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lista_atentionari_lst.AutoArrange = False
+        Me.lista_atentionari_lst.BackColor = System.Drawing.SystemColors.Window
         Me.lista_atentionari_lst.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.lista_atentionari_lst.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2})
         Me.lista_atentionari_lst.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.lista_atentionari_lst.FullRowSelect = True
         Me.lista_atentionari_lst.GridLines = True
-        ListViewGroup19.Header = "Diferențe debit între Posalux și Delta Q"
-        ListViewGroup19.Name = "dif_debit"
-        ListViewGroup20.Header = "Delta Q în afara toleranței"
-        ListViewGroup20.Name = "dq_val"
-        ListViewGroup21.Header = "Diferența Delta Q mai mare decât limita impusă"
-        ListViewGroup21.Name = "dif_dq"
-        Me.lista_atentionari_lst.Groups.AddRange(New System.Windows.Forms.ListViewGroup() {ListViewGroup19, ListViewGroup20, ListViewGroup21})
+        ListViewGroup1.Header = "Diferențe debit între Posalux și Delta Q"
+        ListViewGroup1.Name = "dif_debit"
+        ListViewGroup2.Header = "Delta Q în afara toleranței"
+        ListViewGroup2.Name = "dq_val"
+        ListViewGroup3.Header = "Diferența Delta Q mai mare decât limita impusă"
+        ListViewGroup3.Name = "dif_dq"
+        Me.lista_atentionari_lst.Groups.AddRange(New System.Windows.Forms.ListViewGroup() {ListViewGroup1, ListViewGroup2, ListViewGroup3})
         Me.lista_atentionari_lst.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable
         Me.lista_atentionari_lst.HideSelection = False
         Me.lista_atentionari_lst.LabelWrap = False
-        Me.lista_atentionari_lst.Location = New System.Drawing.Point(216, 87)
+        Me.lista_atentionari_lst.Location = New System.Drawing.Point(210, 163)
         Me.lista_atentionari_lst.MultiSelect = False
         Me.lista_atentionari_lst.Name = "lista_atentionari_lst"
         Me.lista_atentionari_lst.Size = New System.Drawing.Size(748, 367)
@@ -636,12 +798,23 @@ Partial Class fereastra_principala_frm
         'lista_masini_pnl
         '
         Me.lista_masini_pnl.BackColor = System.Drawing.Color.SlateGray
+        Me.lista_masini_pnl.Controls.Add(Me.masini_posalux_lbl)
         Me.lista_masini_pnl.Controls.Add(Me.button_flow_pnl)
         Me.lista_masini_pnl.Dock = System.Windows.Forms.DockStyle.Fill
         Me.lista_masini_pnl.Location = New System.Drawing.Point(0, 0)
         Me.lista_masini_pnl.Name = "lista_masini_pnl"
         Me.lista_masini_pnl.Size = New System.Drawing.Size(1024, 651)
         Me.lista_masini_pnl.TabIndex = 2
+        '
+        'masini_posalux_lbl
+        '
+        Me.masini_posalux_lbl.AutoSize = True
+        Me.masini_posalux_lbl.Font = New System.Drawing.Font("Consolas", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.masini_posalux_lbl.Location = New System.Drawing.Point(217, 26)
+        Me.masini_posalux_lbl.Name = "masini_posalux_lbl"
+        Me.masini_posalux_lbl.Size = New System.Drawing.Size(120, 18)
+        Me.masini_posalux_lbl.TabIndex = 1
+        Me.masini_posalux_lbl.Text = "Mașini Posalux"
         '
         'button_flow_pnl
         '
@@ -658,10 +831,10 @@ Partial Class fereastra_principala_frm
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1024, 651)
         Me.Controls.Add(Me.panou_butoane_pnl)
-        Me.Controls.Add(Me.lista_atentionari_pnl)
         Me.Controls.Add(Me.grafice_pnl)
         Me.Controls.Add(Me.adauga_valori_pnl)
         Me.Controls.Add(Me.lista_masini_pnl)
+        Me.Controls.Add(Me.lista_atentionari_pnl)
         Me.MinimumSize = New System.Drawing.Size(1040, 690)
         Me.Name = "fereastra_principala_frm"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
@@ -676,8 +849,10 @@ Partial Class fereastra_principala_frm
         Me.TableLayoutPanel1.PerformLayout()
         CType(Me.tabel_valori_dgv, System.ComponentModel.ISupportInitialize).EndInit()
         Me.lista_atentionari_pnl.ResumeLayout(False)
-        Me.lista_atentionari_pnl.PerformLayout()
+        Me.TableLayoutPanel2.ResumeLayout(False)
+        Me.TableLayoutPanel2.PerformLayout()
         Me.lista_masini_pnl.ResumeLayout(False)
+        Me.lista_masini_pnl.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -724,4 +899,15 @@ Partial Class fereastra_principala_frm
     Friend WithEvents FlowLayoutPanel1 As FlowLayoutPanel
     Friend WithEvents lista_masini_pnl As Panel
     Friend WithEvents button_flow_pnl As FlowLayoutPanel
+    Friend WithEvents masini_posalux_lbl As Label
+    Friend WithEvents Label4 As Label
+    Friend WithEvents TableLayoutPanel2 As TableLayoutPanel
+    Friend WithEvents Label6 As Label
+    Friend WithEvents Label5 As Label
+    Friend WithEvents referinta_atentionare_lbl As Label
+    Friend WithEvents operator_lbl As Label
+    Friend WithEvents masina_atentionare_lbl As Label
+    Friend WithEvents data_ora_atentionare_lbl As Label
+    Friend WithEvents id_atentionare_lbl As Label
+    Friend WithEvents date_operator_atentionare_lbl As Label
 End Class

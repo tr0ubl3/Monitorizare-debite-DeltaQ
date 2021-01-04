@@ -9,7 +9,8 @@ Public Class fereastra_principala_frm
         Return regex_test.IsMatch(text)
     End Function
     Private Sub adauga_valori_btn_Click(sender As Object, e As EventArgs) Handles adauga_valori_btn.Click
-        Me.adauga_valori_pnl.Visible = True
+        vizibilitate_panou(adauga_valori_pnl)
+
         'setare initiala elemente din panou
         Me.nr_marca_tb.Focus()
         'nr masina eticheta si camp
@@ -34,13 +35,6 @@ Public Class fereastra_principala_frm
 
         'buton salvare
         Me.salveaza_valori_btn.Visible = False
-        grafice_pnl.Visible = False
-        lista_atentionari_pnl.Visible = False
-        lista_masini_pnl.Visible = False
-    End Sub
-
-    Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs)
-
     End Sub
 
     Private Sub nr_marca_tb_TextChanged(sender As Object, e As EventArgs) Handles nr_marca_tb.TextChanged
@@ -203,6 +197,7 @@ Public Class fereastra_principala_frm
                     tabel_valori_dgv.Rows.Add(rand)
                 End While
             End Using
+            comanda.Dispose()
             conexiune_bd.Close()
         End If
         tabel_valori_dgv.ClearSelection()
@@ -329,7 +324,6 @@ Public Class fereastra_principala_frm
         Dim debit_masurat(3) As Single
         Dim spc_id As Double
         Dim atentionare_activa As Boolean
-        Dim id_atent As Double
         Dim atentionare_1, atentionare_2, atentionare_3 As Boolean
         Dim item_lista_1, item_lista_2, item_lista_3 As New ListViewItem
         Dim atentionare(11) As Boolean
@@ -359,13 +353,14 @@ Public Class fereastra_principala_frm
                 id_masina = reader.GetInt16(0)
             End While
         End Using
+        comanda.Dispose()
 
         'salvare id masina in rezultatele selectatate
         For Each rand In tabel_valori_dgv.SelectedRows
             comanda.CommandText = "update valori set masina = " & id_masina & " where rowid = " & rand.Cells(7).Value
             comanda.ExecuteNonQuery()
         Next
-
+        comanda.Dispose()
         'salvare rezultat spc in bd
         'comanda.CommandText = "insert into spc_posalux (nr_marca, valoare_z1, valoare_z2, valoare_z3, valoare_z4, referinta, masina) values (" _
         '                       & nr_marca_tb.Text & ", " & If(z1_tb.Text = "*", "", z1_tb.Text) & ", " & If(z2_tb.Text = "*", "", z2_tb.Text) _
@@ -408,6 +403,7 @@ Public Class fereastra_principala_frm
                 comanda.CommandText = "update valori set spc_id = " & spc_id & " where rowid = " & rand.Cells(7).Value
                 comanda.ExecuteNonQuery()
             Next
+            comanda.Dispose()
 
             nr_marca_tb.Text = ""
             adauga_valori_pnl.Visible = False
@@ -425,6 +421,7 @@ Public Class fereastra_principala_frm
                     dif_dq_min = reader.GetInt16(5)
                 End While
             End Using
+            comanda.Dispose()
 
             'creare comanda pentru inserare linie in tabelul atentionare
             comanda.CommandText = "insert into atentionare (spc_id, atentionare_activa, z1_atentionare_1, z1_atentionare_2, z1_atentionare_3, z2_atentionare_1, z2_atentionare_2, z2_atentionare_3,
@@ -557,127 +554,10 @@ Public Class fereastra_principala_frm
             End If
 
             comanda_executata = comanda.ExecuteNonQuery()
-
+            comanda.Dispose()
             If comanda_executata = 1 Then
-                comanda.CommandText = "select last_insert_rowid()"
-                id_atent = comanda.ExecuteScalar()
-
-                id_atentionare.Text = "Atenționare " & id_atent
-                'comanda.CommandText = "select * from spc_posalux s inner join atentionare a on s.spc_id = a.spc_id where a.id_atentionare = " & id_atent
-                'reader = comanda.ExecuteReader
-
-                'Using reader
-                '    While reader.Read()
-                '        'MsgBox(reader.GetString(1))
-                '    End While
-                'End Using
-
-                lista_atentionari_pnl.Visible = True
-                lista_atentionari_lst.Items.Clear()
-                If atentionare_1 Then
-                    'examinare z1
-                    If atentionare(0) Then
-                        'item_lista_1.BackColor = Color.Red
-                        item_lista_1.Text = "Z1 diferența de "
-                        item_lista_1.SubItems.Add(dif_debit(0) & " ml")
-                        item_lista_1.Group = lista_atentionari_lst.Groups(0)
-                        lista_atentionari_lst.Items.Add(item_lista_1)
-                    End If
-
-                    If atentionare(1) Then
-                        ' item_lista_1.BackColor = Color.Red
-                        item_lista_1 = New ListViewItem
-                        item_lista_1.Text = "Z2 diferența de "
-                        item_lista_1.SubItems.Add(dif_debit(1) & " ml")
-                        item_lista_1.Group = lista_atentionari_lst.Groups(0)
-                        lista_atentionari_lst.Items.Add(item_lista_1)
-                    End If
-
-                    If atentionare(2) Then
-                        'item_lista_1.BackColor = Color.Red
-                        item_lista_1 = New ListViewItem
-                        item_lista_1.Text = "Z3 diferența de "
-                        item_lista_1.SubItems.Add(dif_debit(2) & " ml")
-                        item_lista_1.Group = lista_atentionari_lst.Groups(0)
-                        lista_atentionari_lst.Items.Add(item_lista_1)
-                    End If
-
-                    If atentionare(3) Then
-                        'item_lista_1.BackColor = Color.Red
-                        item_lista_1 = New ListViewItem
-                        item_lista_1.Text = "Z4 diferența de "
-                        item_lista_1.SubItems.Add(dif_debit(3) & " ml")
-                        item_lista_1.Group = lista_atentionari_lst.Groups(0)
-                        lista_atentionari_lst.Items.Add(item_lista_1)
-                    End If
-                End If
-
-                If atentionare_2 Then
-                    If atentionare(4) Then
-                        item_lista_2.Text = "Z1"
-                        item_lista_2.SubItems.Add(dq_vals(0) & " ml")
-                        item_lista_2.Group = lista_atentionari_lst.Groups(1)
-                        lista_atentionari_lst.Items.Add(item_lista_2)
-                    End If
-
-                    If atentionare(5) Then
-                        item_lista_2 = New ListViewItem
-                        item_lista_2.Text = "Z2"
-                        item_lista_2.SubItems.Add(dq_vals(1) & " ml")
-                        item_lista_2.Group = lista_atentionari_lst.Groups(1)
-                        lista_atentionari_lst.Items.Add(item_lista_2)
-                    End If
-
-                    If atentionare(6) Then
-                        item_lista_2 = New ListViewItem
-                        item_lista_2.Text = "Z3"
-                        item_lista_2.SubItems.Add(dq_vals(2) & " ml")
-                        item_lista_2.Group = lista_atentionari_lst.Groups(1)
-                        lista_atentionari_lst.Items.Add(item_lista_2)
-                    End If
-
-                    If atentionare(7) Then
-                        item_lista_2 = New ListViewItem
-                        item_lista_2.Text = "Z4"
-                        item_lista_2.SubItems.Add(dq_vals(3) & " ml")
-                        item_lista_2.Group = lista_atentionari_lst.Groups(1)
-                        lista_atentionari_lst.Items.Add(item_lista_2)
-                    End If
-                End If
-
-                If atentionare_3 Then
-                    lista_atentionari_lst.Groups(2).Header = "Diferența Delta Q este de " & Math.Round(dq_vals.Max - dq_vals.Min, 1) & " față de maxim " & dif_dq_max
-                    If atentionare(8) Then
-                        item_lista_3.Text = "Z1"
-                        item_lista_3.Group = lista_atentionari_lst.Groups(2)
-                        item_lista_3.SubItems.Add(dq_vals(0) & " ml")
-                        lista_atentionari_lst.Items.Add(item_lista_3)
-                    End If
-
-                    If atentionare(9) Then
-                        item_lista_3 = New ListViewItem
-                        item_lista_3.Text = "Z2"
-                        item_lista_3.Group = lista_atentionari_lst.Groups(2)
-                        item_lista_3.SubItems.Add(dq_vals(1) & " ml")
-                        lista_atentionari_lst.Items.Add(item_lista_3)
-                    End If
-
-                    If atentionare(10) Then
-                        item_lista_3 = New ListViewItem
-                        item_lista_3.Text = "Z3"
-                        item_lista_3.Group = lista_atentionari_lst.Groups(2)
-                        item_lista_3.SubItems.Add(dq_vals(2) & " ml")
-                        lista_atentionari_lst.Items.Add(item_lista_3)
-                    End If
-
-                    If atentionare(11) Then
-                        item_lista_3 = New ListViewItem
-                        item_lista_3.Text = "Z4"
-                        item_lista_3.Group = lista_atentionari_lst.Groups(2)
-                        item_lista_3.SubItems.Add(dq_vals(3) & " ml")
-                        lista_atentionari_lst.Items.Add(item_lista_3)
-                    End If
-                End If
+                lista_atentionari_pnl.Tag = id_masina
+                vizibilitate_panou(lista_atentionari_pnl)
             End If
         End If
         conexiune_bd.Close()
@@ -691,66 +571,119 @@ Public Class fereastra_principala_frm
             Dim limita_min As New DataVisualization.Charting.StripLine
             Dim nominal As New DataVisualization.Charting.StripLine
             Dim punct As New DataVisualization.Charting.DataPoint
+            'de implementat intr-o functie
+            Dim conexiune_bd As New SqliteConnection("data source=" & locatie_bd)
+            Dim comanda = conexiune_bd.CreateCommand
+            Dim reader As SqliteDataReader
+            Dim lim_max, lim_min, lim_nom, interval_tol, incr As Integer
+            Dim dif(), diferenta As Double
+
+            conexiune_bd.Open()
+            comanda.CommandText = "select diferenta_max, diferenta_min, diferenta_nominala from referinta where id_referinta = 1"
+            reader = comanda.ExecuteReader
+
+            Using reader
+                While reader.Read
+                    lim_max = reader.GetValue(0)
+                    lim_min = reader.GetValue(1)
+                    lim_nom = reader.GetValue(2)
+                End While
+            End Using
+            reader.Close()
 
             limita_max.BorderDashStyle = DataVisualization.Charting.ChartDashStyle.DashDot
             limita_max.BorderColor = Color.Red
             limita_max.BorderWidth = 2
-            limita_max.IntervalOffset = 5
+            limita_max.IntervalOffset = lim_max
 
             limita_min.BorderDashStyle = DataVisualization.Charting.ChartDashStyle.DashDot
             limita_min.BorderColor = Color.Red
             limita_min.BorderWidth = 2
-            limita_min.IntervalOffset = -5
+            limita_min.IntervalOffset = lim_min
 
             nominal.BorderDashStyle = DataVisualization.Charting.ChartDashStyle.DashDot
             nominal.BorderColor = Color.Green
             nominal.BorderWidth = 2
-            nominal.IntervalOffset = 0
-
-            dif_debit_z1_chart.ChartAreas(0).AxisY.Interval = 2.5
-            dif_debit_z1_chart.ChartAreas(0).AxisY.Minimum = -5 - 10 * 0.1 '666 - 72 * 0.1
-            dif_debit_z1_chart.ChartAreas(0).AxisY.Maximum = 5 + 10 * 0.1 '738 + 72 * 0.1
+            nominal.IntervalOffset = lim_nom
+            interval_tol = (lim_max - lim_min)
+            dif_debit_z1_chart.ChartAreas(0).AxisY.Interval = interval_tol / 4
+            dif_debit_z1_chart.ChartAreas(0).AxisY.Minimum = lim_min - interval_tol * 0.1 '666 - 72 * 0.1
+            dif_debit_z1_chart.ChartAreas(0).AxisY.Maximum = lim_max + interval_tol * 0.1 '738 + 72 * 0.1
             dif_debit_z1_chart.ChartAreas(0).AxisY.IntervalOffset = 1
 
             dif_debit_z1_chart.ChartAreas(0).AxisY.StripLines.Add(limita_max)
             dif_debit_z1_chart.ChartAreas(0).AxisY.StripLines.Add(limita_min)
             dif_debit_z1_chart.ChartAreas(0).AxisY.StripLines.Add(nominal)
 
-            punct.SetValueY(-5)
-            punct.Color = Color.Blue
-            punct.ToolTip = "lol"
 
+            comanda.CommandText = "select printf('%.1f', diferenta_calculata_z1) from spc_posalux where masina = 7 order by data_creare desc limit 30"
+            reader = comanda.ExecuteReader
+
+            Using reader
+                While reader.Read
+                    ReDim Preserve dif(incr)
+                    dif(incr) = reader.GetValue(0)
+                    incr += 1
+                End While
+            End Using
+            reader.Close()
             dif_debit_z1_chart.Series("valori").Points.Clear()
 
-            dif_debit_z1_chart.Series("valori").Points.Add(punct)
-            dif_debit_z1_chart.Series("valori").Points.AddY(-3)
-            dif_debit_z1_chart.Series("valori").Points.AddY(0)
-            dif_debit_z1_chart.Series("valori").Points.Add(punct)
-            dif_debit_z1_chart.Series("valori").Points.AddY(-3)
-            dif_debit_z1_chart.Series("valori").Points.AddY(0)
-            dif_debit_z1_chart.Series("valori").Points.Add(punct)
-            dif_debit_z1_chart.Series("valori").Points.AddY(-3)
-            dif_debit_z1_chart.Series("valori").Points.AddY(0)
-            dif_debit_z1_chart.Series("valori").Points.AddY(4)
+            For Each diferenta In dif
+                'punct.IsValueShownAsLabel = True
+                punct.SetValueY(diferenta)
+                punct.ToolTip = diferenta
+                If diferenta > lim_max Then
+                    punct.Color = Color.Red
+                    punct.SetValueY(5.5)
+                ElseIf diferenta < lim_min Then
+                    punct.Color = Color.Red
+                    punct.SetValueY(-5.5)
+                ElseIf lim_max > diferenta And diferenta > lim_min Then
+                    punct.Color = Color.Black
+                End If
+                dif_debit_z1_chart.Series("valori").Points.Add(punct)
+                punct = New DataVisualization.Charting.DataPoint
+            Next
 
-            dif_debit_z1_chart.Series("valori").Points.Add(punct)
-            dif_debit_z1_chart.Series("valori").Points.AddY(-3)
-            dif_debit_z1_chart.Series("valori").Points.AddY(0)
-            dif_debit_z1_chart.Series("valori").Points.Add(punct)
-            dif_debit_z1_chart.Series("valori").Points.AddY(-3)
-            dif_debit_z1_chart.Series("valori").Points.AddY(0)
-            dif_debit_z1_chart.Series("valori").Points.Add(punct)
-            dif_debit_z1_chart.Series("valori").Points.AddY(-3)
-            dif_debit_z1_chart.Series("valori").Points.AddY(0)
-            dif_debit_z1_chart.Series("valori").Points.AddY(4)
+            'punct.SetValueY(-5)
+            'punct.Color = Color.Blue
+            'punct.ToolTip = "lol"
+
+
+
+            'dif_debit_z1_chart.Series("valori").Points.Add(punct)
+            'dif_debit_z1_chart.Series("valori").Points.AddY(-3)
+            'dif_debit_z1_chart.Series("valori").Points.AddY(0)
+            'dif_debit_z1_chart.Series("valori").Points.Add(punct)
+            'dif_debit_z1_chart.Series("valori").Points.AddY(-3)
+            'dif_debit_z1_chart.Series("valori").Points.AddY(0)
+            'dif_debit_z1_chart.Series("valori").Points.Add(punct)
+            'dif_debit_z1_chart.Series("valori").Points.AddY(-3)
+            'dif_debit_z1_chart.Series("valori").Points.AddY(0)
+            'dif_debit_z1_chart.Series("valori").Points.AddY(4)
+
+            'dif_debit_z1_chart.Series("valori").Points.Add(punct)
+            'dif_debit_z1_chart.Series("valori").Points.AddY(-3)
+            'dif_debit_z1_chart.Series("valori").Points.AddY(0)
+            'dif_debit_z1_chart.Series("valori").Points.Add(punct)
+            'dif_debit_z1_chart.Series("valori").Points.AddY(-3)
+            'dif_debit_z1_chart.Series("valori").Points.AddY(0)
+            'dif_debit_z1_chart.Series("valori").Points.Add(punct)
+            'dif_debit_z1_chart.Series("valori").Points.AddY(-3)
+            'dif_debit_z1_chart.Series("valori").Points.AddY(0)
+            'dif_debit_z1_chart.Series("valori").Points.AddY(4)
+            conexiune_bd.Close()
         End If
     End Sub
 
     Private Sub vizualizare_grafice_btn_Click(sender As Object, e As EventArgs) Handles vizualizare_grafice_btn.Click
-        grafice_pnl.Visible = True
-        lista_atentionari_pnl.Visible = False
-        adauga_valori_pnl.Visible = False
-        lista_masini_pnl.Visible = False
+        vizibilitate_panou(grafice_pnl)
+        'grafice_pnl.Visible = True
+        'lista_atentionari_pnl.Visible = False
+        'button_flow_pnl.Controls.Clear()
+        'adauga_valori_pnl.Visible = False
+        'lista_masini_pnl.Visible = False
     End Sub
 
     Private Sub lista_atentionari_btn_Click(sender As Object, e As EventArgs) Handles lista_atentionari_btn.Click
@@ -763,6 +696,8 @@ Public Class fereastra_principala_frm
         Dim subelement As Button
         Dim incr As Int16 = 0
         Dim atentionare_activa As Boolean
+        Dim referinta As String = ""
+        Dim spc_id As Integer
 
         conexiune_bd.Open()
         comanda.CommandText = "select nr_producator, nr_operatie, id_masina from masini m where
@@ -770,10 +705,7 @@ Public Class fereastra_principala_frm
                                 order by id_masina asc"
         reader = comanda.ExecuteReader()
 
-        grafice_pnl.Visible = False
-        adauga_valori_pnl.Visible = False
-        lista_atentionari_pnl.Visible = False
-        lista_masini_pnl.Visible = True
+        vizibilitate_panou(lista_masini_pnl)
         If button_flow_pnl.Controls.Count = 0 Then
             Using reader
                 While reader.Read()
@@ -795,10 +727,27 @@ Public Class fereastra_principala_frm
                     incr += 1
                 End While
             End Using
+            comanda.Dispose()
+            reader.Close()
+
 
             For Each subelement In Me.button_flow_pnl.Controls
+                comanda.CommandText = "select rowid, referinta from spc_posalux where masina=" & subelement.Tag & " order by data_creare desc limit 1"
+
+                reader = comanda.ExecuteReader
+
+                Using reader
+                    While reader.Read
+                        spc_id = reader.GetValue(0)
+                        referinta = reader.GetValue(1)
+                    End While
+                End Using
+
+                reader.Close()
+                comanda.Dispose()
+
                 comanda.CommandText = "select atentionare_activa from atentionare a where 
-                                        spc_id = (select rowid from spc_posalux where masina=" & subelement.Tag & " order by data_creare desc limit 1)"
+                                        spc_id = " & spc_id
                 reader = comanda.ExecuteReader
 
                 Using reader
@@ -806,238 +755,334 @@ Public Class fereastra_principala_frm
                         atentionare_activa = reader.GetValue(0)
                     End While
                 End Using
+                reader.Close()
+                comanda.Dispose()
 
                 If atentionare_activa Then
                     subelement.BackColor = Color.Red
                 Else
                     subelement.BackColor = Color.Green
                 End If
+                subelement.Text += Environment.NewLine & referinta
             Next
         End If
         conexiune_bd.Close()
     End Sub
 
     Private Sub buton_masini_click(sender As Object, e As EventArgs)
-        Dim conexiune_bd As New SqliteConnection("data source=" & locatie_bd)
-        Dim comanda = conexiune_bd.CreateCommand
-        Dim reader As SqliteDataReader
-        Dim id_atent, id_spc As Integer
-        Dim atentionare_activa As Boolean
-        Dim atentionare(11) As Boolean
-        Dim item_lista_1, item_lista_2, item_lista_3 As New ListViewItem
-        Dim dif_debit(3), dif_dq, dq_vals(3), dif_dq_max As Double
-        Dim incr As Integer = 0
-        Dim referinta As String = ""
+        Dim id_masina As Integer = CType(sender, Control).Tag
 
-        'MsgBox(CType(sender, Control).Tag)
+        lista_atentionari_pnl.Tag = id_masina
         'lista_atentionari_pnl.Visible = True
+        vizibilitate_panou(lista_atentionari_pnl)
+    End Sub
+
+    Private Function durata(ByRef data_ora As DateTime) As String
+        Dim moment_curent As DateTime = DateTime.Now
+        Dim ts As TimeSpan
+        Dim secunda As Integer = 1
+        Dim minut As Integer = 60 * secunda
+        Dim ora As Integer = 60 * minut
+        Dim zi As Integer = 24 * ora
+        Dim secunde As Double
+
+        ts = moment_curent - data_ora
+        secunde = ts.TotalSeconds
+
+        Select Case secunde
+            Case Is < secunda
+                Return "câteva momente"
+            Case Is < minut
+                Return ts.Seconds & " secunde"
+            Case Is < 2 * minut
+                Return ts.Minutes & " minut"
+            Case Is < 1 * ora
+                Return ts.Minutes & " minute"
+            Case Is < 2 * ora
+                Return "o oră și " & ts.Minutes & " minute"
+            Case Is < 1 * zi
+                If ts.Minutes = 1 Then
+                    Return ts.Hours & " ore și " & ts.Minutes & " minut"
+                Else
+                    Return ts.Hours & " ore și " & ts.Minutes & " minute"
+                End If
+            Case Is < 2 * zi
+                If ts.Hours = 1 Then
+                    Return "o zi și " & ts.Hours & " oră"
+                Else
+                    Return "o zi și " & ts.Hours & " ore"
+                End If
+            Case Is < 30 * zi
+                Return ts.Days & " zile și " & ts.Hours & " ore"
+        End Select
+
+        Return ts.TotalSeconds
+    End Function
+
+    Private Function date_atentionare(id_masina As Integer) As Dictionary(Of String, Object)
+        Dim conexiune_bd As New SqliteConnection("data source=" & locatie_bd)
+        Dim comanda As SqliteCommand = conexiune_bd.CreateCommand
+        Dim reader As SqliteDataReader
+        Dim incr As Int16
+
+        date_atentionare = New Dictionary(Of String, Object)
+
         conexiune_bd.Open()
         comanda.CommandText = "select id_atentionare, spc_id, atentionare_activa, z1_atentionare_1, z2_atentionare_1, z3_atentionare_1, z4_atentionare_1,
                                       z1_atentionare_2, z2_atentionare_2, z3_atentionare_2, z4_atentionare_2, z1_atentionare_3, z2_atentionare_3,
                                       z3_atentionare_3, z4_atentionare_3 from atentionare a where 
-                                      spc_id = (select rowid from spc_posalux where masina=" & CType(sender, Control).Tag & " order by data_creare desc limit 1)"
+                                      spc_id = (select rowid from spc_posalux where masina=" & id_masina & " order by data_creare desc limit 1)"
         reader = comanda.ExecuteReader
 
         Using reader
             While reader.Read()
-                id_atent = reader.GetInt32(0)
-                id_spc = reader.GetInt32(1)
-                atentionare_activa = reader.GetBoolean(2)
-                atentionare(0) = reader.GetBoolean(3)
-                atentionare(1) = reader.GetBoolean(4)
-                atentionare(2) = reader.GetBoolean(5)
-                atentionare(3) = reader.GetBoolean(6)
-                atentionare(4) = reader.GetBoolean(7)
-                atentionare(5) = reader.GetBoolean(8)
-                atentionare(6) = reader.GetBoolean(9)
-                atentionare(7) = reader.GetBoolean(10)
-                atentionare(8) = reader.GetBoolean(11)
-                atentionare(9) = reader.GetBoolean(12)
-                atentionare(10) = reader.GetBoolean(13)
-                atentionare(11) = reader.GetBoolean(14)
+                date_atentionare.Add("id_atent", reader.GetInt32(0))
+                date_atentionare.Add("id_spc", reader.GetInt32(1))
+                date_atentionare.Add("atentionare_activa", reader.GetBoolean(2))
+                date_atentionare.Add("atentionare_0", reader.GetBoolean(3))
+                date_atentionare.Add("atentionare_1", reader.GetBoolean(4))
+                date_atentionare.Add("atentionare_2", reader.GetBoolean(5))
+                date_atentionare.Add("atentionare_3", reader.GetBoolean(6))
+                date_atentionare.Add("atentionare_4", reader.GetBoolean(7))
+                date_atentionare.Add("atentionare_5", reader.GetBoolean(8))
+                date_atentionare.Add("atentionare_6", reader.GetBoolean(9))
+                date_atentionare.Add("atentionare_7", reader.GetBoolean(10))
+                date_atentionare.Add("atentionare_8", reader.GetBoolean(11))
+                date_atentionare.Add("atentionare_9", reader.GetBoolean(12))
+                date_atentionare.Add("atentionare_10", reader.GetBoolean(13))
+                date_atentionare.Add("atentionare_11", reader.GetBoolean(14))
             End While
         End Using
         reader.Close()
 
-        comanda.CommandText = "select diferenta_calculata_z1, diferenta_calculata_z2, diferenta_calculata_z3, diferenta_calculata_z4, diferenta_calculata_min_max_delta_q, referinta
-                               from spc_posalux where spc_id=" & id_spc
+        If date_atentionare.ContainsKey("id_spc") = False Then
+            Exit Function
+        End If
+
+        comanda.CommandText = "select diferenta_calculata_z1, diferenta_calculata_z2, diferenta_calculata_z3, diferenta_calculata_z4, diferenta_calculata_min_max_delta_q, referinta, nr_marca, datetime(data_creare, 'localtime')
+                               from spc_posalux where spc_id=" & date_atentionare.Item("id_spc")
         reader = comanda.ExecuteReader
 
         Using reader
             While reader.Read
                 If reader.IsDBNull(0) = False Then
-                    dif_debit(0) = reader.GetDouble(0)
+                    date_atentionare.Add("dif_debit_0", reader.GetDouble(0))
                 End If
 
                 If reader.IsDBNull(1) = False Then
-                    dif_debit(1) = reader.GetDouble(1)
+                    date_atentionare.Add("dif_debit_1", reader.GetDouble(1))
                 End If
 
                 If reader.IsDBNull(2) = False Then
-                    dif_debit(2) = reader.GetDouble(2)
+                    date_atentionare.Add("dif_debit_2", reader.GetDouble(2))
                 End If
 
                 If reader.IsDBNull(3) = False Then
-                    dif_debit(3) = reader.GetDouble(3)
+                    date_atentionare.Add("dif_debit_3", reader.GetDouble(3))
                 End If
 
-                dif_dq = reader.GetDouble(4)
-                referinta = reader.GetString(5)
+                date_atentionare.Add("dif_dq", reader.GetDouble(4))
+                date_atentionare.Add("referinta", reader.GetString(5))
+                date_atentionare.Add("nr_marca", reader.GetString(6))
+                date_atentionare.Add("data_spc", reader.GetDateTime(7))
             End While
         End Using
-
         reader.Close()
-        'extragere valori delta q din tabelul valori
-        comanda.CommandText = "select delta_q from valori where spc_id=" & id_spc
+
+        comanda.CommandText = "select delta_q from valori where spc_id=" & date_atentionare.Item("id_spc")
         reader = comanda.ExecuteReader
 
         Using reader
             While reader.Read
-                dq_vals(incr) = reader.GetDouble(0)
+                date_atentionare.Add("dq_vals_" & incr, reader.GetDouble(0))
                 incr += 1
             End While
         End Using
-
         reader.Close()
 
-        comanda.CommandText = "select dif_dq_max from referinta where nume='" & referinta & "'"
+        comanda.CommandText = "select dif_dq_max from referinta where nume='" & date_atentionare.Item("referinta") & "'"
         reader = comanda.ExecuteReader()
 
         Using reader
             While reader.Read
-                dif_dq_max = reader.GetDouble(0)
+                date_atentionare.Add("dif_dq_max", reader.GetDouble(0))
             End While
         End Using
+        comanda.Dispose()
 
+        comanda.CommandText = "select nr_operatie from masini where id_masina=" & id_masina
+        reader = comanda.ExecuteReader()
 
-        id_atentionare.Text = "Atenționare " & id_atent
-        'comanda.CommandText = "select * from spc_posalux s inner join atentionare a on s.spc_id = a.spc_id where a.id_atentionare = " & id_atent
-        'reader = comanda.ExecuteReader
+        Using reader
+            While reader.Read
+                date_atentionare.Add("nr_operatie", reader.GetString(0))
+            End While
+        End Using
+        comanda.Dispose()
 
-        'Using reader
-        '    While reader.Read()
-        '        'MsgBox(reader.GetString(1))
-        '    End While
-        'End Using
+        comanda.CommandText = "select nume from utilizator where nr_marca=" & date_atentionare.Item("nr_marca")
+        reader = comanda.ExecuteReader()
 
-        lista_atentionari_pnl.Visible = True
-        lista_atentionari_lst.Items.Clear()
-        If atentionare(0) Or atentionare(1) Or atentionare(2) Or atentionare(3) Then
-            'examinare z1
-            If atentionare(0) Then
-                'item_lista_1.BackColor = Color.Red
-                item_lista_1.Text = "Z1 diferența de "
-                item_lista_1.SubItems.Add(dif_debit(0) & " ml")
-                item_lista_1.Group = lista_atentionari_lst.Groups(0)
-                lista_atentionari_lst.Items.Add(item_lista_1)
-            End If
-
-            If atentionare(1) Then
-                ' item_lista_1.BackColor = Color.Red
-                item_lista_1 = New ListViewItem
-                item_lista_1.Text = "Z2 diferența de "
-                item_lista_1.SubItems.Add(dif_debit(1) & " ml")
-                item_lista_1.Group = lista_atentionari_lst.Groups(0)
-                lista_atentionari_lst.Items.Add(item_lista_1)
-            End If
-
-            If atentionare(2) Then
-                'item_lista_1.BackColor = Color.Red
-                item_lista_1 = New ListViewItem
-                item_lista_1.Text = "Z3 diferența de "
-                item_lista_1.SubItems.Add(dif_debit(2) & " ml")
-                item_lista_1.Group = lista_atentionari_lst.Groups(0)
-                lista_atentionari_lst.Items.Add(item_lista_1)
-            End If
-
-            If atentionare(3) Then
-                'item_lista_1.BackColor = Color.Red
-                item_lista_1 = New ListViewItem
-                item_lista_1.Text = "Z4 diferența de "
-                item_lista_1.SubItems.Add(dif_debit(3) & " ml")
-                item_lista_1.Group = lista_atentionari_lst.Groups(0)
-                lista_atentionari_lst.Items.Add(item_lista_1)
-            End If
-        End If
-
-        If atentionare(4) Or atentionare(5) Or atentionare(6) Or atentionare(7) Then
-            If atentionare(4) Then
-                item_lista_2.Text = "Z1"
-                item_lista_2.SubItems.Add(dq_vals(0) & " ml")
-                item_lista_2.Group = lista_atentionari_lst.Groups(1)
-                lista_atentionari_lst.Items.Add(item_lista_2)
-            End If
-
-            If atentionare(5) Then
-                item_lista_2 = New ListViewItem
-                item_lista_2.Text = "Z2"
-                item_lista_2.SubItems.Add(dq_vals(1) & " ml")
-                item_lista_2.Group = lista_atentionari_lst.Groups(1)
-                lista_atentionari_lst.Items.Add(item_lista_2)
-            End If
-
-            If atentionare(6) Then
-                item_lista_2 = New ListViewItem
-                item_lista_2.Text = "Z3"
-                item_lista_2.SubItems.Add(dq_vals(2) & " ml")
-                item_lista_2.Group = lista_atentionari_lst.Groups(1)
-                lista_atentionari_lst.Items.Add(item_lista_2)
-            End If
-
-            If atentionare(7) Then
-                item_lista_2 = New ListViewItem
-                item_lista_2.Text = "Z4"
-                item_lista_2.SubItems.Add(dq_vals(3) & " ml")
-                item_lista_2.Group = lista_atentionari_lst.Groups(1)
-                lista_atentionari_lst.Items.Add(item_lista_2)
-            End If
-        End If
-
-        If atentionare(8) Or atentionare(9) Or atentionare(10) Or atentionare(11) Then
-            lista_atentionari_lst.Groups(2).Header = "Diferența Delta Q este de " & Math.Round(dif_dq, 1) & " față de maxim " & dif_dq_max
-            If atentionare(8) Then
-                item_lista_3.Text = "Z1"
-                item_lista_3.Group = lista_atentionari_lst.Groups(2)
-                item_lista_3.SubItems.Add(dq_vals(0) & " ml")
-                lista_atentionari_lst.Items.Add(item_lista_3)
-            End If
-
-            If atentionare(9) Then
-                item_lista_3 = New ListViewItem
-                item_lista_3.Text = "Z2"
-                item_lista_3.Group = lista_atentionari_lst.Groups(2)
-                item_lista_3.SubItems.Add(dq_vals(1) & " ml")
-                lista_atentionari_lst.Items.Add(item_lista_3)
-            End If
-
-            If atentionare(10) Then
-                item_lista_3 = New ListViewItem
-                item_lista_3.Text = "Z3"
-                item_lista_3.Group = lista_atentionari_lst.Groups(2)
-                item_lista_3.SubItems.Add(dq_vals(2) & " ml")
-                lista_atentionari_lst.Items.Add(item_lista_3)
-            End If
-
-            If atentionare(11) Then
-                item_lista_3 = New ListViewItem
-                item_lista_3.Text = "Z4"
-                item_lista_3.Group = lista_atentionari_lst.Groups(2)
-                item_lista_3.SubItems.Add(dq_vals(3) & " ml")
-                lista_atentionari_lst.Items.Add(item_lista_3)
-            End If
-        End If
+        Using reader
+            While reader.Read
+                date_atentionare.Add("nume_operator", reader.GetString(0))
+            End While
+        End Using
+        comanda.Dispose()
         conexiune_bd.Close()
-    End Sub
+    End Function
 
     Private Sub lista_atentionari_pnl_VisibleChanged(sender As Object, e As EventArgs) Handles lista_atentionari_pnl.VisibleChanged
+        Dim id_masina As Integer = lista_atentionari_pnl.Tag
+        If lista_atentionari_pnl.Visible = True Then
+            If lista_atentionari_pnl.Tag IsNot Nothing Then
+                Dim item_lista_1, item_lista_2, item_lista_3 As New ListViewItem
+                Dim incr As Integer = 0
+                Dim date_extrase As IDictionary
 
+                date_extrase = date_atentionare(id_masina)
+
+                id_atentionare_lbl.Text = date_extrase.Item("id_atent") '"Atenționare " & date_extrase.Item("id_atent") & " spc masurat acum " & durata(date_extrase.Item("data_spc"))
+                data_ora_atentionare_lbl.Text = date_extrase.Item("data_spc") & " " & "(" & durata(date_extrase.Item("data_spc")) & ")"
+                referinta_atentionare_lbl.Text = date_extrase.Item("referinta")
+                masina_atentionare_lbl.Text = date_extrase.Item("nr_operatie")
+                If date_extrase.Item("nume_operator") = Nothing Then
+                    date_operator_atentionare_lbl.Text = date_extrase.Item("nr_marca") & " - Nume necunoscut"
+                Else
+                    date_operator_atentionare_lbl.Text = date_extrase.Item("nr_marca") & " - " & date_extrase.Item("nume_operator")
+                End If
+
+                lista_atentionari_lst.Items.Clear()
+                    If date_extrase.Item("atentionare_0") Or date_extrase.Item("atentionare_1") Or date_extrase.Item("atentionare_2") Or date_extrase.Item("atentionare_3") Then
+                        'examinare z1
+                        If date_extrase.Item("atentionare_0") Then
+                            'item_lista_1.BackColor = Color.Red
+                            item_lista_1.Text = "Z1 diferența de "
+                            item_lista_1.SubItems.Add(Math.Round(date_extrase.Item("dif_debit_0"), 1) & " ml")
+                            item_lista_1.Group = lista_atentionari_lst.Groups(0)
+                            lista_atentionari_lst.Items.Add(item_lista_1)
+                        End If
+
+                        If date_extrase.Item("atentionare_1") Then
+                            ' item_lista_1.BackColor = Color.Red
+                            item_lista_1 = New ListViewItem
+                            item_lista_1.Text = "Z2 diferența de "
+                            item_lista_1.SubItems.Add(Math.Round(date_extrase.Item("dif_debit_1"), 1) & " ml")
+                            item_lista_1.Group = lista_atentionari_lst.Groups(0)
+                            lista_atentionari_lst.Items.Add(item_lista_1)
+                        End If
+
+                        If date_extrase.Item("atentionare_2") Then
+                            'item_lista_1.BackColor = Color.Red
+                            item_lista_1 = New ListViewItem
+                            item_lista_1.Text = "Z3 diferența de "
+                            item_lista_1.SubItems.Add(Math.Round(date_extrase.Item("dif_debit_2"), 1) & " ml")
+                            item_lista_1.Group = lista_atentionari_lst.Groups(0)
+                            lista_atentionari_lst.Items.Add(item_lista_1)
+                        End If
+
+                        If date_extrase.Item("atentionare_3") Then
+                            'item_lista_1.BackColor = Color.Red
+                            item_lista_1 = New ListViewItem
+                            item_lista_1.Text = "Z4 diferența de "
+                            item_lista_1.SubItems.Add(Math.Round(date_extrase.Item("dif_debit_3"), 1) & " ml")
+                            item_lista_1.Group = lista_atentionari_lst.Groups(0)
+                            lista_atentionari_lst.Items.Add(item_lista_1)
+                        End If
+                    End If
+
+                    If date_extrase.Item("atentionare_4") Or date_extrase.Item("atentionare_5") Or date_extrase.Item("atentionare_6") Or date_extrase.Item("atentionare_7") Then
+                        If date_extrase.Item("atentionare_4") Then
+                            item_lista_2.Text = "Z1"
+                            item_lista_2.SubItems.Add(date_extrase.Item("dq_vals_0") & " ml")
+                            item_lista_2.Group = lista_atentionari_lst.Groups(1)
+                            lista_atentionari_lst.Items.Add(item_lista_2)
+                        End If
+
+                        If date_extrase.Item("atentionare_5") Then
+                            item_lista_2 = New ListViewItem
+                            item_lista_2.Text = "Z2"
+                            item_lista_2.SubItems.Add(date_extrase.Item("dq_vals_1") & " ml")
+                            item_lista_2.Group = lista_atentionari_lst.Groups(1)
+                            lista_atentionari_lst.Items.Add(item_lista_2)
+                        End If
+
+                        If date_extrase.Item("atentionare_6") Then
+                            item_lista_2 = New ListViewItem
+                            item_lista_2.Text = "Z3"
+                            item_lista_2.SubItems.Add(date_extrase.Item("dq_vals_2") & " ml")
+                            item_lista_2.Group = lista_atentionari_lst.Groups(1)
+                            lista_atentionari_lst.Items.Add(item_lista_2)
+                        End If
+
+                        If date_extrase.Item("atentionare_7") Then
+                            item_lista_2 = New ListViewItem
+                            item_lista_2.Text = "Z4"
+                            item_lista_2.SubItems.Add(date_extrase.Item("dq_vals_3") & " ml")
+                            item_lista_2.Group = lista_atentionari_lst.Groups(1)
+                            lista_atentionari_lst.Items.Add(item_lista_2)
+                        End If
+                    End If
+
+                    If date_extrase.Item("atentionare_8") Or date_extrase.Item("atentionare_9") Or date_extrase.Item("atentionare_10") Or date_extrase.Item("atentionare_11") Then
+                        lista_atentionari_lst.Groups(2).Header = "Diferența Delta Q este de " & Math.Round(date_extrase.Item("dif_dq"), 1) & " față de maxim " & date_extrase.Item("dif_dq_max")
+                        If date_extrase.Item("atentionare_8") Then
+                            item_lista_3.Text = "Z1"
+                            item_lista_3.Group = lista_atentionari_lst.Groups(2)
+                            item_lista_3.SubItems.Add(date_extrase.Item("dq_vals_0") & " ml")
+                            lista_atentionari_lst.Items.Add(item_lista_3)
+                        End If
+
+                        If date_extrase.Item("atentionare_9") Then
+                            item_lista_3 = New ListViewItem
+                            item_lista_3.Text = "Z2"
+                            item_lista_3.Group = lista_atentionari_lst.Groups(2)
+                            item_lista_3.SubItems.Add(date_extrase.Item("dq_vals_1") & " ml")
+                            lista_atentionari_lst.Items.Add(item_lista_3)
+                        End If
+
+                        If date_extrase.Item("atentionare_10") Then
+                            item_lista_3 = New ListViewItem
+                            item_lista_3.Text = "Z3"
+                            item_lista_3.Group = lista_atentionari_lst.Groups(2)
+                            item_lista_3.SubItems.Add(date_extrase.Item("dq_vals_2") & " ml")
+                            lista_atentionari_lst.Items.Add(item_lista_3)
+                        End If
+
+                        If date_extrase.Item("atentionare_11") Then
+                            item_lista_3 = New ListViewItem
+                            item_lista_3.Text = "Z4"
+                            item_lista_3.Group = lista_atentionari_lst.Groups(2)
+                            item_lista_3.SubItems.Add(date_extrase.Item("dq_vals_3") & " ml")
+                            lista_atentionari_lst.Items.Add(item_lista_3)
+                        End If
+                    End If
+                End If
+            End If
     End Sub
 
-    Private Sub lista_atentionari_pnl_Paint(sender As Object, e As PaintEventArgs) Handles lista_atentionari_pnl.Paint
+    Private Sub vizibilitate_panou(panou As Panel)
+        Dim element As Panel
 
+        For Each element In Me.Controls.OfType(Of Panel)
+            If element.Name = panou.Name Then
+                panou.Visible = True
+            ElseIf element.Name = "panou_butoane_pnl" Then
+                element.Visible = True
+            Else
+                element.Visible = False
+            End If
+        Next
     End Sub
 
-    Private Sub panou_butoane_pnl_Paint(sender As Object, e As PaintEventArgs) Handles panou_butoane_pnl.Paint
+    Private Sub lista_masini_pnl_VisibleChanged(sender As Object, e As EventArgs) Handles lista_masini_pnl.VisibleChanged
+        If lista_masini_pnl.Visible = False Then
+            button_flow_pnl.Controls.Clear()
+        End If
+    End Sub
 
+    Private Sub fereastra_principala_frm_Load(sender As Object, e As EventArgs) Handles Me.Load
+        vizibilitate_panou(New Panel)
     End Sub
 End Class
+
