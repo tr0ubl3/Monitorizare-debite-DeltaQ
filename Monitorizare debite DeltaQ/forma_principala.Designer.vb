@@ -35,7 +35,6 @@ Partial Class fereastra_principala_frm
         Me.adauga_valori_btn = New FontAwesome.Sharp.IconButton()
         Me.grafice_pnl = New System.Windows.Forms.Panel()
         Me.dif_debit_z1_chart = New System.Windows.Forms.DataVisualization.Charting.Chart()
-        Me.Label3 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.adauga_valori_pnl = New System.Windows.Forms.Panel()
@@ -174,7 +173,6 @@ Partial Class fereastra_principala_frm
         Me.grafice_pnl.AutoScroll = True
         Me.grafice_pnl.BackColor = System.Drawing.Color.Moccasin
         Me.grafice_pnl.Controls.Add(Me.dif_debit_z1_chart)
-        Me.grafice_pnl.Controls.Add(Me.Label3)
         Me.grafice_pnl.Controls.Add(Me.Label2)
         Me.grafice_pnl.Controls.Add(Me.Label1)
         Me.grafice_pnl.Dock = System.Windows.Forms.DockStyle.Fill
@@ -223,16 +221,6 @@ Partial Class fereastra_principala_frm
         Me.dif_debit_z1_chart.Size = New System.Drawing.Size(764, 261)
         Me.dif_debit_z1_chart.TabIndex = 10
         Me.dif_debit_z1_chart.Text = "Chart1"
-        '
-        'Label3
-        '
-        Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!)
-        Me.Label3.Location = New System.Drawing.Point(649, 9)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(57, 20)
-        Me.Label3.TabIndex = 9
-        Me.Label3.Text = "Label3"
         '
         'Label2
         '
@@ -888,7 +876,6 @@ Partial Class fereastra_principala_frm
     Friend WithEvents vizualizare_grafice_btn As FontAwesome.Sharp.IconButton
     Friend WithEvents Label1 As Label
     Friend WithEvents Label2 As Label
-    Friend WithEvents Label3 As Label
     Friend WithEvents dif_debit_z1_chart As DataVisualization.Charting.Chart
     Friend WithEvents lista_atentionari_btn As FontAwesome.Sharp.IconButton
     Friend WithEvents lista_atentionari_pnl As Panel

@@ -571,6 +571,7 @@ Public Class fereastra_principala_frm
             Dim limita_min As New DataVisualization.Charting.StripLine
             Dim nominal As New DataVisualization.Charting.StripLine
             Dim punct As New DataVisualization.Charting.DataPoint
+
             'de implementat intr-o functie
             Dim conexiune_bd As New SqliteConnection("data source=" & locatie_bd)
             Dim comanda = conexiune_bd.CreateCommand
@@ -690,48 +691,57 @@ Public Class fereastra_principala_frm
         Dim conexiune_bd As New SqliteConnection("data source=" & locatie_bd)
         Dim comanda = conexiune_bd.CreateCommand
         Dim reader As SqliteDataReader
-        Dim nr_producator(), nr_operatie() As String
-        Dim id_masina() As Int16
         Dim buton As Button
         Dim subelement As Button
-        Dim incr As Int16 = 0
+        Dim incr As Int16
         Dim atentionare_activa As Boolean
         Dim referinta As String = ""
         Dim spc_id As Integer
+        Dim masini As IDictionary
+        Dim id_producator As String
 
         conexiune_bd.Open()
-        comanda.CommandText = "select nr_producator, nr_operatie, id_masina from masini m where
-                                producator = 'Posalux'
-                                order by id_masina asc"
-        reader = comanda.ExecuteReader()
+        'comanda.CommandText = "select nr_producator, nr_operatie, id_masina from masini m where
+        '                        producator = 'Posalux'
+        '                        order by id_masina asc"
+        'reader = comanda.ExecuteReader()
 
         vizibilitate_panou(lista_masini_pnl)
-        If button_flow_pnl.Controls.Count = 0 Then
-            Using reader
-                While reader.Read()
-                    ReDim Preserve nr_producator(incr), nr_operatie(incr), id_masina(incr)
-                    buton = New Button
-                    nr_producator(incr) = reader.GetString(0)
-                    nr_operatie(incr) = reader.GetString(1)
-                    id_masina(incr) = reader.GetInt16(2)
-                    buton.Text = nr_operatie(incr) & Environment.NewLine & "MH." & nr_producator(incr).Substring(nr_producator(incr).Length - 3)
-                    buton.Name = id_masina(incr) & "_btn"
-                    buton.Tag = id_masina(incr)
-                    buton.BackColor = Color.CadetBlue
-                    buton.Location = New System.Drawing.Point(3, 3)
-                    buton.Size = New System.Drawing.Size(140, 66)
-                    buton.FlatStyle = FlatStyle.Flat
-                    'buton.UseVisualStyleBackColor = True
-                    Me.button_flow_pnl.Controls.Add(buton)
-                    AddHandler buton.Click, AddressOf buton_masini_click
-                    incr += 1
-                End While
-            End Using
-            comanda.Dispose()
-            reader.Close()
+        masini = get_machines()
+
+        For incr = 0 To (masini.Count / 3) - 1
+            buton = New Button
+            id_producator = masini.Item("nr_producator_" & incr)
+            buton.Text = masini.Item("nr_operatie_" & incr) & Environment.NewLine & "MH." & id_producator.Substring(id_producator.Length - 3) 'masini.Item("nr_producator_" & incr).Substring(masini.Item("nr_producator_" & incr).Length - 3)
+            buton.Name = masini.Item("id_masina_" & incr) & "_btn"
+            buton.Tag = masini.Item("id_masina_" & incr)
+            buton.BackColor = Color.CadetBlue
+            buton.Location = New System.Drawing.Point(3, 3)
+            buton.Size = New System.Drawing.Size(140, 66)
+            buton.FlatStyle = FlatStyle.Flat
+            'buton.UseVisualStyleBackColor = True
+            Me.button_flow_pnl.Controls.Add(buton)
+            AddHandler buton.Click, AddressOf buton_masini_click
+        Next
+
+        'If button_flow_pnl.Controls.Count = 0 Then
 
 
-            For Each subelement In Me.button_flow_pnl.Controls
+
+        'Using reader
+        '    While reader.Read()
+        '        ReDim Preserve nr_producator(incr), nr_operatie(incr), id_masina(incr)
+        '        buton = New Button
+        '        nr_producator(incr) = reader.GetString(0)
+        '        nr_operatie(incr) = reader.GetString(1)
+        '        id_masina(incr) = reader.GetInt16(2)
+
+
+        '        incr += 1
+        '    End While
+        'End Using
+
+        For Each subelement In Me.button_flow_pnl.Controls
                 comanda.CommandText = "select rowid, referinta from spc_posalux where masina=" & subelement.Tag & " order by data_creare desc limit 1"
 
                 reader = comanda.ExecuteReader
@@ -765,7 +775,7 @@ Public Class fereastra_principala_frm
                 End If
                 subelement.Text += Environment.NewLine & referinta
             Next
-        End If
+        'End If
         conexiune_bd.Close()
     End Sub
 
@@ -1084,5 +1094,30 @@ Public Class fereastra_principala_frm
     Private Sub fereastra_principala_frm_Load(sender As Object, e As EventArgs) Handles Me.Load
         vizibilitate_panou(New Panel)
     End Sub
+
+    Private Function get_machines() As Dictionary(Of String, String)
+        Dim conexiune_bd As New SqliteConnection("data source=" & locatie_bd)
+        Dim comanda = conexiune_bd.CreateCommand
+        Dim reader As SqliteDataReader
+        Dim incr As Integer
+
+        get_machines = New Dictionary(Of String, String)
+        conexiune_bd.Open()
+        comanda.CommandText = "select nr_producator, nr_operatie, id_masina from masini m where
+                                producator = 'Posalux'
+                                order by id_masina asc"
+        reader = comanda.ExecuteReader()
+
+        Using reader
+            While reader.Read()
+                get_machines.Add("nr_producator_" & incr, reader.GetString(0))
+                get_machines.Add("nr_operatie_" & incr, reader.GetString(1))
+                get_machines.Add("id_masina_" & incr, reader.GetInt16(2))
+                incr += 1
+            End While
+        End Using
+        comanda.Dispose()
+        reader.Close()
+    End Function
 End Class
 
