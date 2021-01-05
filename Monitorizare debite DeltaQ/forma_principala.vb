@@ -647,32 +647,6 @@ Public Class fereastra_principala_frm
                 punct = New DataVisualization.Charting.DataPoint
             Next
 
-            'punct.SetValueY(-5)
-            'punct.Color = Color.Blue
-            'punct.ToolTip = "lol"
-
-
-
-            'dif_debit_z1_chart.Series("valori").Points.Add(punct)
-            'dif_debit_z1_chart.Series("valori").Points.AddY(-3)
-            'dif_debit_z1_chart.Series("valori").Points.AddY(0)
-            'dif_debit_z1_chart.Series("valori").Points.Add(punct)
-            'dif_debit_z1_chart.Series("valori").Points.AddY(-3)
-            'dif_debit_z1_chart.Series("valori").Points.AddY(0)
-            'dif_debit_z1_chart.Series("valori").Points.Add(punct)
-            'dif_debit_z1_chart.Series("valori").Points.AddY(-3)
-            'dif_debit_z1_chart.Series("valori").Points.AddY(0)
-            'dif_debit_z1_chart.Series("valori").Points.AddY(4)
-
-            'dif_debit_z1_chart.Series("valori").Points.Add(punct)
-            'dif_debit_z1_chart.Series("valori").Points.AddY(-3)
-            'dif_debit_z1_chart.Series("valori").Points.AddY(0)
-            'dif_debit_z1_chart.Series("valori").Points.Add(punct)
-            'dif_debit_z1_chart.Series("valori").Points.AddY(-3)
-            'dif_debit_z1_chart.Series("valori").Points.AddY(0)
-            'dif_debit_z1_chart.Series("valori").Points.Add(punct)
-            'dif_debit_z1_chart.Series("valori").Points.AddY(-3)
-            'dif_debit_z1_chart.Series("valori").Points.AddY(0)
             'dif_debit_z1_chart.Series("valori").Points.AddY(4)
             conexiune_bd.Close()
         End If
@@ -680,101 +654,57 @@ Public Class fereastra_principala_frm
 
     Private Sub vizualizare_grafice_btn_Click(sender As Object, e As EventArgs) Handles vizualizare_grafice_btn.Click
         vizibilitate_panou(grafice_pnl)
-        'grafice_pnl.Visible = True
-        'lista_atentionari_pnl.Visible = False
-        'button_flow_pnl.Controls.Clear()
-        'adauga_valori_pnl.Visible = False
-        'lista_masini_pnl.Visible = False
     End Sub
 
     Private Sub lista_atentionari_btn_Click(sender As Object, e As EventArgs) Handles lista_atentionari_btn.Click
         Dim conexiune_bd As New SqliteConnection("data source=" & locatie_bd)
         Dim comanda = conexiune_bd.CreateCommand
         Dim reader As SqliteDataReader
-        Dim buton As Button
         Dim subelement As Button
-        Dim incr As Int16
         Dim atentionare_activa As Boolean
         Dim referinta As String = ""
         Dim spc_id As Integer
-        Dim masini As IDictionary
-        Dim id_producator As String
+        'Dim id_producator As String
 
         conexiune_bd.Open()
-        'comanda.CommandText = "select nr_producator, nr_operatie, id_masina from masini m where
-        '                        producator = 'Posalux'
-        '                        order by id_masina asc"
-        'reader = comanda.ExecuteReader()
 
         vizibilitate_panou(lista_masini_pnl)
-        masini = get_machines()
-
-        For incr = 0 To (masini.Count / 3) - 1
-            buton = New Button
-            id_producator = masini.Item("nr_producator_" & incr)
-            buton.Text = masini.Item("nr_operatie_" & incr) & Environment.NewLine & "MH." & id_producator.Substring(id_producator.Length - 3) 'masini.Item("nr_producator_" & incr).Substring(masini.Item("nr_producator_" & incr).Length - 3)
-            buton.Name = masini.Item("id_masina_" & incr) & "_btn"
-            buton.Tag = masini.Item("id_masina_" & incr)
-            buton.BackColor = Color.CadetBlue
-            buton.Location = New System.Drawing.Point(3, 3)
-            buton.Size = New System.Drawing.Size(140, 66)
-            buton.FlatStyle = FlatStyle.Flat
-            'buton.UseVisualStyleBackColor = True
-            Me.button_flow_pnl.Controls.Add(buton)
-            AddHandler buton.Click, AddressOf buton_masini_click
-        Next
-
-        'If button_flow_pnl.Controls.Count = 0 Then
-
-
-
-        'Using reader
-        '    While reader.Read()
-        '        ReDim Preserve nr_producator(incr), nr_operatie(incr), id_masina(incr)
-        '        buton = New Button
-        '        nr_producator(incr) = reader.GetString(0)
-        '        nr_operatie(incr) = reader.GetString(1)
-        '        id_masina(incr) = reader.GetInt16(2)
-
-
-        '        incr += 1
-        '    End While
-        'End Using
+        adauga_butoane(button_flow_pnl)
 
         For Each subelement In Me.button_flow_pnl.Controls
-                comanda.CommandText = "select rowid, referinta from spc_posalux where masina=" & subelement.Tag & " order by data_creare desc limit 1"
+            comanda.CommandText = "select rowid, referinta from spc_posalux where masina=" & subelement.Tag & " order by data_creare desc limit 1"
 
-                reader = comanda.ExecuteReader
+            reader = comanda.ExecuteReader
 
-                Using reader
-                    While reader.Read
-                        spc_id = reader.GetValue(0)
-                        referinta = reader.GetValue(1)
-                    End While
-                End Using
+            Using reader
+                While reader.Read
+                    spc_id = reader.GetValue(0)
+                    referinta = reader.GetValue(1)
+                End While
+            End Using
 
-                reader.Close()
-                comanda.Dispose()
+            reader.Close()
+            comanda.Dispose()
 
-                comanda.CommandText = "select atentionare_activa from atentionare a where 
+            comanda.CommandText = "select atentionare_activa from atentionare a where 
                                         spc_id = " & spc_id
-                reader = comanda.ExecuteReader
+            reader = comanda.ExecuteReader
 
-                Using reader
-                    While reader.Read()
-                        atentionare_activa = reader.GetValue(0)
-                    End While
-                End Using
-                reader.Close()
-                comanda.Dispose()
+            Using reader
+                While reader.Read()
+                    atentionare_activa = reader.GetValue(0)
+                End While
+            End Using
+            reader.Close()
+            comanda.Dispose()
 
-                If atentionare_activa Then
-                    subelement.BackColor = Color.Red
-                Else
-                    subelement.BackColor = Color.Green
-                End If
-                subelement.Text += Environment.NewLine & referinta
-            Next
+            If atentionare_activa Then
+                subelement.BackColor = Color.Red
+            Else
+                subelement.BackColor = Color.Green
+            End If
+            subelement.Text += Environment.NewLine & referinta
+        Next
         'End If
         conexiune_bd.Close()
     End Sub
@@ -1119,5 +1049,28 @@ Public Class fereastra_principala_frm
         comanda.Dispose()
         reader.Close()
     End Function
+
+    Private Sub adauga_butoane(ByRef container_fluid As FlowLayoutPanel)
+        Dim buton As Button
+        Dim masini As IDictionary
+        'Dim id_producator As String
+
+        masini = get_machines()
+
+        For incr = 0 To (masini.Count / 3) - 1
+            buton = New Button
+            'id_producator = masini.Item("nr_producator_" & incr)
+            buton.Text = masini.Item("nr_operatie_" & incr) & Environment.NewLine & "MH." & masini.Item("nr_producator_" & incr).Substring(masini.Item("nr_producator_" & incr).Length - 3)
+            buton.Name = masini.Item("id_masina_" & incr) & "_btn"
+            buton.Tag = masini.Item("id_masina_" & incr)
+            buton.BackColor = Color.CadetBlue
+            buton.Location = New System.Drawing.Point(3, 3)
+            buton.Size = New System.Drawing.Size(140, 66)
+            buton.FlatStyle = FlatStyle.Flat
+            'buton.UseVisualStyleBackColor = True
+            container_fluid.Controls.Add(buton)
+            AddHandler buton.Click, AddressOf buton_masini_click
+        Next
+    End Sub
 End Class
 
