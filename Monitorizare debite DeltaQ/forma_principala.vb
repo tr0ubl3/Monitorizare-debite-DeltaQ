@@ -713,7 +713,6 @@ Public Class fereastra_principala_frm
         Dim id_masina As Integer = CType(sender, Control).Tag
 
         lista_atentionari_pnl.Tag = id_masina
-        'lista_atentionari_pnl.Visible = True
         vizibilitate_panou(lista_atentionari_pnl)
     End Sub
 
@@ -1069,7 +1068,10 @@ Public Class fereastra_principala_frm
             buton.FlatStyle = FlatStyle.Flat
             'buton.UseVisualStyleBackColor = True
             container_fluid.Controls.Add(buton)
-            AddHandler buton.Click, AddressOf buton_masini_click
+            If container_fluid.Name = "button_flow_pnl" Then
+                AddHandler buton.Click, AddressOf buton_masini_click
+            ElseIf container_fluid.Name = "" Then
+            End If
         Next
     End Sub
 End Class
