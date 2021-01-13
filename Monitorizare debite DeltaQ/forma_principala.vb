@@ -690,47 +690,49 @@ Public Class fereastra_principala_frm
         Dim spc_id As Integer
         'Dim id_producator As String
 
-        conexiune_bd.Open()
+
 
         vizibilitate_panou(lista_masini_pnl)
-        adauga_butoane(button_flow_pnl)
+        If button_flow_pnl.Controls.OfType(Of Button).Count = 0 Then
+            conexiune_bd.Open()
+            adauga_butoane(button_flow_pnl)
 
-        For Each subelement In Me.button_flow_pnl.Controls
-            comanda.CommandText = "select rowid, referinta from spc_posalux where masina=" & subelement.Tag & " order by data_creare desc limit 1"
+            For Each subelement In Me.button_flow_pnl.Controls
+                comanda.CommandText = "select rowid, referinta from spc_posalux where masina=" & subelement.Tag & " order by data_creare desc limit 1"
 
-            reader = comanda.ExecuteReader
+                reader = comanda.ExecuteReader
 
-            Using reader
-                While reader.Read
-                    spc_id = reader.GetValue(0)
-                    referinta = reader.GetValue(1)
-                End While
-            End Using
+                Using reader
+                    While reader.Read
+                        spc_id = reader.GetValue(0)
+                        referinta = reader.GetValue(1)
+                    End While
+                End Using
 
-            reader.Close()
-            comanda.Dispose()
+                reader.Close()
+                comanda.Dispose()
 
-            comanda.CommandText = "select atentionare_activa from atentionare a where 
+                comanda.CommandText = "select atentionare_activa from atentionare a where 
                                         spc_id = " & spc_id
-            reader = comanda.ExecuteReader
+                reader = comanda.ExecuteReader
 
-            Using reader
-                While reader.Read()
-                    atentionare_activa = reader.GetValue(0)
-                End While
-            End Using
-            reader.Close()
-            comanda.Dispose()
+                Using reader
+                    While reader.Read()
+                        atentionare_activa = reader.GetValue(0)
+                    End While
+                End Using
+                reader.Close()
+                comanda.Dispose()
 
-            If atentionare_activa Then
-                subelement.BackColor = Color.Red
-            Else
-                subelement.BackColor = Color.Green
-            End If
-            subelement.Text += Environment.NewLine & referinta
-        Next
-        'End If
-        conexiune_bd.Close()
+                If atentionare_activa Then
+                    subelement.BackColor = Color.Red
+                Else
+                    subelement.BackColor = Color.Green
+                End If
+                subelement.Text += Environment.NewLine & referinta
+            Next
+            conexiune_bd.Close()
+        End If
     End Sub
 
     Private Sub buton_masini_click(sender As Object, e As EventArgs)
