@@ -220,6 +220,9 @@ Public Class fereastra_principala_frm
             End Using
             comanda.Dispose()
             conexiune_bd.Close()
+            Timer1.Start()
+        Else
+            Timer1.Stop()
         End If
         tabel_valori_dgv.ClearSelection()
         salveaza_valori_btn.Visible = False
@@ -1094,6 +1097,52 @@ Public Class fereastra_principala_frm
             ElseIf container_fluid.Name = "" Then
             End If
         Next
+    End Sub
+
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        If tabel_valori_dgv.Visible Then
+            tabel_valori_dgv.Rows.Clear()
+            Dim conexiune_bd As New SqliteConnection("data source=" & locatie_bd)
+            Dim continut_bd As New DataSet
+            Dim datacurenta As String = String.Format("{0:yyyy-MM-dd}", DateTime.Now)
+            Dim ieri As String = String.Format("{0:yyyy-MM-dd}", DateTime.Now.AddDays(-1))
+            Dim moment_curent As DateTime = DateTime.Now
+            Dim data_inceput As String = ""
+            Dim data_sfarsit As String = ""
+
+            Select Case moment_curent.Hour
+                Case 6 To 13
+                    data_inceput = datacurenta & " " & "06:00:00"
+                    data_sfarsit = datacurenta & " " & "14:00:00"
+                Case 14 To 21
+                    data_inceput = datacurenta & " " & "14:00:00"
+                    data_sfarsit = datacurenta & " " & "22:00:00"
+                Case 22 To 23
+                    data_inceput = datacurenta & " " & "22:00:00"
+                    data_sfarsit = datacurenta & " " & "23:59:59"
+                Case 0 To 5
+                    data_inceput = ieri & " " & "22:00:00"
+                    data_sfarsit = datacurenta & " " & "06:00:00"
+            End Select
+
+            conexiune_bd.Open()
+            Dim comanda = conexiune_bd.CreateCommand
+            comanda.CommandText = "select data, dm, referinta, nr_caseta, debit, delta_q, nr_cuib, rowid from valori where 
+                                   data between '" & data_inceput & "' and '" & data_sfarsit & "' and spc_id is null order by data asc"
+            Dim reader As SqliteDataReader = comanda.ExecuteReader
+            Dim rand As String()
+
+            Using reader
+                While reader.Read()
+                    'MsgBox(reader.GetString(0) & " " & reader.GetString(1) & " " & reader.GetString(2) & " " & reader.GetString(3))
+                    'tabel_valori_dgv. = reader.GetString(0)
+                    rand = New String() {reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetFloat(3), reader.GetFloat(4), reader.GetFloat(5), reader.GetInt16(6), reader.GetInt64(7)}
+                    tabel_valori_dgv.Rows.Add(rand)
+                End While
+            End Using
+            comanda.Dispose()
+            conexiune_bd.Close()
+        End If
     End Sub
 End Class
 
