@@ -882,6 +882,7 @@ Public Class fereastra_principala_frm
                 End If
 
                 lista_atentionari_lst.Items.Clear()
+
                 If date_extrase.Item("atentionare_0") Or date_extrase.Item("atentionare_1") Or date_extrase.Item("atentionare_2") Or date_extrase.Item("atentionare_3") Then
                     'examinare z1
                     If date_extrase.Item("atentionare_0") Then

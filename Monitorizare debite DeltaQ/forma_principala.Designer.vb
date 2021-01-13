@@ -39,6 +39,7 @@ Partial Class fereastra_principala_frm
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.adauga_valori_pnl = New System.Windows.Forms.Panel()
+        Me.reactualizare_date_btn = New FontAwesome.Sharp.IconButton()
         Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.z1_lbl = New System.Windows.Forms.Label()
@@ -50,6 +51,14 @@ Partial Class fereastra_principala_frm
         Me.z1_tb = New System.Windows.Forms.TextBox()
         Me.z2_lbl = New System.Windows.Forms.Label()
         Me.tabel_valori_dgv = New System.Windows.Forms.DataGridView()
+        Me.data_ora = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dm = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.referinta = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.caseta = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.debit = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.delta_q = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.nr_cuib = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.id_rand_rezultate = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.debit_posalux_lbl = New System.Windows.Forms.Label()
         Me.nr_masina_cb = New System.Windows.Forms.ComboBox()
         Me.nr_masina_lbl = New System.Windows.Forms.Label()
@@ -74,16 +83,7 @@ Partial Class fereastra_principala_frm
         Me.lista_masini_pnl = New System.Windows.Forms.Panel()
         Me.masini_posalux_lbl = New System.Windows.Forms.Label()
         Me.button_flow_pnl = New System.Windows.Forms.FlowLayoutPanel()
-        Me.data_ora = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.dm = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.referinta = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.caseta = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.debit = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.delta_q = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.nr_cuib = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.id_rand_rezultate = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
-        Me.reactualizare_date_btn = New FontAwesome.Sharp.IconButton()
         Me.buton_refresh_ttp = New System.Windows.Forms.ToolTip(Me.components)
         Me.panou_butoane_pnl.SuspendLayout()
         Me.grafice_pnl.SuspendLayout()
@@ -269,6 +269,23 @@ Partial Class fereastra_principala_frm
         Me.adauga_valori_pnl.TabIndex = 1
         Me.adauga_valori_pnl.Visible = False
         '
+        'reactualizare_date_btn
+        '
+        Me.reactualizare_date_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.reactualizare_date_btn.Flip = FontAwesome.Sharp.FlipOrientation.Normal
+        Me.reactualizare_date_btn.Font = New System.Drawing.Font("Consolas", 20.0!, System.Drawing.FontStyle.Bold)
+        Me.reactualizare_date_btn.IconChar = FontAwesome.Sharp.IconChar.Redo
+        Me.reactualizare_date_btn.IconColor = System.Drawing.Color.DarkGreen
+        Me.reactualizare_date_btn.IconSize = 32
+        Me.reactualizare_date_btn.ImageAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.reactualizare_date_btn.Location = New System.Drawing.Point(944, 171)
+        Me.reactualizare_date_btn.Name = "reactualizare_date_btn"
+        Me.reactualizare_date_btn.Rotation = 0R
+        Me.reactualizare_date_btn.Size = New System.Drawing.Size(68, 45)
+        Me.reactualizare_date_btn.TabIndex = 10
+        Me.buton_refresh_ttp.SetToolTip(Me.reactualizare_date_btn, "Reactualizare date tabel")
+        Me.reactualizare_date_btn.UseVisualStyleBackColor = True
+        '
         'FlowLayoutPanel1
         '
         Me.FlowLayoutPanel1.Location = New System.Drawing.Point(0, 0)
@@ -448,6 +465,65 @@ Partial Class fereastra_principala_frm
         Me.tabel_valori_dgv.Size = New System.Drawing.Size(802, 315)
         Me.tabel_valori_dgv.TabIndex = 6
         Me.tabel_valori_dgv.Visible = False
+        '
+        'data_ora
+        '
+        Me.data_ora.HeaderText = "Data/ora"
+        Me.data_ora.Name = "data_ora"
+        Me.data_ora.ReadOnly = True
+        Me.data_ora.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.data_ora.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.data_ora.Width = 200
+        '
+        'dm
+        '
+        Me.dm.HeaderText = "DM"
+        Me.dm.Name = "dm"
+        Me.dm.ReadOnly = True
+        Me.dm.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.dm.Width = 130
+        '
+        'referinta
+        '
+        Me.referinta.HeaderText = "Referinta"
+        Me.referinta.Name = "referinta"
+        Me.referinta.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'caseta
+        '
+        Me.caseta.HeaderText = "Caseta"
+        Me.caseta.Name = "caseta"
+        Me.caseta.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.caseta.Width = 70
+        '
+        'debit
+        '
+        Me.debit.HeaderText = "Debit"
+        Me.debit.Name = "debit"
+        Me.debit.ReadOnly = True
+        Me.debit.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.debit.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'delta_q
+        '
+        Me.delta_q.HeaderText = "DeltaQ"
+        Me.delta_q.Name = "delta_q"
+        Me.delta_q.ReadOnly = True
+        Me.delta_q.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.delta_q.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'nr_cuib
+        '
+        Me.nr_cuib.HeaderText = "Nr cuib"
+        Me.nr_cuib.Name = "nr_cuib"
+        Me.nr_cuib.ReadOnly = True
+        Me.nr_cuib.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'id_rand_rezultate
+        '
+        Me.id_rand_rezultate.HeaderText = "Id rand rezultate"
+        Me.id_rand_rezultate.Name = "id_rand_rezultate"
+        Me.id_rand_rezultate.Visible = False
         '
         'debit_posalux_lbl
         '
@@ -761,85 +837,9 @@ Partial Class fereastra_principala_frm
         Me.button_flow_pnl.Size = New System.Drawing.Size(763, 427)
         Me.button_flow_pnl.TabIndex = 0
         '
-        'data_ora
-        '
-        Me.data_ora.HeaderText = "Data/ora"
-        Me.data_ora.Name = "data_ora"
-        Me.data_ora.ReadOnly = True
-        Me.data_ora.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.data_ora.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.data_ora.Width = 200
-        '
-        'dm
-        '
-        Me.dm.HeaderText = "DM"
-        Me.dm.Name = "dm"
-        Me.dm.ReadOnly = True
-        Me.dm.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.dm.Width = 130
-        '
-        'referinta
-        '
-        Me.referinta.HeaderText = "Referinta"
-        Me.referinta.Name = "referinta"
-        Me.referinta.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'caseta
-        '
-        Me.caseta.HeaderText = "Caseta"
-        Me.caseta.Name = "caseta"
-        Me.caseta.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.caseta.Width = 70
-        '
-        'debit
-        '
-        Me.debit.HeaderText = "Debit"
-        Me.debit.Name = "debit"
-        Me.debit.ReadOnly = True
-        Me.debit.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.debit.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'delta_q
-        '
-        Me.delta_q.HeaderText = "DeltaQ"
-        Me.delta_q.Name = "delta_q"
-        Me.delta_q.ReadOnly = True
-        Me.delta_q.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.delta_q.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'nr_cuib
-        '
-        Me.nr_cuib.HeaderText = "Nr cuib"
-        Me.nr_cuib.Name = "nr_cuib"
-        Me.nr_cuib.ReadOnly = True
-        Me.nr_cuib.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'id_rand_rezultate
-        '
-        Me.id_rand_rezultate.HeaderText = "Id rand rezultate"
-        Me.id_rand_rezultate.Name = "id_rand_rezultate"
-        Me.id_rand_rezultate.Visible = False
-        '
         'Timer1
         '
         Me.Timer1.Interval = 15000
-        '
-        'reactualizare_date_btn
-        '
-        Me.reactualizare_date_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.reactualizare_date_btn.Flip = FontAwesome.Sharp.FlipOrientation.Normal
-        Me.reactualizare_date_btn.Font = New System.Drawing.Font("Consolas", 20.0!, System.Drawing.FontStyle.Bold)
-        Me.reactualizare_date_btn.IconChar = FontAwesome.Sharp.IconChar.Redo
-        Me.reactualizare_date_btn.IconColor = System.Drawing.Color.DarkGreen
-        Me.reactualizare_date_btn.IconSize = 32
-        Me.reactualizare_date_btn.ImageAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.reactualizare_date_btn.Location = New System.Drawing.Point(944, 171)
-        Me.reactualizare_date_btn.Name = "reactualizare_date_btn"
-        Me.reactualizare_date_btn.Rotation = 0R
-        Me.reactualizare_date_btn.Size = New System.Drawing.Size(68, 45)
-        Me.reactualizare_date_btn.TabIndex = 10
-        Me.reactualizare_date_btn.UseVisualStyleBackColor = True
-        Me.buton_refresh_ttp.SetToolTip(reactualizare_date_btn, "Reactualizare date tabel")
         '
         'fereastra_principala_frm
         '
@@ -847,10 +847,10 @@ Partial Class fereastra_principala_frm
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1024, 651)
         Me.Controls.Add(Me.panou_butoane_pnl)
-        Me.Controls.Add(Me.adauga_valori_pnl)
-        Me.Controls.Add(Me.lista_masini_pnl)
         Me.Controls.Add(Me.lista_atentionari_pnl)
         Me.Controls.Add(Me.grafice_pnl)
+        Me.Controls.Add(Me.adauga_valori_pnl)
+        Me.Controls.Add(Me.lista_masini_pnl)
         Me.MinimumSize = New System.Drawing.Size(1040, 690)
         Me.Name = "fereastra_principala_frm"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
