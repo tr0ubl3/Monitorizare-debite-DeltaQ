@@ -207,18 +207,22 @@ Public Class fereastra_principala_frm
         Dim z1_prezent, z2_prezent, z3_prezent, z4_prezent, z1_validat, z2_validat, z3_validat, z4_validat As Boolean
         Dim valori_verificate As Integer
         Dim nr_valori_introduse As Integer
+        Dim rand_curent As Integer = tabel_valori_dgv.CurrentRow.Index
+
 
         For i = 1 To 3
-            If caseta_selectata = tabel_valori_dgv.Item(3, tabel_valori_dgv.CurrentRow.Index + i).Value Then
-                If Not tabel_valori_dgv.Rows.Count = tabel_valori_dgv.CurrentRow.Index Then
-                    data_ora_urmatoare = tabel_valori_dgv.Item(0, tabel_valori_dgv.CurrentRow.Index + i).Value
-                    ora_urmatoare = DateAndTime.Hour(data_ora_urmatoare)
-                    minutul_urmator = DateAndTime.Minute(data_ora_urmatoare)
-                    cuib_urmator = tabel_valori_dgv.Item(6, tabel_valori_dgv.CurrentRow.Index + i).Value
-                    If cuib_urmator >= cuib_selectat + val_selectate And cuib_urmator <= 4 Then
-                        If (ora_selectata = ora_urmatoare Or ora_selectata = (ora_urmatoare - 1)) AndAlso (minutul_urmator >= minutul_selectat Or (minutul_urmator <= minutul_selectat And ora_urmatoare > ora_selectata)) AndAlso (minutul_selectat = minutul_urmator Or minutul_selectat = minutul_urmator - 1 Or minutul_selectat = minutul_urmator - 2 Or minutul_selectat = minutul_urmator - 3) Then
-                            tabel_valori_dgv.Rows(tabel_valori_dgv.CurrentRow.Index + i).Selected = True
-                            val_selectate += 1
+            If rand_curent + i < tabel_valori_dgv.RowCount Then
+                If caseta_selectata = tabel_valori_dgv.Item(3, tabel_valori_dgv.CurrentRow.Index + i).Value Then
+                    If Not tabel_valori_dgv.Rows.Count = tabel_valori_dgv.CurrentRow.Index Then
+                        data_ora_urmatoare = tabel_valori_dgv.Item(0, tabel_valori_dgv.CurrentRow.Index + i).Value
+                        ora_urmatoare = DateAndTime.Hour(data_ora_urmatoare)
+                        minutul_urmator = DateAndTime.Minute(data_ora_urmatoare)
+                        cuib_urmator = tabel_valori_dgv.Item(6, tabel_valori_dgv.CurrentRow.Index + i).Value
+                        If cuib_urmator >= cuib_selectat + val_selectate And cuib_urmator <= 4 Then
+                            If (ora_selectata = ora_urmatoare Or ora_selectata = (ora_urmatoare - 1)) AndAlso (minutul_urmator >= minutul_selectat Or (minutul_urmator <= minutul_selectat And ora_urmatoare > ora_selectata)) AndAlso (minutul_selectat = minutul_urmator Or minutul_selectat = minutul_urmator - 1 Or minutul_selectat = minutul_urmator - 2 Or minutul_selectat = minutul_urmator - 3) Then
+                                tabel_valori_dgv.Rows(tabel_valori_dgv.CurrentRow.Index + i).Selected = True
+                                val_selectate += 1
+                            End If
                         End If
                     End If
                 End If
