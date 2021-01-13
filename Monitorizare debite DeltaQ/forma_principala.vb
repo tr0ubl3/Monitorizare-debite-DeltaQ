@@ -829,12 +829,17 @@ Public Class fereastra_principala_frm
         End Using
         reader.Close()
 
-        comanda.CommandText = "select dif_dq_max from referinta where nume='" & date_atentionare.Item("referinta") & "'"
+        comanda.CommandText = "select diferenta_max, diferenta_min, delta_q_nominal, delta_q_min, delta_q_max, dif_dq_max from referinta where nume='" & date_atentionare.Item("referinta") & "'"
         reader = comanda.ExecuteReader()
 
         Using reader
             While reader.Read
-                date_atentionare.Add("dif_dq_max", reader.GetDouble(0))
+                date_atentionare.Add("diferenta_max", reader.GetDouble(0))
+                date_atentionare.Add("diferenta_min", reader.GetDouble(1))
+                date_atentionare.Add("delta_q_nominal", reader.GetDouble(2))
+                date_atentionare.Add("delta_q_min", reader.GetDouble(3))
+                date_atentionare.Add("delta_q_max", reader.GetDouble(4))
+                date_atentionare.Add("dif_dq_max", reader.GetDouble(5))
             End While
         End Using
         comanda.Dispose()
@@ -922,6 +927,7 @@ Public Class fereastra_principala_frm
                 End If
 
                 If date_extrase.Item("atentionare_4") Or date_extrase.Item("atentionare_5") Or date_extrase.Item("atentionare_6") Or date_extrase.Item("atentionare_7") Then
+                    lista_atentionari_lst.Groups(1).Header = "Delta Q în afara toleranței " & date_extrase.Item("delta_q_nominal") & " [minim " & date_extrase.Item("delta_q_min") & ", maxim " & date_extrase.Item("delta_q_max") & "]"
                     If date_extrase.Item("atentionare_4") Then
                         item_lista_2.Text = "Z1"
                         item_lista_2.SubItems.Add(date_extrase.Item("dq_vals_0") & " ml")
