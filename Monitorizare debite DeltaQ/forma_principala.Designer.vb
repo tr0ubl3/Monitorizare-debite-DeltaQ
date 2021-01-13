@@ -83,6 +83,7 @@ Partial Class fereastra_principala_frm
         Me.nr_cuib = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.id_rand_rezultate = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.reactualizare_date_btn = New FontAwesome.Sharp.IconButton()
         Me.panou_butoane_pnl.SuspendLayout()
         Me.grafice_pnl.SuspendLayout()
         CType(Me.dif_debit_z1_chart, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -248,6 +249,7 @@ Partial Class fereastra_principala_frm
         'adauga_valori_pnl
         '
         Me.adauga_valori_pnl.BackColor = System.Drawing.Color.FromArgb(CType(CType(222, Byte), Integer), CType(CType(214, Byte), Integer), CType(CType(209, Byte), Integer))
+        Me.adauga_valori_pnl.Controls.Add(Me.reactualizare_date_btn)
         Me.adauga_valori_pnl.Controls.Add(Me.FlowLayoutPanel1)
         Me.adauga_valori_pnl.Controls.Add(Me.TableLayoutPanel1)
         Me.adauga_valori_pnl.Controls.Add(Me.tabel_valori_dgv)
@@ -821,6 +823,22 @@ Partial Class fereastra_principala_frm
         '
         Me.Timer1.Interval = 15000
         '
+        'reactualizare_date_btn
+        '
+        Me.reactualizare_date_btn.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.reactualizare_date_btn.Flip = FontAwesome.Sharp.FlipOrientation.Normal
+        Me.reactualizare_date_btn.Font = New System.Drawing.Font("Consolas", 20.0!, System.Drawing.FontStyle.Bold)
+        Me.reactualizare_date_btn.IconChar = FontAwesome.Sharp.IconChar.Redo
+        Me.reactualizare_date_btn.IconColor = System.Drawing.Color.DarkGreen
+        Me.reactualizare_date_btn.IconSize = 32
+        Me.reactualizare_date_btn.ImageAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.reactualizare_date_btn.Location = New System.Drawing.Point(944, 171)
+        Me.reactualizare_date_btn.Name = "reactualizare_date_btn"
+        Me.reactualizare_date_btn.Rotation = 0R
+        Me.reactualizare_date_btn.Size = New System.Drawing.Size(68, 45)
+        Me.reactualizare_date_btn.TabIndex = 10
+        Me.reactualizare_date_btn.UseVisualStyleBackColor = True
+        '
         'fereastra_principala_frm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -906,4 +924,5 @@ Partial Class fereastra_principala_frm
     Friend WithEvents nr_cuib As DataGridViewTextBoxColumn
     Friend WithEvents id_rand_rezultate As DataGridViewTextBoxColumn
     Friend WithEvents Timer1 As Timer
+    Friend WithEvents reactualizare_date_btn As FontAwesome.Sharp.IconButton
 End Class

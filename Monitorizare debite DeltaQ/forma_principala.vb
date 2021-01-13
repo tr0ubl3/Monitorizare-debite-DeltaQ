@@ -30,6 +30,7 @@ Public Class fereastra_principala_frm
         Me.z4_tb.Visible = False
 
         'tabel valori
+        Me.reactualizare_date_btn.Visible = False
         Me.tabel_valori_dgv.Visible = False
         Me.tabel_valori_dgv.Rows.Clear()
 
@@ -188,6 +189,7 @@ Public Class fereastra_principala_frm
             Dim data_inceput As String = ""
             Dim data_sfarsit As String = ""
 
+            reactualizare_date_btn.Visible = True
             Select Case moment_curent.Hour
                 Case 6 To 13
                     data_inceput = datacurenta & " " & "06:00:00"
@@ -206,7 +208,7 @@ Public Class fereastra_principala_frm
             conexiune_bd.Open()
             Dim comanda = conexiune_bd.CreateCommand
             comanda.CommandText = "select data, dm, referinta, nr_caseta, debit, delta_q, nr_cuib, rowid from valori where 
-                                   data between '" & data_inceput & "' and '" & data_sfarsit & "' and spc_id is null order by data asc"
+                                   data between '" & data_inceput & "' and '" & data_sfarsit & "' and spc_id is null and referinta like 'L%' order by data asc"
             Dim reader As SqliteDataReader = comanda.ExecuteReader
             Dim rand As String()
 
@@ -1102,6 +1104,15 @@ Public Class fereastra_principala_frm
     End Sub
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        If reactualizare_date_btn.Enabled = False Then
+            reactualizare_date_btn.Enabled = True
+        End If
+        Timer1.Stop()
+    End Sub
+
+    Private Sub reactualizare_date_btn_Click(sender As Object, e As EventArgs) Handles reactualizare_date_btn.Click
+        Timer1.Start()
+        reactualizare_date_btn.Enabled = False
         If tabel_valori_dgv.Visible Then
             tabel_valori_dgv.Rows.Clear()
             Dim conexiune_bd As New SqliteConnection("data source=" & locatie_bd)
@@ -1130,7 +1141,7 @@ Public Class fereastra_principala_frm
             conexiune_bd.Open()
             Dim comanda = conexiune_bd.CreateCommand
             comanda.CommandText = "select data, dm, referinta, nr_caseta, debit, delta_q, nr_cuib, rowid from valori where 
-                                   data between '" & data_inceput & "' and '" & data_sfarsit & "' and spc_id is null order by data asc"
+                                   data between '" & data_inceput & "' and '" & data_sfarsit & "' and spc_id is null and referinta like 'L%' order by data asc"
             Dim reader As SqliteDataReader = comanda.ExecuteReader
             Dim rand As String()
 
