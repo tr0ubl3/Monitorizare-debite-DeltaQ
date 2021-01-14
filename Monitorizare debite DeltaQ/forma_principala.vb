@@ -654,8 +654,6 @@ Public Class fereastra_principala_frm
         Dim spc_id As Integer
         'Dim id_producator As String
 
-
-
         vizibilitate_panou(lista_masini_pnl)
         If button_flow_pnl.Controls.OfType(Of Button).Count = 0 Then
             conexiune_bd.Open()
@@ -889,6 +887,8 @@ Public Class fereastra_principala_frm
                 lista_atentionari_lst.Items.Clear()
 
                 If date_extrase.Item("atentionare_0") Or date_extrase.Item("atentionare_1") Or date_extrase.Item("atentionare_2") Or date_extrase.Item("atentionare_3") Then
+                    lista_atentionari_lst.Groups(0).Header = "Diferențe debit între Posalux și Delta Q minim " _
+                        & date_extrase.Item("diferenta_min") & "ml, maxim " & date_extrase.Item("diferenta_max") & "ml"
                     'examinare z1
                     If date_extrase.Item("atentionare_0") Then
                         'item_lista_1.BackColor = Color.Red
@@ -927,7 +927,8 @@ Public Class fereastra_principala_frm
                 End If
 
                 If date_extrase.Item("atentionare_4") Or date_extrase.Item("atentionare_5") Or date_extrase.Item("atentionare_6") Or date_extrase.Item("atentionare_7") Then
-                    lista_atentionari_lst.Groups(1).Header = "Delta Q în afara toleranței " & date_extrase.Item("delta_q_nominal") & " [minim " & date_extrase.Item("delta_q_min") & ", maxim " & date_extrase.Item("delta_q_max") & "]"
+                    lista_atentionari_lst.Groups(1).Header = "Delta Q în afara toleranței nominal " _
+                        & date_extrase.Item("delta_q_nominal") & "ml (minim " & date_extrase.Item("delta_q_min") & ", maxim " & date_extrase.Item("delta_q_max") & ")"
                     If date_extrase.Item("atentionare_4") Then
                         item_lista_2.Text = "Z1"
                         item_lista_2.SubItems.Add(date_extrase.Item("dq_vals_0") & " ml")
