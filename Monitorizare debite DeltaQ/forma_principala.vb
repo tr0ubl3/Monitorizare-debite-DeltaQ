@@ -821,14 +821,14 @@ Public Class fereastra_principala_frm
         End Using
         reader.Close()
 
-        comanda.CommandText = "select dm, round(debit, 1), delta_q from valori where spc_id=" & date_atentionare.Item("id_spc")
+        comanda.CommandText = "select dm, round(debit, 1), delta_q, nr_cuib from valori where spc_id=" & date_atentionare.Item("id_spc")
         reader = comanda.ExecuteReader
 
         Using reader
             While reader.Read
-                date_atentionare.Add("dm_" & incr, reader.GetString(0))
-                date_atentionare.Add("debit_" & incr, reader.GetDouble(1))
-                date_atentionare.Add("dq_vals_" & incr, reader.GetDouble(2))
+                date_atentionare.Add("dm_" & reader.GetInt16(3) - 1, reader.GetString(0))
+                date_atentionare.Add("debit_" & reader.GetInt16(3) - 1, reader.GetDouble(1))
+                date_atentionare.Add("dq_vals_" & reader.GetInt16(3) - 1, reader.GetDouble(2))
                 incr += 1
             End While
         End Using
@@ -894,6 +894,11 @@ Public Class fereastra_principala_frm
                 lista_atentionari_lst.Items.Clear()
 
 
+                lista_atentionari_lst.Groups(0).Header = "Diferențe debit între Posalux și Delta Q (minim " _
+                        & date_extrase.Item("diferenta_min") & ", maxim " & date_extrase.Item("diferenta_max") & ")"
+
+                lista_atentionari_lst.Groups(1).Header = "Delta Q în afara toleranței nominal " _
+                        & date_extrase.Item("delta_q_nominal") & "ml (minim " & date_extrase.Item("delta_q_min") & ", maxim " & date_extrase.Item("delta_q_max") & ")"
 
                 If date_extrase.Contains("debit_0") Then
                     item_lista_1.UseItemStyleForSubItems = False
@@ -948,8 +953,6 @@ Public Class fereastra_principala_frm
                 End If
 
                 If date_extrase.Item("atentionare_0") Or date_extrase.Item("atentionare_1") Or date_extrase.Item("atentionare_2") Or date_extrase.Item("atentionare_3") Then
-                    lista_atentionari_lst.Groups(0).Header = "Diferențe debit între Posalux și Delta Q minim " _
-                        & date_extrase.Item("diferenta_min") & "ml, maxim " & date_extrase.Item("diferenta_max") & "ml"
                     'examinare z1
                     If date_extrase.Item("atentionare_0") Then
                         lista_atentionari_lst.Items.Item("z1_list").SubItems().Item(2).Text = "NOK"
@@ -973,8 +976,6 @@ Public Class fereastra_principala_frm
                 End If
 
                 If date_extrase.Item("atentionare_4") Or date_extrase.Item("atentionare_5") Or date_extrase.Item("atentionare_6") Or date_extrase.Item("atentionare_7") Then
-                    lista_atentionari_lst.Groups(1).Header = "Delta Q în afara toleranței nominal " _
-                        & date_extrase.Item("delta_q_nominal") & "ml (minim " & date_extrase.Item("delta_q_min") & ", maxim " & date_extrase.Item("delta_q_max") & ")"
                     If date_extrase.Item("atentionare_4") Then
                         item_lista_2.Text = "Z1"
                         item_lista_2.SubItems.Add(date_extrase.Item("dq_vals_0") & " ml")
