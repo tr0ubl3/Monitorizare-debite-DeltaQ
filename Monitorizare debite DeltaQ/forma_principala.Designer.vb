@@ -78,13 +78,17 @@ Partial Class fereastra_principala_frm
         Me.id_atentionare_lbl = New System.Windows.Forms.Label()
         Me.date_operator_atentionare_lbl = New System.Windows.Forms.Label()
         Me.lista_atentionari_lst = New System.Windows.Forms.ListView()
-        Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.spindle = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.rezolutie = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.lista_masini_pnl = New System.Windows.Forms.Panel()
         Me.masini_posalux_lbl = New System.Windows.Forms.Label()
         Me.button_flow_pnl = New System.Windows.Forms.FlowLayoutPanel()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.buton_refresh_ttp = New System.Windows.Forms.ToolTip(Me.components)
+        Me.datamatrix = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.val_introd = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.val_mas = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.diferenta = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.panou_butoane_pnl.SuspendLayout()
         Me.grafice_pnl.SuspendLayout()
         CType(Me.dif_debit_z1_chart, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -775,7 +779,7 @@ Partial Class fereastra_principala_frm
         Me.lista_atentionari_lst.AutoArrange = False
         Me.lista_atentionari_lst.BackColor = System.Drawing.SystemColors.Window
         Me.lista_atentionari_lst.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.lista_atentionari_lst.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2})
+        Me.lista_atentionari_lst.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.spindle, Me.datamatrix, Me.rezolutie, Me.diferenta, Me.val_introd, Me.val_mas})
         Me.lista_atentionari_lst.Font = New System.Drawing.Font("Consolas", 10.0!)
         Me.lista_atentionari_lst.FullRowSelect = True
         Me.lista_atentionari_lst.GridLines = True
@@ -797,15 +801,15 @@ Partial Class fereastra_principala_frm
         Me.lista_atentionari_lst.UseCompatibleStateImageBehavior = False
         Me.lista_atentionari_lst.View = System.Windows.Forms.View.Details
         '
-        'ColumnHeader1
+        'spindle
         '
-        Me.ColumnHeader1.Text = "Spindle"
-        Me.ColumnHeader1.Width = 143
+        Me.spindle.Text = "Spindle"
+        Me.spindle.Width = 62
         '
-        'ColumnHeader2
+        'rezolutie
         '
-        Me.ColumnHeader2.Text = "Rezolutie"
-        Me.ColumnHeader2.Width = 240
+        Me.rezolutie.Text = "Rezolutie"
+        Me.rezolutie.Width = 81
         '
         'lista_masini_pnl
         '
@@ -840,6 +844,26 @@ Partial Class fereastra_principala_frm
         'Timer1
         '
         Me.Timer1.Interval = 15000
+        '
+        'datamatrix
+        '
+        Me.datamatrix.Text = "DM"
+        Me.datamatrix.Width = 127
+        '
+        'val_introd
+        '
+        Me.val_introd.Text = "Valoare introdusă"
+        Me.val_introd.Width = 140
+        '
+        'val_mas
+        '
+        Me.val_mas.Text = "Valoare măsurată"
+        Me.val_mas.Width = 141
+        '
+        'diferenta
+        '
+        Me.diferenta.Text = "Diferență"
+        Me.diferenta.Width = 110
         '
         'fereastra_principala_frm
         '
@@ -901,8 +925,8 @@ Partial Class fereastra_principala_frm
     Friend WithEvents lista_atentionari_pnl As Panel
     Friend WithEvents lista_atentionari_lst As ListView
     Friend WithEvents id_atentionare As Label
-    Friend WithEvents ColumnHeader1 As ColumnHeader
-    Friend WithEvents ColumnHeader2 As ColumnHeader
+    Friend WithEvents spindle As ColumnHeader
+    Friend WithEvents rezolutie As ColumnHeader
     Friend WithEvents FlowLayoutPanel1 As FlowLayoutPanel
     Friend WithEvents lista_masini_pnl As Panel
     Friend WithEvents button_flow_pnl As FlowLayoutPanel
@@ -928,4 +952,8 @@ Partial Class fereastra_principala_frm
     Friend WithEvents Timer1 As Timer
     Friend WithEvents reactualizare_date_btn As FontAwesome.Sharp.IconButton
     Friend WithEvents buton_refresh_ttp As ToolTip
+    Friend WithEvents datamatrix As ColumnHeader
+    Friend WithEvents val_introd As ColumnHeader
+    Friend WithEvents val_mas As ColumnHeader
+    Friend WithEvents diferenta As ColumnHeader
 End Class
