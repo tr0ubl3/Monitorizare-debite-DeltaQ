@@ -30,6 +30,7 @@ Partial Class fereastra_principala_frm
         Dim ListViewGroup1 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Diferențe debit între Posalux și Delta Q", System.Windows.Forms.HorizontalAlignment.Left)
         Dim ListViewGroup2 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Delta Q în afara toleranței", System.Windows.Forms.HorizontalAlignment.Left)
         Dim ListViewGroup3 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Diferența Delta Q mai mare decât limita impusă", System.Windows.Forms.HorizontalAlignment.Left)
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(fereastra_principala_frm))
         Me.panou_butoane_pnl = New System.Windows.Forms.Panel()
         Me.lista_atentionari_btn = New FontAwesome.Sharp.IconButton()
         Me.vizualizare_grafice_btn = New FontAwesome.Sharp.IconButton()
@@ -79,16 +80,16 @@ Partial Class fereastra_principala_frm
         Me.date_operator_atentionare_lbl = New System.Windows.Forms.Label()
         Me.lista_atentionari_lst = New System.Windows.Forms.ListView()
         Me.spindle = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.datamatrix = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.rezolutie = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.diferenta = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.val_introd = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.val_mas = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.lista_masini_pnl = New System.Windows.Forms.Panel()
         Me.masini_posalux_lbl = New System.Windows.Forms.Label()
         Me.button_flow_pnl = New System.Windows.Forms.FlowLayoutPanel()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.buton_refresh_ttp = New System.Windows.Forms.ToolTip(Me.components)
-        Me.datamatrix = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.val_introd = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.val_mas = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.diferenta = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.panou_butoane_pnl.SuspendLayout()
         Me.grafice_pnl.SuspendLayout()
         CType(Me.dif_debit_z1_chart, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -806,10 +807,30 @@ Partial Class fereastra_principala_frm
         Me.spindle.Text = "Spindle"
         Me.spindle.Width = 62
         '
+        'datamatrix
+        '
+        Me.datamatrix.Text = "DM"
+        Me.datamatrix.Width = 127
+        '
         'rezolutie
         '
         Me.rezolutie.Text = "Rezolutie"
         Me.rezolutie.Width = 81
+        '
+        'diferenta
+        '
+        Me.diferenta.Text = "Diferență"
+        Me.diferenta.Width = 110
+        '
+        'val_introd
+        '
+        Me.val_introd.Text = "Valoare introdusă"
+        Me.val_introd.Width = 140
+        '
+        'val_mas
+        '
+        Me.val_mas.Text = "Valoare măsurată"
+        Me.val_mas.Width = 141
         '
         'lista_masini_pnl
         '
@@ -845,26 +866,6 @@ Partial Class fereastra_principala_frm
         '
         Me.Timer1.Interval = 15000
         '
-        'datamatrix
-        '
-        Me.datamatrix.Text = "DM"
-        Me.datamatrix.Width = 127
-        '
-        'val_introd
-        '
-        Me.val_introd.Text = "Valoare introdusă"
-        Me.val_introd.Width = 140
-        '
-        'val_mas
-        '
-        Me.val_mas.Text = "Valoare măsurată"
-        Me.val_mas.Width = 141
-        '
-        'diferenta
-        '
-        Me.diferenta.Text = "Diferență"
-        Me.diferenta.Width = 110
-        '
         'fereastra_principala_frm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -875,6 +876,7 @@ Partial Class fereastra_principala_frm
         Me.Controls.Add(Me.grafice_pnl)
         Me.Controls.Add(Me.adauga_valori_pnl)
         Me.Controls.Add(Me.lista_masini_pnl)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MinimumSize = New System.Drawing.Size(1040, 690)
         Me.Name = "fereastra_principala_frm"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
