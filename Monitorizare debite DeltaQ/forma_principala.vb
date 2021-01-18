@@ -878,6 +878,7 @@ Public Class fereastra_principala_frm
                 Dim item_lista_1, item_lista_2, item_lista_3 As New ListViewItem
                 Dim incr As Integer = 0
                 Dim date_extrase As IDictionary
+                Dim nr_z As String
 
                 date_extrase = date_atentionare(id_masina)
 
@@ -900,10 +901,11 @@ Public Class fereastra_principala_frm
                 lista_atentionari_lst.Groups(1).Header = "Delta Q în afara toleranței nominal " _
                         & date_extrase.Item("delta_q_nominal") & "ml (minim " & date_extrase.Item("delta_q_min") & ", maxim " & date_extrase.Item("delta_q_max") & ")"
 
+                nr_z = "Z1"
                 If date_extrase.Contains("debit_0") Then
                     item_lista_1.UseItemStyleForSubItems = False
                     item_lista_1.Name = "z1_list"
-                    item_lista_1.Text = "Z1"
+                    item_lista_1.Text = nr_z
                     item_lista_1.SubItems.Add(date_extrase.Item("dm_0"))
                     item_lista_1.SubItems.Add("OK").BackColor = Color.Green
                     item_lista_1.SubItems.Add(Math.Round(date_extrase.Item("dif_debit_0"), 1) & " ml")
@@ -911,12 +913,25 @@ Public Class fereastra_principala_frm
                     item_lista_1.SubItems.Add(date_extrase.Item("debit_0"))
                     item_lista_1.Group = lista_atentionari_lst.Groups(0)
                     lista_atentionari_lst.Items.Add(item_lista_1)
+                Else
+                    item_lista_1.UseItemStyleForSubItems = False
+                    item_lista_1.Name = "z1_list"
+                    item_lista_1.Text = nr_z
+                    item_lista_1.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_1.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_1.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_1.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_1.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_1.Group = lista_atentionari_lst.Groups(0)
+                    lista_atentionari_lst.Items.Add(item_lista_1)
                 End If
+
+                nr_z = "Z2"
+                item_lista_1 = New ListViewItem
                 If date_extrase.Contains("debit_1") Then
-                    item_lista_1 = New ListViewItem
                     item_lista_1.UseItemStyleForSubItems = False
                     item_lista_1.Name = "z2_list"
-                    item_lista_1.Text = "Z2"
+                    item_lista_1.Text = nr_z
                     item_lista_1.SubItems.Add(date_extrase.Item("dm_1"))
                     item_lista_1.SubItems.Add("OK").BackColor = Color.Green
                     item_lista_1.SubItems.Add(Math.Round(date_extrase.Item("dif_debit_1"), 1) & " ml")
@@ -924,12 +939,25 @@ Public Class fereastra_principala_frm
                     item_lista_1.SubItems.Add(date_extrase.Item("debit_1"))
                     item_lista_1.Group = lista_atentionari_lst.Groups(0)
                     lista_atentionari_lst.Items.Add(item_lista_1)
+                Else
+                    item_lista_1.UseItemStyleForSubItems = False
+                    item_lista_1.Name = "z1_list"
+                    item_lista_1.Text = nr_z
+                    item_lista_1.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_1.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_1.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_1.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_1.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_1.Group = lista_atentionari_lst.Groups(0)
+                    lista_atentionari_lst.Items.Add(item_lista_1)
                 End If
+
+                nr_z = "Z3"
+                item_lista_1 = New ListViewItem
                 If date_extrase.Contains("debit_2") Then
-                    item_lista_1 = New ListViewItem
                     item_lista_1.UseItemStyleForSubItems = False
                     item_lista_1.Name = "z3_list"
-                    item_lista_1.Text = "Z3"
+                    item_lista_1.Text = nr_z
                     item_lista_1.SubItems.Add(date_extrase.Item("dm_2"))
                     item_lista_1.SubItems.Add("OK").BackColor = Color.Green
                     item_lista_1.SubItems.Add(Math.Round(date_extrase.Item("dif_debit_2"), 1) & " ml")
@@ -937,17 +965,41 @@ Public Class fereastra_principala_frm
                     item_lista_1.SubItems.Add(date_extrase.Item("debit_2"))
                     item_lista_1.Group = lista_atentionari_lst.Groups(0)
                     lista_atentionari_lst.Items.Add(item_lista_1)
+                Else
+                    item_lista_1.UseItemStyleForSubItems = False
+                    item_lista_1.Name = "z1_list"
+                    item_lista_1.Text = nr_z
+                    item_lista_1.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_1.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_1.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_1.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_1.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_1.Group = lista_atentionari_lst.Groups(0)
+                    lista_atentionari_lst.Items.Add(item_lista_1)
                 End If
+
+                nr_z = "Z4"
+                item_lista_1 = New ListViewItem
                 If date_extrase.Contains("debit_3") Then
-                    item_lista_1 = New ListViewItem
                     item_lista_1.UseItemStyleForSubItems = False
                     item_lista_1.Name = "z4_list"
-                    item_lista_1.Text = "Z4"
+                    item_lista_1.Text = nr_z
                     item_lista_1.SubItems.Add(date_extrase.Item("dm_3"))
                     item_lista_1.SubItems.Add("OK").BackColor = Color.Green
                     item_lista_1.SubItems.Add(Math.Round(date_extrase.Item("dif_debit_3"), 1) & " ml")
                     item_lista_1.SubItems.Add(date_extrase.Item("valoare_introdusa_z4"))
                     item_lista_1.SubItems.Add(date_extrase.Item("debit_3"))
+                    item_lista_1.Group = lista_atentionari_lst.Groups(0)
+                    lista_atentionari_lst.Items.Add(item_lista_1)
+                Else
+                    item_lista_1.UseItemStyleForSubItems = False
+                    item_lista_1.Name = "z1_list"
+                    item_lista_1.Text = nr_z
+                    item_lista_1.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_1.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_1.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_1.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_1.SubItems.Add("N/A").BackColor = Color.Gray
                     item_lista_1.Group = lista_atentionari_lst.Groups(0)
                     lista_atentionari_lst.Items.Add(item_lista_1)
                 End If
