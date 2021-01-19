@@ -320,9 +320,11 @@ Public Class fereastra_principala_frm
         debit_introdus(1) = z2_tb.Text
         debit_introdus(2) = z3_tb.Text
         debit_introdus(3) = z4_tb.Text
+
         For i = 0 To 3
-            If debit_introdus(i) = "*" Then
-            Else
+            ReDim Preserve debit_masurat(i), dif_debit(i), dq_vals(i)
+            If IsNumeric(debit_introdus(i)) Then
+                dq_vals(i) = tabel_valori_dgv.Item(5, tabel_valori_dgv.CurrentRow.Index + i).Value
                 debit_masurat(i) = tabel_valori_dgv.Item(4, tabel_valori_dgv.CurrentRow.Index + i).Value
                 dif_debit(i) = debit_introdus(i) - debit_masurat(i)
             End If
@@ -358,22 +360,16 @@ Public Class fereastra_principala_frm
                                diferenta_calculata_z2, diferenta_calculata_z3, diferenta_calculata_z4, diferenta_calculata_min_max_delta_q, referinta, masina) values (@nr_marca, @val_z1, @val_z2,
                                @val_z3, @val_z4, @dif_z1, @dif_z2, @dif_z3, @dif_z4, @dif_dq, @referinta, @masina)"
         comanda.Parameters.AddWithValue("@nr_marca", nr_marca_tb.Text)
-        comanda.Parameters.AddWithValue("@val_z1", If(debit_introdus(0) = "*", DBNull.Value, CInt(debit_introdus(0))))
-        comanda.Parameters.AddWithValue("@val_z2", If(debit_introdus(1) = "*", DBNull.Value, CInt(debit_introdus(1))))
-        comanda.Parameters.AddWithValue("@val_z3", If(debit_introdus(2) = "*", DBNull.Value, CInt(debit_introdus(2))))
-        comanda.Parameters.AddWithValue("@val_z4", If(debit_introdus(3) = "*", DBNull.Value, CInt(debit_introdus(3))))
-        comanda.Parameters.AddWithValue("@dif_z1", If(debit_introdus(0) = "*", DBNull.Value, dif_debit(0)))
-        comanda.Parameters.AddWithValue("@dif_z2", If(debit_introdus(1) = "*", DBNull.Value, dif_debit(1)))
-        comanda.Parameters.AddWithValue("@dif_z3", If(debit_introdus(2) = "*", DBNull.Value, dif_debit(2)))
-        comanda.Parameters.AddWithValue("@dif_z4", If(debit_introdus(3) = "*", DBNull.Value, dif_debit(3)))
+
         For i = 0 To 3
-            If debit_introdus(i) = "*" Then
-                'actions tbd
-            Else
-                dq_vals(i) = tabel_valori_dgv.Item(5, tabel_valori_dgv.CurrentRow.Index + i).Value
-            End If
+            comanda.Parameters.AddWithValue("@val_z" & i, If(debit_introdus(i) = "*", DBNull.Value, CInt(debit_introdus(i))))
+            comanda.Parameters.AddWithValue("@dif_z" & i, If(debit_introdus(i) = "*", DBNull.Value, dif_debit(i)))
         Next
-        comanda.Parameters.AddWithValue("@dif_dq", dq_vals.Max - dq_vals.Min)
+        If dq_vals.Length > 1 Then
+            comanda.Parameters.AddWithValue("@dif_dq", dq_vals.Max - dq_vals.Min)
+        Else
+            comanda.Parameters.AddWithValue("@dif_dq", DBNull.Value)
+        End If
         comanda.Parameters.AddWithValue("@referinta", tabel_valori_dgv.Item(2, tabel_valori_dgv.CurrentRow.Index).Value)
         comanda.Parameters.AddWithValue("@masina", id_masina)
         'Debug.Print("insert into spc_posalux (nr_marca, valoare_z1, valoare_z2, valoare_z3, valoare_z4, referinta, masina) values (" & nr_marca_tb.Text & ", " & If(z1_tb.Text = "*", "", z1_tb.Text) & ", " & If(z2_tb.Text = "*", "", z2_tb.Text) & ", " & If(z3_tb.Text = "*", "", z3_tb.Text) & ", " & If(z4_tb.Text = "*", "", z4_tb.Text) & ", '" & tabel_valori_dgv.Item(2, tabel_valori_dgv.CurrentRow.Index).Value & "'," & id_masina & ")")
@@ -496,7 +492,7 @@ Public Class fereastra_principala_frm
                 comanda.Parameters.AddWithValue("@z4_atentionare_2", False)
             End If
 
-            If (dq_vals.Max - dq_vals.Min) > dif_dq_max Then
+            If dq_vals.Length > 1 And (dq_vals.Max - dq_vals.Min) > dif_dq_max Then
                 atentionare_3 = True
                 'actiune de implementat atunci cand diferenta intre delta q-uri este mai mare decat limita impusa
                 'afiseaza z-urile cu valoarea minima si maxima
