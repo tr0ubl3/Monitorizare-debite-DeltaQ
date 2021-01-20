@@ -315,6 +315,7 @@ Public Class fereastra_principala_frm
         Dim atentionare_1, atentionare_2, atentionare_3 As Boolean
         Dim item_lista_1, item_lista_2, item_lista_3 As New ListViewItem
         Dim atentionare(11) As Boolean
+        Dim nr_valori, nr_dq As Int16
 
         debit_introdus(0) = z1_tb.Text
         debit_introdus(1) = z2_tb.Text
@@ -324,11 +325,19 @@ Public Class fereastra_principala_frm
         For i = 0 To 3
             ReDim Preserve debit_masurat(i), dif_debit(i), dq_vals(i)
             If IsNumeric(debit_introdus(i)) Then
-                dq_vals(i) = tabel_valori_dgv.Item(5, tabel_valori_dgv.CurrentRow.Index + i).Value
+                If IsNumeric(tabel_valori_dgv.Item(5, tabel_valori_dgv.CurrentRow.Index + i).Value) Then
+                    dq_vals(i) = tabel_valori_dgv.Item(5, tabel_valori_dgv.CurrentRow.Index + i).Value
+                    nr_dq += 1
+                End If
                 debit_masurat(i) = tabel_valori_dgv.Item(4, tabel_valori_dgv.CurrentRow.Index + i).Value
                 dif_debit(i) = debit_introdus(i) - debit_masurat(i)
+                nr_valori += 1
             End If
         Next
+
+        'MsgBox(debit_masurat(0) & " - " & debit_masurat(1) & " - " & debit_masurat(2) & " - " & debit_masurat(3) & " lungime de " & debit_masurat.Length)
+
+
         'de scos id-ul din tabelul masini pentru a actualiza rowid-urile selectate mai sus cu id-ul masinilor
         rezultat_regex = testare_regex.Match(nr_masina_cb.Text)
         conexiune_bd.Open()
@@ -338,8 +347,6 @@ Public Class fereastra_principala_frm
         'extragere id masina
         Using reader
             While reader.Read()
-                'MsgBox(reader.GetString(0) & " " & reader.GetString(1) & " " & reader.GetString(2) & " " & reader.GetString(3))
-                'tabel_valori_dgv. = reader.GetString(0)
                 id_masina = reader.GetInt16(0)
             End While
         End Using
@@ -351,36 +358,32 @@ Public Class fereastra_principala_frm
             comanda.ExecuteNonQuery()
         Next
         comanda.Dispose()
+
         'salvare rezultat spc in bd
-        'comanda.CommandText = "insert into spc_posalux (nr_marca, valoare_z1, valoare_z2, valoare_z3, valoare_z4, referinta, masina) values (" _
-        '                       & nr_marca_tb.Text & ", " & If(z1_tb.Text = "*", "", z1_tb.Text) & ", " & If(z2_tb.Text = "*", "", z2_tb.Text) _
-        '                      & ", " & If(z3_tb.Text = "*", "", z3_tb.Text) & ", " & If(z4_tb.Text = "*", "", z4_tb.Text) & ", '" _
-        '                       & tabel_valori_dgv.Item(2, tabel_valori_dgv.CurrentRow.Index).Value & "'," & id_masina & ")"
         comanda.CommandText = "insert into spc_posalux (nr_marca, valoare_introdusa_z1, valoare_introdusa_z2, valoare_introdusa_z3, valoare_introdusa_z4, diferenta_calculata_z1,
                                diferenta_calculata_z2, diferenta_calculata_z3, diferenta_calculata_z4, diferenta_calculata_min_max_delta_q, referinta, masina) values (@nr_marca, @val_z1, @val_z2,
                                @val_z3, @val_z4, @dif_z1, @dif_z2, @dif_z3, @dif_z4, @dif_dq, @referinta, @masina)"
         comanda.Parameters.AddWithValue("@nr_marca", nr_marca_tb.Text)
 
         For i = 0 To 3
-            comanda.Parameters.AddWithValue("@val_z" & i, If(debit_introdus(i) = "*", DBNull.Value, CInt(debit_introdus(i))))
-            comanda.Parameters.AddWithValue("@dif_z" & i, If(debit_introdus(i) = "*", DBNull.Value, dif_debit(i)))
+            comanda.Parameters.AddWithValue("@val_z" & i + 1, If(debit_introdus(i) = "*", DBNull.Value, CInt(debit_introdus(i))))
+            comanda.Parameters.AddWithValue("@dif_z" & i + 1, If(debit_introdus(i) = "*", DBNull.Value, dif_debit(i)))
         Next
-        If dq_vals.Length > 1 Then
+
+        If nr_dq > 1 Then
             comanda.Parameters.AddWithValue("@dif_dq", dq_vals.Max - dq_vals.Min)
         Else
             comanda.Parameters.AddWithValue("@dif_dq", DBNull.Value)
         End If
+
         comanda.Parameters.AddWithValue("@referinta", tabel_valori_dgv.Item(2, tabel_valori_dgv.CurrentRow.Index).Value)
         comanda.Parameters.AddWithValue("@masina", id_masina)
-        'Debug.Print("insert into spc_posalux (nr_marca, valoare_z1, valoare_z2, valoare_z3, valoare_z4, referinta, masina) values (" & nr_marca_tb.Text & ", " & If(z1_tb.Text = "*", "", z1_tb.Text) & ", " & If(z2_tb.Text = "*", "", z2_tb.Text) & ", " & If(z3_tb.Text = "*", "", z3_tb.Text) & ", " & If(z4_tb.Text = "*", "", z4_tb.Text) & ", '" & tabel_valori_dgv.Item(2, tabel_valori_dgv.CurrentRow.Index).Value & "'," & id_masina & ")")
         comanda_executata = comanda.ExecuteNonQuery()
 
         If comanda_executata = 1 Then
             'extrage id-ul spc-ului
             comanda.CommandText = "select last_insert_rowid()"
             spc_id = comanda.ExecuteScalar()
-
-            'grafice_pnl.Visible = True
 
             'actualizare tabel valori cu id-ul spcului creat
             For Each rand In tabel_valori_dgv.SelectedRows
@@ -418,36 +421,16 @@ Public Class fereastra_principala_frm
             'calcul diferenta debit maxima pentru a verificare daca e mai mare decat limita impusa in referinta
             If dif_debit.Max > dif_max Or dif_debit.Min < dif_min Then
                 atentionare_1 = True
-                'comanda.Parameters.AddWithValue("@atentionare_activa", True)
-                'actiune de implementat
-                'lista_atentionari_lst.Items.Add("Diferente de debit mai mari decat " & dif_max & " sau " & dif_min).Group = lista_atentionari_lst.Groups("Verificare 1")
-                If dif_debit(0) > dif_max Or dif_debit(0) < dif_min Then
-                    atentionare(0) = True
-                    comanda.Parameters.AddWithValue("@z1_atentionare_1", True)
-                Else
-                    comanda.Parameters.AddWithValue("@z1_atentionare_1", False)
-                End If
 
-                If dif_debit(1) > dif_max Or dif_debit(1) < dif_min Then
-                    atentionare(1) = True
-                    comanda.Parameters.AddWithValue("@z2_atentionare_1", True)
-                Else
-                    comanda.Parameters.AddWithValue("@z2_atentionare_1", False)
-                End If
-
-                If dif_debit(2) > dif_max Or dif_debit(2) < dif_min Then
-                    atentionare(2) = True
-                    comanda.Parameters.AddWithValue("@z3_atentionare_1", True)
-                Else
-                    comanda.Parameters.AddWithValue("@z3_atentionare_1", False)
-                End If
-
-                If dif_debit(3) > dif_max Or dif_debit(3) < dif_min Then
-                    atentionare(3) = True
-                    comanda.Parameters.AddWithValue("@z4_atentionare_1", True)
-                Else
-                    comanda.Parameters.AddWithValue("@z4_atentionare_1", False)
-                End If
+                'verifica diferenta debit z1
+                For i = 0 To 3
+                    If debit_masurat(i) > 0 And (dif_debit(i) > dif_max Or dif_debit(i) < dif_min) Then
+                        atentionare(i) = True
+                        comanda.Parameters.AddWithValue("@z" & i + 1 & "_atentionare_1", True)
+                    Else
+                        comanda.Parameters.AddWithValue("@z" & i + 1 & "_atentionare_1", False)
+                    End If
+                Next
             Else
                 comanda.Parameters.AddWithValue("@z1_atentionare_1", False)
                 comanda.Parameters.AddWithValue("@z2_atentionare_1", False)
@@ -457,34 +440,12 @@ Public Class fereastra_principala_frm
 
             If dq_vals.Max > dq_max Or dq_vals.Min < dq_min Then
                 atentionare_2 = True
-                'actiune de implementat atunci cand delta q-urile sunt in afara limitei
-                If dq_vals(0) > dq_max Or dq_vals(0) < dq_min Then
-                    atentionare(4) = True
-                    comanda.Parameters.AddWithValue("@z1_atentionare_2", True)
-                Else
-                    comanda.Parameters.AddWithValue("@z1_atentionare_2", False)
-                End If
-
-                If dq_vals(1) > dq_max Or dq_vals(1) < dq_min Then
-                    atentionare(5) = True
-                    comanda.Parameters.AddWithValue("@z2_atentionare_2", True)
-                Else
-                    comanda.Parameters.AddWithValue("@z2_atentionare_2", False)
-                End If
-
-                If dq_vals(2) > dq_max Or dq_vals(2) < dq_min Then
-                    atentionare(6) = True
-                    comanda.Parameters.AddWithValue("@z3_atentionare_2", True)
-                Else
-                    comanda.Parameters.AddWithValue("@z3_atentionare_2", False)
-                End If
-
-                If dq_vals(3) > dq_max Or dq_vals(3) < dq_min Then
-                    atentionare(7) = True
-                    comanda.Parameters.AddWithValue("@z4_atentionare_2", True)
-                Else
-                    comanda.Parameters.AddWithValue("@z4_atentionare_2", False)
-                End If
+                For i = 0 To 3
+                    If dq_vals(i) > 0 And (dq_vals(i) > dq_max Or dq_vals(i) < dq_min) Then
+                        atentionare(4 + i) = True
+                        comanda.Parameters.AddWithValue("@z" & i + 1 & "_atentionare_2", True)
+                    End If
+                Next
             Else
                 comanda.Parameters.AddWithValue("@z1_atentionare_2", False)
                 comanda.Parameters.AddWithValue("@z2_atentionare_2", False)
@@ -492,37 +453,15 @@ Public Class fereastra_principala_frm
                 comanda.Parameters.AddWithValue("@z4_atentionare_2", False)
             End If
 
-            If dq_vals.Length > 1 And (dq_vals.Max - dq_vals.Min) > dif_dq_max Then
+            If nr_dq > 1 And (dq_vals.Max - dq_vals.Min) > dif_dq_max Then
                 atentionare_3 = True
-                'actiune de implementat atunci cand diferenta intre delta q-uri este mai mare decat limita impusa
                 'afiseaza z-urile cu valoarea minima si maxima
-                If dq_vals(0) = dq_vals.Max Or dq_vals(0) = dq_vals.Min Then
-                    atentionare(8) = True
-                    comanda.Parameters.AddWithValue("@z1_atentionare_3", True)
-                Else
-                    comanda.Parameters.AddWithValue("@z1_atentionare_3", False)
-                End If
-
-                If dq_vals(1) = dq_vals.Max Or dq_vals(1) = dq_vals.Min Then
-                    atentionare(9) = True
-                    comanda.Parameters.AddWithValue("@z2_atentionare_3", True)
-                Else
-                    comanda.Parameters.AddWithValue("@z2_atentionare_3", False)
-                End If
-
-                If dq_vals(2) = dq_vals.Max Or dq_vals(2) = dq_vals.Min Then
-                    atentionare(10) = True
-                    comanda.Parameters.AddWithValue("@z3_atentionare_3", True)
-                Else
-                    comanda.Parameters.AddWithValue("@z3_atentionare_3", False)
-                End If
-
-                If dq_vals(3) = dq_vals.Max Or dq_vals(3) = dq_vals.Min Then
-                    atentionare(11) = True
-                    comanda.Parameters.AddWithValue("@z4_atentionare_3", True)
-                Else
-                    comanda.Parameters.AddWithValue("@z4_atentionare_3", False)
-                End If
+                For i = 0 To 3
+                    If dq_vals(i) > 0 And (dq_vals(i) = dq_vals.Max Or dq_vals(i) = dq_vals.Min) Then
+                        atentionare(8 + i) = True
+                        comanda.Parameters.AddWithValue("@z" & i + 1 & "_atentionare_3", True)
+                    End If
+                Next
             Else
                 comanda.Parameters.AddWithValue("@z1_atentionare_3", False)
                 comanda.Parameters.AddWithValue("@z2_atentionare_3", False)
