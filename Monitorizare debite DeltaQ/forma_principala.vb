@@ -441,9 +441,11 @@ Public Class fereastra_principala_frm
             If dq_vals.Max > dq_max Or dq_vals.Min < dq_min Then
                 atentionare_2 = True
                 For i = 0 To 3
-                    If dq_vals(i) > 0 And (dq_vals(i) > dq_max Or dq_vals(i) < dq_min) Then
+                    If dq_vals(i) <> 0 And (dq_vals(i) > dq_max Or dq_vals(i) < dq_min) Then
                         atentionare(4 + i) = True
                         comanda.Parameters.AddWithValue("@z" & i + 1 & "_atentionare_2", True)
+                    Else
+                        comanda.Parameters.AddWithValue("@z" & i + 1 & "_atentionare_2", False)
                     End If
                 Next
             Else
@@ -457,9 +459,11 @@ Public Class fereastra_principala_frm
                 atentionare_3 = True
                 'afiseaza z-urile cu valoarea minima si maxima
                 For i = 0 To 3
-                    If dq_vals(i) > 0 And (dq_vals(i) = dq_vals.Max Or dq_vals(i) = dq_vals.Min) Then
+                    If dq_vals(i) <> 0 And (dq_vals(i) = dq_vals.Max Or dq_vals(i) = dq_vals.Min) Then
                         atentionare(8 + i) = True
                         comanda.Parameters.AddWithValue("@z" & i + 1 & "_atentionare_3", True)
+                    Else
+                        comanda.Parameters.AddWithValue("@z" & i + 1 & "_atentionare_3", False)
                     End If
                 Next
             Else
