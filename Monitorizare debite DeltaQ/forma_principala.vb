@@ -39,7 +39,7 @@ Public Class fereastra_principala_frm
     End Sub
 
     Private Sub nr_marca_tb_TextChanged(sender As Object, e As EventArgs) Handles nr_marca_tb.TextChanged
-        Dim regex_text As String = "[5-9]+[0-5]+\d{3}"
+        Dim regex_text As String = "[4-9]+[0-5]+\d{3}"
         Dim regex_test As New Regex(regex_text)
         If nr_marca_tb.TextLength = 5 Then
             If regex_test.IsMatch(nr_marca_tb.Text) Then
