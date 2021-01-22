@@ -1027,28 +1027,118 @@ Public Class fereastra_principala_frm
                     lista_atentionari_lst.Items.Add(item_lista_2)
                 End If
 
+                'diferente Delta Q
+                lista_atentionari_lst.Groups(2).Header = "Diferența Delta Q dintre minim si maxim este de " & Math.Round(date_extrase.Item("dif_dq"), 1) & " față de maxim " & date_extrase.Item("dif_dq_max")
+                item_lista_3.Text = "Z1"
+                item_lista_3.UseItemStyleForSubItems = False
+                item_lista_3.Name = "z1_list_2"
+
+                If date_extrase.Contains("dq_vals_0") Then
+                    item_lista_3.SubItems.Add(date_extrase.Item("dm_0"))
+                    item_lista_3.SubItems.Add("OK").BackColor = Color.Green
+                    item_lista_3.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_3.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_3.SubItems.Add(Math.Round(date_extrase.Item("dq_vals_0"), 1))
+                    item_lista_3.Group = lista_atentionari_lst.Groups(2)
+                    lista_atentionari_lst.Items.Add(item_lista_3)
+                Else
+                    item_lista_3.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_3.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_3.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_3.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_3.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_3.Group = lista_atentionari_lst.Groups(2)
+                    lista_atentionari_lst.Items.Add(item_lista_3)
+                End If
+
+                item_lista_3 = New ListViewItem
+                item_lista_3.Text = "Z2"
+                item_lista_3.UseItemStyleForSubItems = False
+                item_lista_3.Name = "z2_list_2"
+                If date_extrase.Contains("dq_vals_1") Then
+                    item_lista_3.SubItems.Add(date_extrase.Item("dm_1"))
+                    item_lista_3.SubItems.Add("OK").BackColor = Color.Green
+                    item_lista_3.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_3.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_3.SubItems.Add(Math.Round(date_extrase.Item("dq_vals_1"), 1))
+                    item_lista_3.Group = lista_atentionari_lst.Groups(2)
+                    lista_atentionari_lst.Items.Add(item_lista_3)
+                Else
+                    item_lista_3.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_3.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_3.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_3.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_3.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_3.Group = lista_atentionari_lst.Groups(2)
+                    lista_atentionari_lst.Items.Add(item_lista_3)
+                End If
+
+                item_lista_3 = New ListViewItem
+                item_lista_3.Text = "Z3"
+                item_lista_3.UseItemStyleForSubItems = False
+                item_lista_3.Name = "z3_list_2"
+                If date_extrase.Contains("dq_vals_2") Then
+                    item_lista_3.SubItems.Add(date_extrase.Item("dm_2"))
+                    item_lista_3.SubItems.Add("OK").BackColor = Color.Green
+                    item_lista_3.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_3.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_3.SubItems.Add(Math.Round(date_extrase.Item("dq_vals_2"), 1))
+                    item_lista_3.Group = lista_atentionari_lst.Groups(2)
+                    lista_atentionari_lst.Items.Add(item_lista_3)
+                Else
+                    item_lista_3.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_3.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_3.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_3.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_3.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_3.Group = lista_atentionari_lst.Groups(2)
+                    lista_atentionari_lst.Items.Add(item_lista_3)
+                End If
+
+                item_lista_3 = New ListViewItem
+                item_lista_3.Text = "Z4"
+                item_lista_3.UseItemStyleForSubItems = False
+                item_lista_3.Name = "z4_list_2"
+                If date_extrase.Contains("dq_vals_3") Then
+                    item_lista_3.SubItems.Add(date_extrase.Item("dm_3"))
+                    item_lista_3.SubItems.Add("OK").BackColor = Color.Green
+                    item_lista_3.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_3.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_3.SubItems.Add(Math.Round(date_extrase.Item("dq_vals_3"), 1))
+                    item_lista_3.Group = lista_atentionari_lst.Groups(2)
+                    lista_atentionari_lst.Items.Add(item_lista_3)
+                Else
+                    item_lista_3.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_3.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_3.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_3.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_3.SubItems.Add("N/A").BackColor = Color.Gray
+                    item_lista_3.Group = lista_atentionari_lst.Groups(2)
+                    lista_atentionari_lst.Items.Add(item_lista_3)
+                End If
+
                 If date_extrase.Item("atentionare_0") Or date_extrase.Item("atentionare_1") Or date_extrase.Item("atentionare_2") Or date_extrase.Item("atentionare_3") Then
-                        'examinare z1
-                        If date_extrase.Item("atentionare_0") Then
-                            lista_atentionari_lst.Items.Item("z1_list").SubItems().Item(2).Text = "NOK"
-                            lista_atentionari_lst.Items.Item("z1_list").SubItems().Item(2).BackColor = Color.Red
-                        End If
-
-                        If date_extrase.Item("atentionare_1") Then
-                            lista_atentionari_lst.Items.Item("z2_list").SubItems().Item(2).Text = "NOK"
-                            lista_atentionari_lst.Items.Item("z2_list").SubItems().Item(2).BackColor = Color.Red
-                        End If
-
-                        If date_extrase.Item("atentionare_2") Then
-                            lista_atentionari_lst.Items.Item("z3_list").SubItems().Item(2).Text = "NOK"
-                            lista_atentionari_lst.Items.Item("z3_list").SubItems().Item(2).BackColor = Color.Red
-                        End If
-
-                        If date_extrase.Item("atentionare_3") Then
-                            lista_atentionari_lst.Items.Item("z4_list").SubItems().Item(2).Text = "NOK"
-                            lista_atentionari_lst.Items.Item("z4_list").SubItems().Item(2).BackColor = Color.Red
-                        End If
+                    'examinare z1
+                    If date_extrase.Item("atentionare_0") Then
+                        lista_atentionari_lst.Items.Item("z1_list").SubItems().Item(2).Text = "NOK"
+                        lista_atentionari_lst.Items.Item("z1_list").SubItems().Item(2).BackColor = Color.Red
                     End If
+
+                    If date_extrase.Item("atentionare_1") Then
+                        lista_atentionari_lst.Items.Item("z2_list").SubItems().Item(2).Text = "NOK"
+                        lista_atentionari_lst.Items.Item("z2_list").SubItems().Item(2).BackColor = Color.Red
+                    End If
+
+                    If date_extrase.Item("atentionare_2") Then
+                        lista_atentionari_lst.Items.Item("z3_list").SubItems().Item(2).Text = "NOK"
+                        lista_atentionari_lst.Items.Item("z3_list").SubItems().Item(2).BackColor = Color.Red
+                    End If
+
+                    If date_extrase.Item("atentionare_3") Then
+                        lista_atentionari_lst.Items.Item("z4_list").SubItems().Item(2).Text = "NOK"
+                        lista_atentionari_lst.Items.Item("z4_list").SubItems().Item(2).BackColor = Color.Red
+                    End If
+                End If
 
                 If date_extrase.Item("atentionare_4") Or date_extrase.Item("atentionare_5") Or date_extrase.Item("atentionare_6") Or date_extrase.Item("atentionare_7") Then
                     If date_extrase.Item("atentionare_4") Then
@@ -1073,39 +1163,27 @@ Public Class fereastra_principala_frm
                 End If
 
                 If date_extrase.Item("atentionare_8") Or date_extrase.Item("atentionare_9") Or date_extrase.Item("atentionare_10") Or date_extrase.Item("atentionare_11") Then
-                        lista_atentionari_lst.Groups(2).Header = "Diferența Delta Q este de " & Math.Round(date_extrase.Item("dif_dq"), 1) & " față de maxim " & date_extrase.Item("dif_dq_max")
-                        If date_extrase.Item("atentionare_8") Then
-                            item_lista_3.Text = "Z1"
-                            item_lista_3.Group = lista_atentionari_lst.Groups(2)
-                            item_lista_3.SubItems.Add(date_extrase.Item("dq_vals_0") & " ml")
-                            lista_atentionari_lst.Items.Add(item_lista_3)
-                        End If
+                    If date_extrase.Item("atentionare_8") Then
+                        lista_atentionari_lst.Items.Item("z1_list_2").SubItems().Item(2).Text = "NOK"
+                        lista_atentionari_lst.Items.Item("z1_list_2").SubItems().Item(2).BackColor = Color.Red
+                    End If
 
-                        If date_extrase.Item("atentionare_9") Then
-                            item_lista_3 = New ListViewItem
-                            item_lista_3.Text = "Z2"
-                            item_lista_3.Group = lista_atentionari_lst.Groups(2)
-                            item_lista_3.SubItems.Add(date_extrase.Item("dq_vals_1") & " ml")
-                            lista_atentionari_lst.Items.Add(item_lista_3)
-                        End If
+                    If date_extrase.Item("atentionare_9") Then
+                        lista_atentionari_lst.Items.Item("z2_list_2").SubItems().Item(2).Text = "NOK"
+                        lista_atentionari_lst.Items.Item("z2_list_2").SubItems().Item(2).BackColor = Color.Red
+                    End If
 
-                        If date_extrase.Item("atentionare_10") Then
-                            item_lista_3 = New ListViewItem
-                            item_lista_3.Text = "Z3"
-                            item_lista_3.Group = lista_atentionari_lst.Groups(2)
-                            item_lista_3.SubItems.Add(date_extrase.Item("dq_vals_2") & " ml")
-                            lista_atentionari_lst.Items.Add(item_lista_3)
-                        End If
+                    If date_extrase.Item("atentionare_10") Then
+                        lista_atentionari_lst.Items.Item("z3_list_2").SubItems().Item(2).Text = "NOK"
+                        lista_atentionari_lst.Items.Item("z3_list_2").SubItems().Item(2).BackColor = Color.Red
+                    End If
 
-                        If date_extrase.Item("atentionare_11") Then
-                            item_lista_3 = New ListViewItem
-                            item_lista_3.Text = "Z4"
-                            item_lista_3.Group = lista_atentionari_lst.Groups(2)
-                            item_lista_3.SubItems.Add(date_extrase.Item("dq_vals_3") & " ml")
-                            lista_atentionari_lst.Items.Add(item_lista_3)
-                        End If
+                    If date_extrase.Item("atentionare_11") Then
+                        lista_atentionari_lst.Items.Item("z4_list_2").SubItems().Item(2).Text = "NOK"
+                        lista_atentionari_lst.Items.Item("z4_list_2").SubItems().Item(2).BackColor = Color.Red
                     End If
                 End If
+            End If
             End If
     End Sub
 
