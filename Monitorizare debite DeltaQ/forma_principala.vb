@@ -455,7 +455,7 @@ Public Class fereastra_principala_frm
             If dq_vals.Max > dq_max Or dq_vals.Min < dq_min Then
                 atentionare_2 = True
                 For i = 0 To 3
-                    If dq_vals(i) <> 0 And (dq_vals(i) > dq_max Or dq_vals(i) < dq_min) Then
+                    If dq_vals(i) > minim_absolut And (dq_vals(i) > dq_max Or dq_vals(i) < dq_min) Then
                         atentionare(4 + i) = True
                         comanda.Parameters.AddWithValue("@z" & i + 1 & "_atentionare_2", True)
                     Else
