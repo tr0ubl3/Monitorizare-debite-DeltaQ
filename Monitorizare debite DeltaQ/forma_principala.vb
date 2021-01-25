@@ -325,7 +325,7 @@ Public Class fereastra_principala_frm
         For i = 0 To 3
             ReDim Preserve debit_masurat(i), dif_debit(i), dq_vals(i)
             If IsNumeric(debit_introdus(i)) Then
-                If IsNumeric(tabel_valori_dgv.Item(5, tabel_valori_dgv.CurrentRow.Index + i).Value) Then
+                If (tabel_valori_dgv.CurrentRow.Index + i) < tabel_valori_dgv.RowCount And IsNumeric(tabel_valori_dgv.Item(5, tabel_valori_dgv.CurrentRow.Index + i).Value) Then
                     dq_vals(i) = tabel_valori_dgv.Item(5, tabel_valori_dgv.CurrentRow.Index + i).Value
                     nr_dq += 1
                 End If
@@ -334,9 +334,6 @@ Public Class fereastra_principala_frm
                 nr_valori += 1
             End If
         Next
-
-        'MsgBox(debit_masurat(0) & " - " & debit_masurat(1) & " - " & debit_masurat(2) & " - " & debit_masurat(3) & " lungime de " & debit_masurat.Length)
-
 
         'de scos id-ul din tabelul masini pentru a actualiza rowid-urile selectate mai sus cu id-ul masinilor
         rezultat_regex = testare_regex.Match(nr_masina_cb.Text)
@@ -750,7 +747,9 @@ Public Class fereastra_principala_frm
                     date_atentionare.Add("valoare_introdusa_z4", reader.GetDouble(11))
                 End If
 
-                date_atentionare.Add("dif_dq", reader.GetDouble(4))
+                If reader.IsDBNull(3) = False Then
+                    date_atentionare.Add("dif_dq", reader.GetDouble(4))
+                End If
                 date_atentionare.Add("referinta", reader.GetString(5))
                 date_atentionare.Add("nr_marca", reader.GetString(6))
                 date_atentionare.Add("data_spc", reader.GetDateTime(7))
