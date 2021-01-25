@@ -316,6 +316,8 @@ Public Class fereastra_principala_frm
         Dim item_lista_1, item_lista_2, item_lista_3 As New ListViewItem
         Dim atentionare(11) As Boolean
         Dim nr_valori, nr_dq As Int16
+        Dim minim_absolut As Double = -99999.99999
+        Dim dq_arr() As Double = {}
 
         debit_introdus(0) = z1_tb.Text
         debit_introdus(1) = z2_tb.Text
@@ -323,15 +325,30 @@ Public Class fereastra_principala_frm
         debit_introdus(3) = z4_tb.Text
 
         For i = 0 To 3
-            ReDim Preserve debit_masurat(i), dif_debit(i), dq_vals(i)
             If IsNumeric(debit_introdus(i)) Then
-                If (tabel_valori_dgv.CurrentRow.Index + i) < tabel_valori_dgv.RowCount And IsNumeric(tabel_valori_dgv.Item(5, tabel_valori_dgv.CurrentRow.Index + i).Value) Then
-                    dq_vals(i) = tabel_valori_dgv.Item(5, tabel_valori_dgv.CurrentRow.Index + i).Value
-                    nr_dq += 1
+                'extragere debit daca valoarea masurata este numerica
+                If IsNumeric(tabel_valori_dgv.Item(4, tabel_valori_dgv.CurrentRow.Index).Value + nr_valori) Then
+                    debit_masurat(i) = tabel_valori_dgv.Item(4, tabel_valori_dgv.CurrentRow.Index + nr_valori).Value
+                    dif_debit(i) = debit_introdus(i) - debit_masurat(i)
+                    nr_valori += 1
+                Else
+                    debit_masurat(i) = minim_absolut
+                    dif_debit(i) = minim_absolut
                 End If
-                debit_masurat(i) = tabel_valori_dgv.Item(4, tabel_valori_dgv.CurrentRow.Index + i).Value
-                dif_debit(i) = debit_introdus(i) - debit_masurat(i)
-                nr_valori += 1
+
+                'extragere delta q daca valoarea masurata este numerica
+                If IsNumeric(tabel_valori_dgv.Item(5, tabel_valori_dgv.CurrentRow.Index).Value + nr_dq) Then
+                    ReDim Preserve dq_arr(nr_dq)
+                    dq_vals(i) = tabel_valori_dgv.Item(5, tabel_valori_dgv.CurrentRow.Index + nr_dq).Value
+                    dq_arr(nr_dq) = dq_vals(i)
+                    nr_dq += 1
+                Else
+                    dq_vals(i) = minim_absolut
+                End If
+            Else
+                debit_masurat(i) = minim_absolut
+                dif_debit(i) = minim_absolut
+                dq_vals(i) = minim_absolut
             End If
         Next
 
@@ -363,7 +380,7 @@ Public Class fereastra_principala_frm
         comanda.Parameters.AddWithValue("@nr_marca", nr_marca_tb.Text)
 
         For i = 0 To 3
-            comanda.Parameters.AddWithValue("@val_z" & i + 1, If(debit_introdus(i) = "*", DBNull.Value, CInt(debit_introdus(i))))
+            comanda.Parameters.AddWithValue("@val_z" & i + 1, If(debit_introdus(i) = "*", DBNull.Value, (debit_introdus(i))))
             comanda.Parameters.AddWithValue("@dif_z" & i + 1, If(debit_introdus(i) = "*", DBNull.Value, dif_debit(i)))
         Next
 
@@ -452,11 +469,11 @@ Public Class fereastra_principala_frm
                 comanda.Parameters.AddWithValue("@z4_atentionare_2", False)
             End If
 
-            If nr_dq > 1 And (dq_vals.Max - dq_vals.Min) > dif_dq_max Then
+            If nr_dq > 1 And (dq_arr.Max - dq_arr.Min) > dif_dq_max Then
                 atentionare_3 = True
                 'afiseaza z-urile cu valoarea minima si maxima
                 For i = 0 To 3
-                    If dq_vals(i) <> 0 And (dq_vals(i) = dq_vals.Max Or dq_vals(i) = dq_vals.Min) Then
+                    If dq_vals(i) > minim_absolut And (dq_vals(i) = dq_vals.Max Or dq_vals(i) = dq_vals.Min) Then
                         atentionare(8 + i) = True
                         comanda.Parameters.AddWithValue("@z" & i + 1 & "_atentionare_3", True)
                     Else
@@ -750,6 +767,7 @@ Public Class fereastra_principala_frm
                 If reader.IsDBNull(3) = False Then
                     date_atentionare.Add("dif_dq", reader.GetDouble(4))
                 End If
+
                 date_atentionare.Add("referinta", reader.GetString(5))
                 date_atentionare.Add("nr_marca", reader.GetString(6))
                 date_atentionare.Add("data_spc", reader.GetDateTime(7))
