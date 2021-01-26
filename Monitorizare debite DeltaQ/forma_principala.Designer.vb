@@ -454,6 +454,7 @@ Partial Class fereastra_principala_frm
         Me.tabel_valori_dgv.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.data_ora, Me.dm, Me.referinta, Me.caseta, Me.debit, Me.delta_q, Me.nr_cuib, Me.id_rand_rezultate})
         Me.tabel_valori_dgv.Cursor = System.Windows.Forms.Cursors.Default
         Me.tabel_valori_dgv.Location = New System.Drawing.Point(210, 225)
+        Me.tabel_valori_dgv.MultiSelect = False
         Me.tabel_valori_dgv.Name = "tabel_valori_dgv"
         Me.tabel_valori_dgv.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.[Single]
         DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter

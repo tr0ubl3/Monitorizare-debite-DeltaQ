@@ -209,9 +209,11 @@ Public Class fereastra_principala_frm
         Dim nr_valori_introduse As Integer
         Dim rand_curent As Integer = tabel_valori_dgv.CurrentRow.Index
 
+        If tabel_valori_dgv.SelectedRows.Count = 1 Then
 
+        End If
         For i = 1 To 3
-            If rand_curent + i < tabel_valori_dgv.RowCount Then
+            If rand_curent + i < tabel_valori_dgv.RowCount - 1 Then
                 If caseta_selectata = tabel_valori_dgv.Item(3, tabel_valori_dgv.CurrentRow.Index + i).Value Then
                     If Not tabel_valori_dgv.Rows.Count = tabel_valori_dgv.CurrentRow.Index Then
                         data_ora_urmatoare = tabel_valori_dgv.Item(0, tabel_valori_dgv.CurrentRow.Index + i).Value
