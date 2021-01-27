@@ -188,10 +188,6 @@ Public Class fereastra_principala_frm
         salveaza_valori_btn.Visible = False
     End Sub
 
-    'Private Sub tabel_valori_dgv_RowEnter(sender As Object, e As DataGridViewCellEventArgs) Handles tabel_valori_dgv.RowEnter
-    'MsgBox("S-a selectat randul " & Convert.ToString(tabel_valori_dgv.CurrentRow.Index))
-    'End Sub
-
     Private Sub tabel_valori_dgv_MouseClick(sender As Object, e As MouseEventArgs) Handles tabel_valori_dgv.MouseClick
         Dim caseta_selectata As String = Convert.ToString(tabel_valori_dgv.Item(3, tabel_valori_dgv.CurrentRow.Index).Value)
         Dim data_ora_selectata As String = tabel_valori_dgv.Item(0, tabel_valori_dgv.CurrentRow.Index).Value
@@ -210,12 +206,12 @@ Public Class fereastra_principala_frm
         Dim rand_curent As Integer = tabel_valori_dgv.CurrentRow.Index
 
         If tabel_valori_dgv.SelectedRows.Count = 1 Then
-
+            tabel_valori_dgv.Enabled = False
         End If
         For i = 1 To 3
             If rand_curent + i < tabel_valori_dgv.RowCount - 1 Then
                 If caseta_selectata = tabel_valori_dgv.Item(3, tabel_valori_dgv.CurrentRow.Index + i).Value Then
-                    If Not tabel_valori_dgv.Rows.Count = tabel_valori_dgv.CurrentRow.Index Then
+                    If Not tabel_valori_dgv.Rows.Count - 1 = tabel_valori_dgv.CurrentRow.Index Then
                         data_ora_urmatoare = tabel_valori_dgv.Item(0, tabel_valori_dgv.CurrentRow.Index + i).Value
                         ora_urmatoare = DateAndTime.Hour(data_ora_urmatoare)
                         minutul_urmator = DateAndTime.Minute(data_ora_urmatoare)
