@@ -1330,10 +1330,6 @@ Public Class fereastra_principala_frm
         conexiune_bd.Close()
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs)
-
-    End Sub
-
     Private Sub deblocare_selectie_btn_Click(sender As Object, e As EventArgs) Handles deblocare_selectie_btn.Click
         With tabel_valori_dgv
             .Enabled = True
