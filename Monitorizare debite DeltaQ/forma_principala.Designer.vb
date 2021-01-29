@@ -289,6 +289,7 @@ Partial Class fereastra_principala_frm
         Me.deblocare_selectie_btn.Size = New System.Drawing.Size(68, 45)
         Me.deblocare_selectie_btn.TabIndex = 12
         Me.deblocare_selectie_btn.UseVisualStyleBackColor = True
+        Me.buton_refresh_ttp.SetToolTip(Me.deblocare_selectie_btn, "Deblochează selecția")
         '
         'reactualizare_date_btn
         '
