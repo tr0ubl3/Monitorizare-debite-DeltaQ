@@ -310,7 +310,8 @@ Public Class fereastra_principala_frm
         Dim nr_valori, nr_dq As Int16
         Dim minim_absolut As Double = -99999.99999
         Dim dq_arr() As Double = {}
-        Dim dq_comparare() As Double
+        Dim dq_comparare() As Double = {}
+        Dim incr As Int16
 
         debit_introdus(0) = z1_tb.Text
         debit_introdus(1) = z2_tb.Text
@@ -342,6 +343,14 @@ Public Class fereastra_principala_frm
                 debit_masurat(i) = minim_absolut
                 dif_debit(i) = minim_absolut
                 dq_vals(i) = minim_absolut
+            End If
+        Next
+
+        For Each dq In dq_vals
+            If dq > minim_absolut Then
+                ReDim Preserve dq_comparare(incr)
+                dq_comparare(incr) = dq
+                incr += 1
             End If
         Next
 
@@ -378,7 +387,7 @@ Public Class fereastra_principala_frm
         Next
 
         If nr_dq > 1 Then
-            comanda.Parameters.AddWithValue("@dif_dq", dq_vals.Max - dq_vals.Min)
+            comanda.Parameters.AddWithValue("@dif_dq", dq_comparare.Max - dq_comparare.Min)
         Else
             comanda.Parameters.AddWithValue("@dif_dq", DBNull.Value)
         End If
@@ -444,14 +453,6 @@ Public Class fereastra_principala_frm
                 comanda.Parameters.AddWithValue("@z3_atentionare_1", False)
                 comanda.Parameters.AddWithValue("@z4_atentionare_1", False)
             End If
-            incr = 0
-            For Each dq In dq_vals
-                If dq > minim_absolut Then
-                    ReDim Preserve dq_comparare(incr)
-                    dq_comparare(incr) = dq
-                    incr += 1
-                End If
-            Next
 
             If dq_comparare.Max > dq_max Or dq_comparare.Min < dq_min Then
                 atentionare_2 = True
@@ -470,7 +471,7 @@ Public Class fereastra_principala_frm
                 comanda.Parameters.AddWithValue("@z4_atentionare_2", False)
             End If
 
-            If nr_dq > 1 AndAlso (dq_arr.Max - dq_arr.Min) > dif_dq_max Then
+            If nr_dq > 1 AndAlso (dq_comparare.Max - dq_comparare.Min) > dif_dq_max Then
                 atentionare_3 = True
                 'afiseaza z-urile cu valoarea minima si maxima
                 For i = 0 To 3
