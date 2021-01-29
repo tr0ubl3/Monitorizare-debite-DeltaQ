@@ -31,6 +31,7 @@ Public Class fereastra_principala_frm
 
         'tabel valori
         Me.reactualizare_date_btn.Visible = False
+        Me.deblocare_selectie_btn.Visible = False
         Me.tabel_valori_dgv.Visible = False
         Me.tabel_valori_dgv.Rows.Clear()
 
@@ -183,6 +184,7 @@ Public Class fereastra_principala_frm
         If tabel_valori_dgv.Visible Then
             actualizare_tabel_valori()
             reactualizare_date_btn.Visible = True
+            deblocare_selectie_btn.Visible = True
         End If
         tabel_valori_dgv.ClearSelection()
         salveaza_valori_btn.Visible = False
@@ -193,9 +195,7 @@ Public Class fereastra_principala_frm
         Dim data_ora_selectata As String = tabel_valori_dgv.Item(0, tabel_valori_dgv.CurrentRow.Index).Value
         Dim ora_selectata = DateAndTime.Hour(data_ora_selectata)
         Dim minutul_selectat = DateAndTime.Minute(data_ora_selectata)
-        Dim data_ora_urmatoare As String
-        Dim ora_urmatoare As Integer
-        Dim minutul_urmator As Integer
+        Dim data_ora_urmatoare As DateTime
         Dim val_selectate As Integer = 1
         Dim cuib_urmator As Integer
         Dim cuib_selectat As Integer = tabel_valori_dgv.Item(6, tabel_valori_dgv.CurrentRow.Index).Value
@@ -204,44 +204,38 @@ Public Class fereastra_principala_frm
         Dim valori_verificate As Integer
         Dim nr_valori_introduse As Integer
         Dim rand_curent As Integer = tabel_valori_dgv.CurrentRow.Index
+        Dim timp_petrecut As TimeSpan
 
         If tabel_valori_dgv.SelectedRows.Count = 1 Then
-            tabel_valori_dgv.Enabled = False
+            With tabel_valori_dgv
+                .MultiSelect = True
+                .Enabled = False
+                .ForeColor = Color.LightGray
+                .CurrentRow.Selected = True
+            End With
+            deblocare_selectie_btn.IconChar = FontAwesome.Sharp.IconChar.Unlock
         End If
+
         For i = 1 To 3
-            If rand_curent + i < tabel_valori_dgv.RowCount - 1 Then
-                If caseta_selectata = tabel_valori_dgv.Item(3, tabel_valori_dgv.CurrentRow.Index + i).Value Then
-                    If Not tabel_valori_dgv.Rows.Count - 1 = tabel_valori_dgv.CurrentRow.Index Then
-                        data_ora_urmatoare = tabel_valori_dgv.Item(0, tabel_valori_dgv.CurrentRow.Index + i).Value
-                        ora_urmatoare = DateAndTime.Hour(data_ora_urmatoare)
-                        minutul_urmator = DateAndTime.Minute(data_ora_urmatoare)
-                        cuib_urmator = tabel_valori_dgv.Item(6, tabel_valori_dgv.CurrentRow.Index + i).Value
-                        If cuib_urmator >= cuib_selectat + val_selectate And cuib_urmator <= 4 Then
-                            If (ora_selectata = ora_urmatoare Or ora_selectata = (ora_urmatoare - 1)) AndAlso (minutul_urmator >= minutul_selectat Or (minutul_urmator <= minutul_selectat And ora_urmatoare > ora_selectata)) AndAlso (minutul_selectat = minutul_urmator Or minutul_selectat = minutul_urmator - 1 Or minutul_selectat = minutul_urmator - 2 Or minutul_selectat = minutul_urmator - 3) Then
-                                tabel_valori_dgv.Rows(tabel_valori_dgv.CurrentRow.Index + i).Selected = True
-                                val_selectate += 1
+            With tabel_valori_dgv
+                If rand_curent + i < .RowCount Then
+                    If caseta_selectata = .Item(3, .CurrentRow.Index + i).Value Then
+                        If .Rows.Count - 1 > .CurrentRow.Index Then
+                            data_ora_urmatoare = .Item(0, .CurrentRow.Index + i).Value
+                            timp_petrecut = data_ora_urmatoare.Subtract(.Item(0, .CurrentRow.Index).Value)
+                            cuib_urmator = .Item(6, .CurrentRow.Index + i).Value
+                            If cuib_urmator >= cuib_selectat + val_selectate And cuib_urmator <= 4 Then
+                                If timp_petrecut.TotalSeconds < 360 Then
+                                    .Rows(.CurrentRow.Index + i).Selected = True
+                                    val_selectate += 1
+                                End If
                             End If
                         End If
                     End If
                 End If
-                'ElseIf caseta_selectata = tabel_valori_dgv.Item(3, tabel_valori_dgv.CurrentRow.Index - i).Value Then
-                'If Not tabel_valori_dgv.CurrentRow.Index < i Then
-                '    data_ora_urmatoare = tabel_valori_dgv.Item(0, tabel_valori_dgv.CurrentRow.Index - i).Value
-                '    ora_urmatoare = DateAndTime.Hour(data_ora_urmatoare)
-                '    minutul_urmator = DateAndTime.Minute(data_ora_urmatoare)
-                '    cuib_urmator = tabel_valori_dgv.Item(6, tabel_valori_dgv.CurrentRow.Index - i).Value
-                '    If cuib_urmator >= cuib_selectat - 1 And cuib_urmator <= 1 Then
-                '        'selecteaza randurile de mai sus daca pe randul urmator ora e aceeasi sau daca minutul e mai mare decat cel selectat sau ora mai mare si minutul mai mic
-                '        If (ora_selectata = ora_urmatoare Or ora_selectata > ora_urmatoare) AndAlso (minutul_urmator <= minutul_selectat Or (minutul_urmator > minutul_selectat And ora_urmatoare < ora_selectata)) AndAlso (minutul_selectat = minutul_urmator Or minutul_selectat = minutul_urmator + 1 Or minutul_selectat = minutul_urmator + 2 Or minutul_selectat = minutul_urmator + 3) Then
-                '            tabel_valori_dgv.Rows(tabel_valori_dgv.CurrentRow.Index - i).Selected = True
-                '            val_selectate += 1
-                '        End If
-                '    End If
-                'End If
-            End If
+            End With
         Next
 
-        'verificare daca pentru valorile selectate sunt valori introduse
         For Each rand In tabel_valori_dgv.SelectedRows
             Select Case rand.Cells(6).Value
                 Case 1
@@ -1199,7 +1193,7 @@ Public Class fereastra_principala_frm
                     End If
                 End If
             End If
-            End If
+        End If
     End Sub
 
     Private Sub vizibilitate_panou(panou As Panel)
@@ -1334,6 +1328,19 @@ Public Class fereastra_principala_frm
         End Using
         comanda.Dispose()
         conexiune_bd.Close()
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub deblocare_selectie_btn_Click(sender As Object, e As EventArgs) Handles deblocare_selectie_btn.Click
+        With tabel_valori_dgv
+            .Enabled = True
+            .MultiSelect = False
+            .ForeColor = DefaultForeColor
+        End With
+        deblocare_selectie_btn.IconChar = FontAwesome.Sharp.IconChar.Lock
     End Sub
 End Class
 
