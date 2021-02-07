@@ -191,101 +191,99 @@ Public Class fereastra_principala_frm
     End Sub
 
     Private Sub tabel_valori_dgv_MouseClick(sender As Object, e As MouseEventArgs) Handles tabel_valori_dgv.MouseClick
-        Dim caseta_selectata As String = Convert.ToString(tabel_valori_dgv.Item(3, tabel_valori_dgv.CurrentRow.Index).Value)
-        Dim data_ora_selectata As String = tabel_valori_dgv.Item(0, tabel_valori_dgv.CurrentRow.Index).Value
-        Dim ora_selectata = DateAndTime.Hour(data_ora_selectata)
-        Dim minutul_selectat = DateAndTime.Minute(data_ora_selectata)
         Dim data_ora_urmatoare As DateTime
         Dim val_selectate As Integer = 1
         Dim cuib_urmator As Integer
-        Dim cuib_selectat As Integer = tabel_valori_dgv.Item(6, tabel_valori_dgv.CurrentRow.Index).Value
         Dim rand As DataGridViewRow
         Dim z1_prezent, z2_prezent, z3_prezent, z4_prezent, z1_validat, z2_validat, z3_validat, z4_validat As Boolean
         Dim valori_verificate As Integer
         Dim nr_valori_introduse As Integer
-        Dim rand_curent As Integer = tabel_valori_dgv.CurrentRow.Index
         Dim timp_petrecut As TimeSpan
 
-        If tabel_valori_dgv.SelectedRows.Count = 1 Then
-            With tabel_valori_dgv
+        With tabel_valori_dgv
+            If .SelectedRows.Count = 1 Then
+                Dim caseta_selectata As String = Convert.ToString(.Item(3, .CurrentRow.Index).Value)
+                Dim data_ora_selectata As String = .Item(0, .CurrentRow.Index).Value
+                Dim ora_selectata = DateAndTime.Hour(data_ora_selectata)
+                Dim minutul_selectat = DateAndTime.Minute(data_ora_selectata)
+                Dim cuib_selectat As Integer = .Item(6, .CurrentRow.Index).Value
+                Dim rand_curent As Integer = .CurrentRow.Index
                 .MultiSelect = True
                 .Enabled = False
                 .ForeColor = Color.LightGray
                 .CurrentRow.Selected = True
-            End With
-            deblocare_selectie_btn.IconChar = FontAwesome.Sharp.IconChar.Unlock
-        End If
-
-        For i = 1 To 3
-            With tabel_valori_dgv
-                If rand_curent + i < .RowCount Then
-                    If caseta_selectata = .Item(3, .CurrentRow.Index + i).Value Then
-                        If .Rows.Count - 1 > .CurrentRow.Index Then
-                            data_ora_urmatoare = .Item(0, .CurrentRow.Index + i).Value
-                            timp_petrecut = data_ora_urmatoare.Subtract(.Item(0, .CurrentRow.Index).Value)
-                            cuib_urmator = .Item(6, .CurrentRow.Index + i).Value
-                            If cuib_urmator >= cuib_selectat + val_selectate And cuib_urmator <= 4 Then
-                                If timp_petrecut.TotalSeconds < 360 Then
-                                    .Rows(.CurrentRow.Index + i).Selected = True
-                                    val_selectate += 1
+                For i = 1 To 3
+                    If rand_curent + i < .RowCount Then
+                        If caseta_selectata = .Item(3, .CurrentRow.Index + i).Value Then
+                            If .Rows.Count - 1 > .CurrentRow.Index Then
+                                data_ora_urmatoare = .Item(0, .CurrentRow.Index + i).Value
+                                timp_petrecut = data_ora_urmatoare.Subtract(.Item(0, .CurrentRow.Index).Value)
+                                cuib_urmator = .Item(6, .CurrentRow.Index + i).Value
+                                If cuib_urmator >= cuib_selectat + val_selectate And cuib_urmator <= 4 Then
+                                    If timp_petrecut.TotalSeconds < 360 Then
+                                        .Rows(.CurrentRow.Index + i).Selected = True
+                                        val_selectate += 1
+                                    End If
                                 End If
                             End If
                         End If
                     End If
+                Next
+
+                For Each rand In .SelectedRows
+                    Select Case rand.Cells(6).Value
+                        Case 1
+                            z1_prezent = True
+                            If IsNumeric(z1_tb.Text) Then
+                                z1_validat = True
+                                valori_verificate += 1
+                            End If
+                        Case 2
+                            z2_prezent = True
+                            If IsNumeric(z2_tb.Text) Then
+                                z2_validat = True
+                                valori_verificate += 1
+                            End If
+                        Case 3
+                            z3_prezent = True
+                            If IsNumeric(z3_tb.Text) Then
+                                z3_validat = True
+                                valori_verificate += 1
+                            End If
+                        Case 4
+                            z4_prezent = True
+                            If IsNumeric(z4_tb.Text) Then
+                                z4_validat = True
+                                valori_verificate += 1
+                            End If
+                    End Select
+                Next
+
+                If Not z1_tb.Text = "*" Then
+                    nr_valori_introduse += 1
                 End If
-            End With
-        Next
 
-        For Each rand In tabel_valori_dgv.SelectedRows
-            Select Case rand.Cells(6).Value
-                Case 1
-                    z1_prezent = True
-                    If IsNumeric(z1_tb.Text) Then
-                        z1_validat = True
-                        valori_verificate += 1
-                    End If
-                Case 2
-                    z2_prezent = True
-                    If IsNumeric(z2_tb.Text) Then
-                        z2_validat = True
-                        valori_verificate += 1
-                    End If
-                Case 3
-                    z3_prezent = True
-                    If IsNumeric(z3_tb.Text) Then
-                        z3_validat = True
-                        valori_verificate += 1
-                    End If
-                Case 4
-                    z4_prezent = True
-                    If IsNumeric(z4_tb.Text) Then
-                        z4_validat = True
-                        valori_verificate += 1
-                    End If
-            End Select
-        Next
+                If Not z2_tb.Text = "*" Then
+                    nr_valori_introduse += 1
+                End If
 
-        If Not z1_tb.Text = "*" Then
-            nr_valori_introduse += 1
-        End If
+                If Not z3_tb.Text = "*" Then
+                    nr_valori_introduse += 1
+                End If
 
-        If Not z2_tb.Text = "*" Then
-            nr_valori_introduse += 1
-        End If
-
-        If Not z3_tb.Text = "*" Then
-            nr_valori_introduse += 1
-        End If
-
-        If Not z4_tb.Text = "*" Then
-            nr_valori_introduse += 1
-        End If
-
-        If tabel_valori_dgv.SelectedRows.Count = valori_verificate And tabel_valori_dgv.SelectedRows.Count = nr_valori_introduse Then
-            salveaza_valori_btn.Visible = True
-        Else
-            salveaza_valori_btn.Visible = False
-        End If
+                If Not z4_tb.Text = "*" Then
+                    nr_valori_introduse += 1
+                End If
+                If .SelectedRows.Count = valori_verificate AndAlso .SelectedRows.Count = nr_valori_introduse Then
+                    salveaza_valori_btn.Visible = True
+                Else
+                    salveaza_valori_btn.Visible = False
+                End If
+                deblocare_selectie_btn.IconChar = FontAwesome.Sharp.IconChar.Unlock
+            ElseIf .SelectedRows.count < 1 Then
+                MsgBox("Eroare extragere date din DeltaQ Bench!")
+            End If
+        End With
     End Sub
 
     Private Sub salveaza_valori_btn_Click(sender As Object, e As EventArgs) Handles salveaza_valori_btn.Click
