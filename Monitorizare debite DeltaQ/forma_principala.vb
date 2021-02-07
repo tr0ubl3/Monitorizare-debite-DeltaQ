@@ -432,7 +432,7 @@ Public Class fereastra_principala_frm
 
             comanda.Parameters.AddWithValue("@spc_id", spc_id)
 
-            'calcul diferenta debit maxima pentru a verificare daca e mai mare decat limita impusa in referinta
+            'calcul diferenta debit maxima pentru verificare daca e mai mare decat limita impusa in referinta
             If dif_debit.Max > dif_max Or dif_debit.Min < dif_min Then
                 atentionare_1 = True
 
