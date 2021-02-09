@@ -191,101 +191,99 @@ Public Class fereastra_principala_frm
     End Sub
 
     Private Sub tabel_valori_dgv_MouseClick(sender As Object, e As MouseEventArgs) Handles tabel_valori_dgv.MouseClick
-        Dim caseta_selectata As String = Convert.ToString(tabel_valori_dgv.Item(3, tabel_valori_dgv.CurrentRow.Index).Value)
-        Dim data_ora_selectata As String = tabel_valori_dgv.Item(0, tabel_valori_dgv.CurrentRow.Index).Value
-        Dim ora_selectata = DateAndTime.Hour(data_ora_selectata)
-        Dim minutul_selectat = DateAndTime.Minute(data_ora_selectata)
         Dim data_ora_urmatoare As DateTime
         Dim val_selectate As Integer = 1
         Dim cuib_urmator As Integer
-        Dim cuib_selectat As Integer = tabel_valori_dgv.Item(6, tabel_valori_dgv.CurrentRow.Index).Value
         Dim rand As DataGridViewRow
         Dim z1_prezent, z2_prezent, z3_prezent, z4_prezent, z1_validat, z2_validat, z3_validat, z4_validat As Boolean
         Dim valori_verificate As Integer
         Dim nr_valori_introduse As Integer
-        Dim rand_curent As Integer = tabel_valori_dgv.CurrentRow.Index
         Dim timp_petrecut As TimeSpan
 
-        If tabel_valori_dgv.SelectedRows.Count = 1 Then
-            With tabel_valori_dgv
+        With tabel_valori_dgv
+            If .SelectedRows.Count = 1 Then
+                Dim caseta_selectata As String = Convert.ToString(.Item(3, .CurrentRow.Index).Value)
+                Dim data_ora_selectata As String = .Item(0, .CurrentRow.Index).Value
+                Dim ora_selectata = DateAndTime.Hour(data_ora_selectata)
+                Dim minutul_selectat = DateAndTime.Minute(data_ora_selectata)
+                Dim cuib_selectat As Integer = .Item(6, .CurrentRow.Index).Value
+                Dim rand_curent As Integer = .CurrentRow.Index
                 .MultiSelect = True
                 .Enabled = False
                 .ForeColor = Color.LightGray
                 .CurrentRow.Selected = True
-            End With
-            deblocare_selectie_btn.IconChar = FontAwesome.Sharp.IconChar.Unlock
-        End If
-
-        For i = 1 To 3
-            With tabel_valori_dgv
-                If rand_curent + i < .RowCount Then
-                    If caseta_selectata = .Item(3, .CurrentRow.Index + i).Value Then
-                        If .Rows.Count - 1 > .CurrentRow.Index Then
-                            data_ora_urmatoare = .Item(0, .CurrentRow.Index + i).Value
-                            timp_petrecut = data_ora_urmatoare.Subtract(.Item(0, .CurrentRow.Index).Value)
-                            cuib_urmator = .Item(6, .CurrentRow.Index + i).Value
-                            If cuib_urmator >= cuib_selectat + val_selectate And cuib_urmator <= 4 Then
-                                If timp_petrecut.TotalSeconds < 360 Then
-                                    .Rows(.CurrentRow.Index + i).Selected = True
-                                    val_selectate += 1
+                For i = 1 To 3
+                    If rand_curent + i < .RowCount Then
+                        If caseta_selectata = .Item(3, .CurrentRow.Index + i).Value Then
+                            If .Rows.Count - 1 > .CurrentRow.Index Then
+                                data_ora_urmatoare = .Item(0, .CurrentRow.Index + i).Value
+                                timp_petrecut = data_ora_urmatoare.Subtract(.Item(0, .CurrentRow.Index).Value)
+                                cuib_urmator = .Item(6, .CurrentRow.Index + i).Value
+                                If cuib_urmator >= cuib_selectat + val_selectate And cuib_urmator <= 4 Then
+                                    If timp_petrecut.TotalSeconds < 360 Then
+                                        .Rows(.CurrentRow.Index + i).Selected = True
+                                        val_selectate += 1
+                                    End If
                                 End If
                             End If
                         End If
                     End If
+                Next
+
+                For Each rand In .SelectedRows
+                    Select Case rand.Cells(6).Value
+                        Case 1
+                            z1_prezent = True
+                            If IsNumeric(z1_tb.Text) Then
+                                z1_validat = True
+                                valori_verificate += 1
+                            End If
+                        Case 2
+                            z2_prezent = True
+                            If IsNumeric(z2_tb.Text) Then
+                                z2_validat = True
+                                valori_verificate += 1
+                            End If
+                        Case 3
+                            z3_prezent = True
+                            If IsNumeric(z3_tb.Text) Then
+                                z3_validat = True
+                                valori_verificate += 1
+                            End If
+                        Case 4
+                            z4_prezent = True
+                            If IsNumeric(z4_tb.Text) Then
+                                z4_validat = True
+                                valori_verificate += 1
+                            End If
+                    End Select
+                Next
+
+                If Not z1_tb.Text = "*" Then
+                    nr_valori_introduse += 1
                 End If
-            End With
-        Next
 
-        For Each rand In tabel_valori_dgv.SelectedRows
-            Select Case rand.Cells(6).Value
-                Case 1
-                    z1_prezent = True
-                    If IsNumeric(z1_tb.Text) Then
-                        z1_validat = True
-                        valori_verificate += 1
-                    End If
-                Case 2
-                    z2_prezent = True
-                    If IsNumeric(z2_tb.Text) Then
-                        z2_validat = True
-                        valori_verificate += 1
-                    End If
-                Case 3
-                    z3_prezent = True
-                    If IsNumeric(z3_tb.Text) Then
-                        z3_validat = True
-                        valori_verificate += 1
-                    End If
-                Case 4
-                    z4_prezent = True
-                    If IsNumeric(z4_tb.Text) Then
-                        z4_validat = True
-                        valori_verificate += 1
-                    End If
-            End Select
-        Next
+                If Not z2_tb.Text = "*" Then
+                    nr_valori_introduse += 1
+                End If
 
-        If Not z1_tb.Text = "*" Then
-            nr_valori_introduse += 1
-        End If
+                If Not z3_tb.Text = "*" Then
+                    nr_valori_introduse += 1
+                End If
 
-        If Not z2_tb.Text = "*" Then
-            nr_valori_introduse += 1
-        End If
-
-        If Not z3_tb.Text = "*" Then
-            nr_valori_introduse += 1
-        End If
-
-        If Not z4_tb.Text = "*" Then
-            nr_valori_introduse += 1
-        End If
-
-        If tabel_valori_dgv.SelectedRows.Count = valori_verificate And tabel_valori_dgv.SelectedRows.Count = nr_valori_introduse Then
-            salveaza_valori_btn.Visible = True
-        Else
-            salveaza_valori_btn.Visible = False
-        End If
+                If Not z4_tb.Text = "*" Then
+                    nr_valori_introduse += 1
+                End If
+                If .SelectedRows.Count = valori_verificate AndAlso .SelectedRows.Count = nr_valori_introduse Then
+                    salveaza_valori_btn.Visible = True
+                Else
+                    salveaza_valori_btn.Visible = False
+                End If
+                deblocare_selectie_btn.IconChar = FontAwesome.Sharp.IconChar.Unlock
+            ElseIf .SelectedRows.count < 1 Then
+                MsgBox("Eroare extragere date din DeltaQ Bench!")
+            End If
+        End With
     End Sub
 
     Private Sub salveaza_valori_btn_Click(sender As Object, e As EventArgs) Handles salveaza_valori_btn.Click
@@ -318,191 +316,193 @@ Public Class fereastra_principala_frm
         debit_introdus(2) = z3_tb.Text
         debit_introdus(3) = z4_tb.Text
 
-        For i = 0 To 3
-            If IsNumeric(debit_introdus(i)) Then
-                'extragere debit daca valoarea masurata este numerica
-                If IsNumeric(tabel_valori_dgv.Item(4, tabel_valori_dgv.CurrentRow.Index).Value + nr_valori) Then
-                    debit_masurat(i) = tabel_valori_dgv.Item(4, tabel_valori_dgv.CurrentRow.Index + nr_valori).Value
-                    dif_debit(i) = debit_introdus(i) - debit_masurat(i)
-                    nr_valori += 1
+        With tabel_valori_dgv
+            For i = 0 To 3
+                If IsNumeric(debit_introdus(i)) Then
+                    'extragere debit daca valoarea masurata este numerica
+                    If IsNumeric(.Item(4, .CurrentRow.Index).Value + nr_valori) Then
+                        debit_masurat(i) = .Item(4, .CurrentRow.Index + nr_valori).Value
+                        dif_debit(i) = debit_introdus(i) - debit_masurat(i)
+                        nr_valori += 1
+                    Else
+                        debit_masurat(i) = minim_absolut
+                        dif_debit(i) = minim_absolut
+                    End If
+
+                    'extragere delta q daca valoarea masurata este numerica
+                    If IsNumeric(.Item(5, .CurrentRow.Index).Value + nr_dq) Then
+                        ReDim Preserve dq_arr(nr_dq)
+                        dq_vals(i) = .Item(5, .CurrentRow.Index + nr_dq).Value
+                        dq_arr(nr_dq) = dq_vals(i)
+                        nr_dq += 1
+                    Else
+                        dq_vals(i) = minim_absolut
+                    End If
                 Else
                     debit_masurat(i) = minim_absolut
                     dif_debit(i) = minim_absolut
-                End If
-
-                'extragere delta q daca valoarea masurata este numerica
-                If IsNumeric(tabel_valori_dgv.Item(5, tabel_valori_dgv.CurrentRow.Index).Value + nr_dq) Then
-                    ReDim Preserve dq_arr(nr_dq)
-                    dq_vals(i) = tabel_valori_dgv.Item(5, tabel_valori_dgv.CurrentRow.Index + nr_dq).Value
-                    dq_arr(nr_dq) = dq_vals(i)
-                    nr_dq += 1
-                Else
                     dq_vals(i) = minim_absolut
                 End If
-            Else
-                debit_masurat(i) = minim_absolut
-                dif_debit(i) = minim_absolut
-                dq_vals(i) = minim_absolut
-            End If
-        Next
-
-        For Each dq In dq_vals
-            If dq > minim_absolut Then
-                ReDim Preserve dq_comparare(incr)
-                dq_comparare(incr) = dq
-                incr += 1
-            End If
-        Next
-
-        'de scos id-ul din tabelul masini pentru a actualiza rowid-urile selectate mai sus cu id-ul masinilor
-        rezultat_regex = testare_regex.Match(nr_masina_cb.Text)
-        conexiune_bd.Open()
-        comanda.CommandText = "select id_masina from masini where nr_operatie = '" & rezultat_regex.Value & "'"
-        reader = comanda.ExecuteReader
-
-        'extragere id masina
-        Using reader
-            While reader.Read()
-                id_masina = reader.GetInt16(0)
-            End While
-        End Using
-        comanda.Dispose()
-
-        'salvare id masina in rezultatele selectatate
-        For Each rand In tabel_valori_dgv.SelectedRows
-            comanda.CommandText = "update valori set masina = " & id_masina & " where rowid = " & rand.Cells(7).Value
-            comanda.ExecuteNonQuery()
-        Next
-        comanda.Dispose()
-
-        'salvare rezultat spc in bd
-        comanda.CommandText = "insert into spc_posalux (nr_marca, valoare_introdusa_z1, valoare_introdusa_z2, valoare_introdusa_z3, valoare_introdusa_z4, diferenta_calculata_z1,
-                               diferenta_calculata_z2, diferenta_calculata_z3, diferenta_calculata_z4, diferenta_calculata_min_max_delta_q, referinta, masina) values (@nr_marca, @val_z1, @val_z2,
-                               @val_z3, @val_z4, @dif_z1, @dif_z2, @dif_z3, @dif_z4, @dif_dq, @referinta, @masina)"
-        comanda.Parameters.AddWithValue("@nr_marca", nr_marca_tb.Text)
-
-        For i = 0 To 3
-            comanda.Parameters.AddWithValue("@val_z" & i + 1, If(debit_introdus(i) = "*", DBNull.Value, (debit_introdus(i))))
-            comanda.Parameters.AddWithValue("@dif_z" & i + 1, If(debit_introdus(i) = "*", DBNull.Value, dif_debit(i)))
-        Next
-
-        If nr_dq > 1 Then
-            comanda.Parameters.AddWithValue("@dif_dq", dq_comparare.Max - dq_comparare.Min)
-        Else
-            comanda.Parameters.AddWithValue("@dif_dq", DBNull.Value)
-        End If
-
-        comanda.Parameters.AddWithValue("@referinta", tabel_valori_dgv.Item(2, tabel_valori_dgv.CurrentRow.Index).Value)
-        comanda.Parameters.AddWithValue("@masina", id_masina)
-        comanda_executata = comanda.ExecuteNonQuery()
-
-        If comanda_executata = 1 Then
-            'extrage id-ul spc-ului
-            comanda.CommandText = "select last_insert_rowid()"
-            spc_id = comanda.ExecuteScalar()
-
-            'actualizare tabel valori cu id-ul spcului creat
-            For Each rand In tabel_valori_dgv.SelectedRows
-                comanda.CommandText = "update valori set spc_id = " & spc_id & " where rowid = " & rand.Cells(7).Value
-                comanda.ExecuteNonQuery()
             Next
-            comanda.Dispose()
 
-            nr_marca_tb.Text = ""
-            adauga_valori_pnl.Visible = False
+            For Each dq In dq_vals
+                If dq > minim_absolut Then
+                    ReDim Preserve dq_comparare(incr)
+                    dq_comparare(incr) = dq
+                    incr += 1
+                End If
+            Next
 
-            'extragere limite dif, dq si nominal pentru afisare pagina atentionari
-            comanda.CommandText = "select diferenta_max, diferenta_min, delta_q_max, delta_q_min, dif_dq_max, dif_dq_min from referinta where nume = '" & tabel_valori_dgv.Item(2, tabel_valori_dgv.CurrentRow.Index).Value & "'"
+            'de scos id-ul din tabelul masini pentru a actualiza rowid-urile selectate mai sus cu id-ul masinilor
+            rezultat_regex = testare_regex.Match(nr_masina_cb.Text)
+            conexiune_bd.Open()
+            comanda.CommandText = "select id_masina from masini where nr_operatie = '" & rezultat_regex.Value & "'"
             reader = comanda.ExecuteReader
+
+            'extragere id masina
             Using reader
                 While reader.Read()
-                    dif_max = reader.GetInt16(0)
-                    dif_min = reader.GetInt16(1)
-                    dq_max = reader.GetInt16(2)
-                    dq_min = reader.GetInt16(3)
-                    dif_dq_max = reader.GetInt16(4)
-                    dif_dq_min = reader.GetInt16(5)
+                    id_masina = reader.GetInt16(0)
                 End While
             End Using
             comanda.Dispose()
 
-            'creare comanda pentru inserare linie in tabelul atentionare
-            comanda.CommandText = "insert into atentionare (spc_id, atentionare_activa, z1_atentionare_1, z1_atentionare_2, z1_atentionare_3, z2_atentionare_1, z2_atentionare_2, z2_atentionare_3,
+            'salvare id masina in rezultatele selectatate
+            For Each rand In tabel_valori_dgv.SelectedRows
+                comanda.CommandText = "update valori set masina = " & id_masina & " where rowid = " & rand.Cells(7).Value
+                comanda.ExecuteNonQuery()
+            Next
+            comanda.Dispose()
+
+            'salvare rezultat spc in bd
+            comanda.CommandText = "insert into spc_posalux (nr_marca, valoare_introdusa_z1, valoare_introdusa_z2, valoare_introdusa_z3, valoare_introdusa_z4, diferenta_calculata_z1,
+                               diferenta_calculata_z2, diferenta_calculata_z3, diferenta_calculata_z4, diferenta_calculata_min_max_delta_q, referinta, masina) values (@nr_marca, @val_z1, @val_z2,
+                               @val_z3, @val_z4, @dif_z1, @dif_z2, @dif_z3, @dif_z4, @dif_dq, @referinta, @masina)"
+            comanda.Parameters.AddWithValue("@nr_marca", nr_marca_tb.Text)
+
+            For i = 0 To 3
+                comanda.Parameters.AddWithValue("@val_z" & i + 1, If(debit_introdus(i) = "*", DBNull.Value, (debit_introdus(i))))
+                comanda.Parameters.AddWithValue("@dif_z" & i + 1, If(debit_introdus(i) = "*", DBNull.Value, dif_debit(i)))
+            Next
+
+            If nr_dq > 1 Then
+                comanda.Parameters.AddWithValue("@dif_dq", dq_comparare.Max - dq_comparare.Min)
+            Else
+                comanda.Parameters.AddWithValue("@dif_dq", DBNull.Value)
+            End If
+
+            comanda.Parameters.AddWithValue("@referinta", .Item(2, .CurrentRow.Index).Value)
+            comanda.Parameters.AddWithValue("@masina", id_masina)
+            comanda_executata = comanda.ExecuteNonQuery()
+
+            If comanda_executata = 1 Then
+                'extrage id-ul spc-ului
+                comanda.CommandText = "select last_insert_rowid()"
+                spc_id = comanda.ExecuteScalar()
+
+                'actualizare tabel valori cu id-ul spc-ului creat
+                For Each rand In .SelectedRows
+                    comanda.CommandText = "update valori set spc_id = " & spc_id & " where rowid = " & rand.Cells(7).Value
+                    comanda.ExecuteNonQuery()
+                Next
+                comanda.Dispose()
+
+                nr_marca_tb.Text = ""
+                adauga_valori_pnl.Visible = False
+
+                'extragere limite dif, dq si nominal pentru afisare pagina atentionari
+                comanda.CommandText = "select diferenta_max, diferenta_min, delta_q_max, delta_q_min, dif_dq_max, dif_dq_min from referinta where nume = '" & .Item(2, .CurrentRow.Index).Value & "'"
+                reader = comanda.ExecuteReader
+                Using reader
+                    While reader.Read()
+                        dif_max = reader.GetInt16(0)
+                        dif_min = reader.GetInt16(1)
+                        dq_max = reader.GetInt16(2)
+                        dq_min = reader.GetInt16(3)
+                        dif_dq_max = reader.GetInt16(4)
+                        dif_dq_min = reader.GetInt16(5)
+                    End While
+                End Using
+                comanda.Dispose()
+
+                'creare comanda pentru inserare linie in tabelul atentionare
+                comanda.CommandText = "insert into atentionare (spc_id, atentionare_activa, z1_atentionare_1, z1_atentionare_2, z1_atentionare_3, z2_atentionare_1, z2_atentionare_2, z2_atentionare_3,
                                    z3_atentionare_1, z3_atentionare_2, z3_atentionare_3, z4_atentionare_1, z4_atentionare_2, z4_atentionare_3) values (@spc_id, @atentionare_activa, @z1_atentionare_1,
                                    @z1_atentionare_2, @z1_atentionare_3, @z2_atentionare_1, @z2_atentionare_2, @z2_atentionare_3, @z3_atentionare_1, @z3_atentionare_2, @z3_atentionare_3,
                                    @z4_atentionare_1, @z4_atentionare_2, @z4_atentionare_3)"
 
-            comanda.Parameters.AddWithValue("@spc_id", spc_id)
+                comanda.Parameters.AddWithValue("@spc_id", spc_id)
 
-            'calcul diferenta debit maxima pentru a verificare daca e mai mare decat limita impusa in referinta
-            If dif_debit.Max > dif_max Or dif_debit.Min < dif_min Then
-                atentionare_1 = True
+                'calcul diferenta debit maxima pentru verificare daca e mai mare decat limita impusa in referinta
+                If dif_debit.Max > dif_max Or dif_debit.Min < dif_min Then
 
-                'verifica diferenta debit z1
-                For i = 0 To 3
-                    If debit_masurat(i) > 0 And (dif_debit(i) > dif_max Or dif_debit(i) < dif_min) Then
-                        atentionare(i) = True
-                        comanda.Parameters.AddWithValue("@z" & i + 1 & "_atentionare_1", True)
-                    Else
-                        comanda.Parameters.AddWithValue("@z" & i + 1 & "_atentionare_1", False)
+                    'verifica diferenta debit z1
+                    For i = 0 To 3
+                        If debit_masurat(i) > 0 AndAlso (dif_debit(i) > dif_max Or dif_debit(i) < dif_min) Then
+                            atentionare_1 = True
+                            atentionare(i) = True
+                            comanda.Parameters.AddWithValue("@z" & i + 1 & "_atentionare_1", True)
+                        Else
+                            comanda.Parameters.AddWithValue("@z" & i + 1 & "_atentionare_1", False)
+                        End If
+                    Next
+                Else
+                    comanda.Parameters.AddWithValue("@z1_atentionare_1", False)
+                    comanda.Parameters.AddWithValue("@z2_atentionare_1", False)
+                    comanda.Parameters.AddWithValue("@z3_atentionare_1", False)
+                    comanda.Parameters.AddWithValue("@z4_atentionare_1", False)
+                End If
+
+                If dq_comparare.Max > dq_max Or dq_comparare.Min < dq_min Then
+                    For i = 0 To 3
+                        If dq_vals(i) > minim_absolut AndAlso (dq_vals(i) > dq_max Or dq_vals(i) < dq_min) Then
+                            atentionare_2 = True
+                            atentionare(4 + i) = True
+                            comanda.Parameters.AddWithValue("@z" & i + 1 & "_atentionare_2", True)
+                        Else
+                            comanda.Parameters.AddWithValue("@z" & i + 1 & "_atentionare_2", False)
+                        End If
+                    Next
+                Else
+                    comanda.Parameters.AddWithValue("@z1_atentionare_2", False)
+                        comanda.Parameters.AddWithValue("@z2_atentionare_2", False)
+                        comanda.Parameters.AddWithValue("@z3_atentionare_2", False)
+                        comanda.Parameters.AddWithValue("@z4_atentionare_2", False)
                     End If
-                Next
-            Else
-                comanda.Parameters.AddWithValue("@z1_atentionare_1", False)
-                comanda.Parameters.AddWithValue("@z2_atentionare_1", False)
-                comanda.Parameters.AddWithValue("@z3_atentionare_1", False)
-                comanda.Parameters.AddWithValue("@z4_atentionare_1", False)
-            End If
 
-            If dq_comparare.Max > dq_max Or dq_comparare.Min < dq_min Then
-                atentionare_2 = True
-                For i = 0 To 3
-                    If dq_vals(i) > minim_absolut And (dq_vals(i) > dq_max Or dq_vals(i) < dq_min) Then
-                        atentionare(4 + i) = True
-                        comanda.Parameters.AddWithValue("@z" & i + 1 & "_atentionare_2", True)
-                    Else
-                        comanda.Parameters.AddWithValue("@z" & i + 1 & "_atentionare_2", False)
+                    If nr_dq > 1 AndAlso (dq_comparare.Max - dq_comparare.Min) > dif_dq_max Then
+                    'afiseaza z-urile cu valoarea minima si maxima
+                    For i = 0 To 3
+                        If dq_vals(i) > minim_absolut And (dq_vals(i) = dq_vals.Max Or dq_vals(i) = dq_vals.Min) Then
+                            atentionare_3 = True
+                            atentionare(8 + i) = True
+                            comanda.Parameters.AddWithValue("@z" & i + 1 & "_atentionare_3", True)
+                        Else
+                            comanda.Parameters.AddWithValue("@z" & i + 1 & "_atentionare_3", False)
+                        End If
+                    Next
+                Else
+                        comanda.Parameters.AddWithValue("@z1_atentionare_3", False)
+                        comanda.Parameters.AddWithValue("@z2_atentionare_3", False)
+                        comanda.Parameters.AddWithValue("@z3_atentionare_3", False)
+                        comanda.Parameters.AddWithValue("@z4_atentionare_3", False)
                     End If
-                Next
-            Else
-                comanda.Parameters.AddWithValue("@z1_atentionare_2", False)
-                comanda.Parameters.AddWithValue("@z2_atentionare_2", False)
-                comanda.Parameters.AddWithValue("@z3_atentionare_2", False)
-                comanda.Parameters.AddWithValue("@z4_atentionare_2", False)
-            End If
 
-            If nr_dq > 1 AndAlso (dq_comparare.Max - dq_comparare.Min) > dif_dq_max Then
-                atentionare_3 = True
-                'afiseaza z-urile cu valoarea minima si maxima
-                For i = 0 To 3
-                    If dq_vals(i) > minim_absolut And (dq_vals(i) = dq_vals.Max Or dq_vals(i) = dq_vals.Min) Then
-                        atentionare(8 + i) = True
-                        comanda.Parameters.AddWithValue("@z" & i + 1 & "_atentionare_3", True)
+                    If atentionare_1 Or atentionare_2 Or atentionare_3 Then
+                        atentionare_activa = True
+                        comanda.Parameters.AddWithValue("@atentionare_activa", True)
                     Else
-                        comanda.Parameters.AddWithValue("@z" & i + 1 & "_atentionare_3", False)
+                        comanda.Parameters.AddWithValue("@atentionare_activa", False)
                     End If
-                Next
-            Else
-                comanda.Parameters.AddWithValue("@z1_atentionare_3", False)
-                comanda.Parameters.AddWithValue("@z2_atentionare_3", False)
-                comanda.Parameters.AddWithValue("@z3_atentionare_3", False)
-                comanda.Parameters.AddWithValue("@z4_atentionare_3", False)
-            End If
 
-            If atentionare_1 Or atentionare_2 Or atentionare_3 Then
-                atentionare_activa = True
-                comanda.Parameters.AddWithValue("@atentionare_activa", True)
-            Else
-                comanda.Parameters.AddWithValue("@atentionare_activa", False)
-            End If
-
-            comanda_executata = comanda.ExecuteNonQuery()
-            comanda.Dispose()
-            If comanda_executata = 1 Then
-                lista_atentionari_pnl.Tag = id_masina
-                vizibilitate_panou(lista_atentionari_pnl)
-            End If
-        End If
+                    comanda_executata = comanda.ExecuteNonQuery()
+                    comanda.Dispose()
+                    If comanda_executata = 1 Then
+                        lista_atentionari_pnl.Tag = id_masina
+                        vizibilitate_panou(lista_atentionari_pnl)
+                    End If
+                End If
+        End With
         conexiune_bd.Close()
     End Sub
 
