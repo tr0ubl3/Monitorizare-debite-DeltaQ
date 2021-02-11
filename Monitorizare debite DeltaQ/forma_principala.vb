@@ -280,7 +280,7 @@ Public Class fereastra_principala_frm
                     salveaza_valori_btn.Visible = False
                 End If
                 deblocare_selectie_btn.IconChar = FontAwesome.Sharp.IconChar.Unlock
-            ElseIf .SelectedRows.count < 1 Then
+            ElseIf .SelectedRows.Count < 1 Then
                 MsgBox("Eroare extragere date din DeltaQ Bench!")
             End If
         End With
@@ -465,12 +465,12 @@ Public Class fereastra_principala_frm
                     Next
                 Else
                     comanda.Parameters.AddWithValue("@z1_atentionare_2", False)
-                        comanda.Parameters.AddWithValue("@z2_atentionare_2", False)
-                        comanda.Parameters.AddWithValue("@z3_atentionare_2", False)
-                        comanda.Parameters.AddWithValue("@z4_atentionare_2", False)
-                    End If
+                    comanda.Parameters.AddWithValue("@z2_atentionare_2", False)
+                    comanda.Parameters.AddWithValue("@z3_atentionare_2", False)
+                    comanda.Parameters.AddWithValue("@z4_atentionare_2", False)
+                End If
 
-                    If nr_dq > 1 AndAlso (dq_comparare.Max - dq_comparare.Min) > dif_dq_max Then
+                If nr_dq > 1 AndAlso (dq_comparare.Max - dq_comparare.Min) > dif_dq_max Then
                     'afiseaza z-urile cu valoarea minima si maxima
                     For i = 0 To 3
                         If dq_vals(i) > minim_absolut And (dq_vals(i) = dq_vals.Max Or dq_vals(i) = dq_vals.Min) Then
@@ -482,26 +482,26 @@ Public Class fereastra_principala_frm
                         End If
                     Next
                 Else
-                        comanda.Parameters.AddWithValue("@z1_atentionare_3", False)
-                        comanda.Parameters.AddWithValue("@z2_atentionare_3", False)
-                        comanda.Parameters.AddWithValue("@z3_atentionare_3", False)
-                        comanda.Parameters.AddWithValue("@z4_atentionare_3", False)
-                    End If
-
-                    If atentionare_1 Or atentionare_2 Or atentionare_3 Then
-                        atentionare_activa = True
-                        comanda.Parameters.AddWithValue("@atentionare_activa", True)
-                    Else
-                        comanda.Parameters.AddWithValue("@atentionare_activa", False)
-                    End If
-
-                    comanda_executata = comanda.ExecuteNonQuery()
-                    comanda.Dispose()
-                    If comanda_executata = 1 Then
-                        lista_atentionari_pnl.Tag = id_masina
-                        vizibilitate_panou(lista_atentionari_pnl)
-                    End If
+                    comanda.Parameters.AddWithValue("@z1_atentionare_3", False)
+                    comanda.Parameters.AddWithValue("@z2_atentionare_3", False)
+                    comanda.Parameters.AddWithValue("@z3_atentionare_3", False)
+                    comanda.Parameters.AddWithValue("@z4_atentionare_3", False)
                 End If
+
+                If atentionare_1 Or atentionare_2 Or atentionare_3 Then
+                    atentionare_activa = True
+                    comanda.Parameters.AddWithValue("@atentionare_activa", True)
+                Else
+                    comanda.Parameters.AddWithValue("@atentionare_activa", False)
+                End If
+
+                comanda_executata = comanda.ExecuteNonQuery()
+                comanda.Dispose()
+                If comanda_executata = 1 Then
+                    lista_atentionari_pnl.Tag = id_masina
+                    vizibilitate_panou(lista_atentionari_pnl)
+                End If
+            End If
         End With
         conexiune_bd.Close()
     End Sub
