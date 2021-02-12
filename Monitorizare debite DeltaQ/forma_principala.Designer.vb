@@ -89,6 +89,12 @@ Partial Class fereastra_principala_frm
         Me.lista_masini_pnl = New System.Windows.Forms.Panel()
         Me.masini_posalux_lbl = New System.Windows.Forms.Label()
         Me.button_flow_pnl = New System.Windows.Forms.FlowLayoutPanel()
+        Me.selectie_val_pnl = New System.Windows.Forms.Panel()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.vizualizare_evolutie_btn = New FontAwesome.Sharp.IconButton()
+        Me.lista_referinte_lbx = New System.Windows.Forms.ListBox()
+        Me.lista_masina_lbx = New System.Windows.Forms.ListBox()
+        Me.Label3 = New System.Windows.Forms.Label()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.buton_refresh_ttp = New System.Windows.Forms.ToolTip(Me.components)
         Me.panou_butoane_pnl.SuspendLayout()
@@ -100,6 +106,7 @@ Partial Class fereastra_principala_frm
         Me.lista_atentionari_pnl.SuspendLayout()
         Me.TableLayoutPanel2.SuspendLayout()
         Me.lista_masini_pnl.SuspendLayout()
+        Me.selectie_val_pnl.SuspendLayout()
         Me.SuspendLayout()
         '
         'panou_butoane_pnl
@@ -288,8 +295,8 @@ Partial Class fereastra_principala_frm
         Me.deblocare_selectie_btn.Rotation = 0R
         Me.deblocare_selectie_btn.Size = New System.Drawing.Size(68, 45)
         Me.deblocare_selectie_btn.TabIndex = 12
-        Me.deblocare_selectie_btn.UseVisualStyleBackColor = True
         Me.buton_refresh_ttp.SetToolTip(Me.deblocare_selectie_btn, "Deblochează selecția")
+        Me.deblocare_selectie_btn.UseVisualStyleBackColor = True
         '
         'reactualizare_date_btn
         '
@@ -880,6 +887,74 @@ Partial Class fereastra_principala_frm
         Me.button_flow_pnl.Size = New System.Drawing.Size(763, 427)
         Me.button_flow_pnl.TabIndex = 0
         '
+        'selectie_val_pnl
+        '
+        Me.selectie_val_pnl.Controls.Add(Me.Label8)
+        Me.selectie_val_pnl.Controls.Add(Me.vizualizare_evolutie_btn)
+        Me.selectie_val_pnl.Controls.Add(Me.lista_referinte_lbx)
+        Me.selectie_val_pnl.Controls.Add(Me.lista_masina_lbx)
+        Me.selectie_val_pnl.Controls.Add(Me.Label3)
+        Me.selectie_val_pnl.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.selectie_val_pnl.Location = New System.Drawing.Point(200, 0)
+        Me.selectie_val_pnl.Name = "selectie_val_pnl"
+        Me.selectie_val_pnl.Size = New System.Drawing.Size(824, 651)
+        Me.selectie_val_pnl.TabIndex = 2
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 16.0!)
+        Me.Label8.Location = New System.Drawing.Point(172, 255)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(25, 26)
+        Me.Label8.TabIndex = 6
+        Me.Label8.Text = ">"
+        '
+        'vizualizare_evolutie_btn
+        '
+        Me.vizualizare_evolutie_btn.Flip = FontAwesome.Sharp.FlipOrientation.Normal
+        Me.vizualizare_evolutie_btn.IconChar = FontAwesome.Sharp.IconChar.ArrowCircleRight
+        Me.vizualizare_evolutie_btn.IconColor = System.Drawing.Color.Black
+        Me.vizualizare_evolutie_btn.IconSize = 41
+        Me.vizualizare_evolutie_btn.Location = New System.Drawing.Point(391, 126)
+        Me.vizualizare_evolutie_btn.Name = "vizualizare_evolutie_btn"
+        Me.vizualizare_evolutie_btn.Rotation = 0R
+        Me.vizualizare_evolutie_btn.Size = New System.Drawing.Size(97, 48)
+        Me.vizualizare_evolutie_btn.TabIndex = 4
+        Me.vizualizare_evolutie_btn.UseVisualStyleBackColor = True
+        '
+        'lista_referinte_lbx
+        '
+        Me.lista_referinte_lbx.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.lista_referinte_lbx.Font = New System.Drawing.Font("Consolas", 14.0!)
+        Me.lista_referinte_lbx.FormattingEnabled = True
+        Me.lista_referinte_lbx.ItemHeight = 22
+        Me.lista_referinte_lbx.Location = New System.Drawing.Point(225, 128)
+        Me.lista_referinte_lbx.Name = "lista_referinte_lbx"
+        Me.lista_referinte_lbx.Size = New System.Drawing.Size(135, 286)
+        Me.lista_referinte_lbx.TabIndex = 3
+        '
+        'lista_masina_lbx
+        '
+        Me.lista_masina_lbx.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.lista_masina_lbx.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lista_masina_lbx.FormattingEnabled = True
+        Me.lista_masina_lbx.ItemHeight = 19
+        Me.lista_masina_lbx.Location = New System.Drawing.Point(20, 126)
+        Me.lista_masina_lbx.Name = "lista_masina_lbx"
+        Me.lista_masina_lbx.Size = New System.Drawing.Size(135, 285)
+        Me.lista_masina_lbx.TabIndex = 2
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Font = New System.Drawing.Font("Consolas", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Location = New System.Drawing.Point(16, 48)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(530, 22)
+        Me.Label3.TabIndex = 1
+        Me.Label3.Text = "Selecție mașină și referință pentru afișare evoluție"
+        '
         'Timer1
         '
         Me.Timer1.Interval = 15000
@@ -889,11 +964,12 @@ Partial Class fereastra_principala_frm
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1024, 651)
+        Me.Controls.Add(Me.selectie_val_pnl)
         Me.Controls.Add(Me.panou_butoane_pnl)
-        Me.Controls.Add(Me.adauga_valori_pnl)
         Me.Controls.Add(Me.lista_masini_pnl)
         Me.Controls.Add(Me.lista_atentionari_pnl)
         Me.Controls.Add(Me.grafice_pnl)
+        Me.Controls.Add(Me.adauga_valori_pnl)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MinimumSize = New System.Drawing.Size(1040, 690)
         Me.Name = "fereastra_principala_frm"
@@ -913,6 +989,8 @@ Partial Class fereastra_principala_frm
         Me.TableLayoutPanel2.PerformLayout()
         Me.lista_masini_pnl.ResumeLayout(False)
         Me.lista_masini_pnl.PerformLayout()
+        Me.selectie_val_pnl.ResumeLayout(False)
+        Me.selectie_val_pnl.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -977,4 +1055,10 @@ Partial Class fereastra_principala_frm
     Friend WithEvents val_mas As ColumnHeader
     Friend WithEvents diferenta As ColumnHeader
     Friend WithEvents deblocare_selectie_btn As FontAwesome.Sharp.IconButton
+    Friend WithEvents selectie_val_pnl As Panel
+    Friend WithEvents Label3 As Label
+    Friend WithEvents lista_masina_lbx As ListBox
+    Friend WithEvents vizualizare_evolutie_btn As FontAwesome.Sharp.IconButton
+    Friend WithEvents lista_referinte_lbx As ListBox
+    Friend WithEvents Label8 As Label
 End Class

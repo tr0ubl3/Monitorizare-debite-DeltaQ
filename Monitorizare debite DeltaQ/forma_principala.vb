@@ -596,9 +596,16 @@ Public Class fereastra_principala_frm
     End Sub
 
     Private Sub vizualizare_grafice_btn_Click(sender As Object, e As EventArgs) Handles vizualizare_grafice_btn.Click
-        vizibilitate_panou(grafice_pnl)
+        vizibilitate_panou(selectie_val_pnl)
+        'vizibilitate_panou(lista_masini_pnl)
+        'populare_masini()
     End Sub
     Private Sub lista_atentionari_btn_Click(sender As Object, e As EventArgs) Handles lista_atentionari_btn.Click
+        vizibilitate_panou(lista_masini_pnl)
+        populare_masini()
+    End Sub
+
+    Private Sub populare_masini()
         Dim conexiune_bd As New SqliteConnection("data source=" & locatie_bd)
         Dim comanda = conexiune_bd.CreateCommand
         Dim reader As SqliteDataReader
@@ -606,9 +613,7 @@ Public Class fereastra_principala_frm
         Dim atentionare_activa As Boolean
         Dim referinta As String = ""
         Dim spc_id As Integer
-        'Dim id_producator As String
 
-        vizibilitate_panou(lista_masini_pnl)
         If button_flow_pnl.Controls.OfType(Of Button).Count = 0 Then
             conexiune_bd.Open()
             adauga_butoane(button_flow_pnl)
@@ -1348,5 +1353,59 @@ Public Class fereastra_principala_frm
         End With
         deblocare_selectie_btn.IconChar = FontAwesome.Sharp.IconChar.Lock
     End Sub
-End Class
 
+    Private Sub selectie_val_pnl_VisibleChanged(sender As Object, e As EventArgs) Handles selectie_val_pnl.VisibleChanged
+        Dim masini As IDictionary
+        Dim incr As Int16
+
+        If selectie_val_pnl.Visible Then
+            masini = get_machines()
+
+            For incr = 0 To (masini.Count / 3) - 1
+                lista_masina_lbx.Items.Add(masini.Item("nr_operatie_" & incr))
+            Next
+        Else
+            lista_masina_lbx.Items.Clear()
+            lista_masina_lbx.Tag = ""
+            lista_referinte_lbx.Items.Clear()
+        End If
+    End Sub
+
+    Private Sub lista_masina_lbx_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lista_masina_lbx.SelectedIndexChanged
+        Dim conexiune_bd As New SqliteConnection("data source=" & locatie_bd)
+        Dim comanda = conexiune_bd.CreateCommand
+        Dim reader As SqliteDataReader
+        Dim masina As Int16
+
+        lista_referinte_lbx.Items.Clear()
+
+        conexiune_bd.Open()
+        comanda.CommandText = "select id_masina from masini where nr_operatie = " & lista_masina_lbx.SelectedItem
+        reader = comanda.ExecuteReader()
+
+        Using reader
+            While reader.Read()
+                masina = reader.GetInt16(0)
+            End While
+        End Using
+
+        comanda.Dispose()
+        reader.Close()
+
+        comanda.CommandText = "select referinta from spc_posalux where masina = " & masina & " and referinta like 'L%' group by referinta"
+        reader = comanda.ExecuteReader
+
+        Using reader
+            While reader.Read()
+                lista_referinte_lbx.Items.Add(reader.GetString(0))
+            End While
+        End Using
+
+        lista_masina_lbx.Tag = masina
+        conexiune_bd.Close()
+    End Sub
+
+    Private Sub lista_referinte_lbx_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lista_referinte_lbx.SelectedIndexChanged
+
+    End Sub
+End Class
