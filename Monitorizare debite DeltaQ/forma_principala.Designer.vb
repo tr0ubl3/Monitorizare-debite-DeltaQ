@@ -37,7 +37,6 @@ Partial Class fereastra_principala_frm
         Me.adauga_valori_btn = New FontAwesome.Sharp.IconButton()
         Me.grafice_pnl = New System.Windows.Forms.Panel()
         Me.dif_debit_z1_chart = New System.Windows.Forms.DataVisualization.Charting.Chart()
-        Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.adauga_valori_pnl = New System.Windows.Forms.Panel()
         Me.deblocare_selectie_btn = New FontAwesome.Sharp.IconButton()
@@ -97,6 +96,11 @@ Partial Class fereastra_principala_frm
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.buton_refresh_ttp = New System.Windows.Forms.ToolTip(Me.components)
+        Me.TabControl1 = New System.Windows.Forms.TabControl()
+        Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.TabPage4 = New System.Windows.Forms.TabPage()
         Me.panou_butoane_pnl.SuspendLayout()
         Me.grafice_pnl.SuspendLayout()
         CType(Me.dif_debit_z1_chart, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -107,6 +111,8 @@ Partial Class fereastra_principala_frm
         Me.TableLayoutPanel2.SuspendLayout()
         Me.lista_masini_pnl.SuspendLayout()
         Me.selectie_val_pnl.SuspendLayout()
+        Me.TabControl1.SuspendLayout()
+        Me.TabPage1.SuspendLayout()
         Me.SuspendLayout()
         '
         'panou_butoane_pnl
@@ -189,9 +195,7 @@ Partial Class fereastra_principala_frm
         '
         Me.grafice_pnl.AutoScroll = True
         Me.grafice_pnl.BackColor = System.Drawing.Color.FromArgb(CType(CType(103, Byte), Integer), CType(CType(106, Byte), Integer), CType(CType(113, Byte), Integer))
-        Me.grafice_pnl.Controls.Add(Me.dif_debit_z1_chart)
-        Me.grafice_pnl.Controls.Add(Me.Label2)
-        Me.grafice_pnl.Controls.Add(Me.Label1)
+        Me.grafice_pnl.Controls.Add(Me.TabControl1)
         Me.grafice_pnl.Dock = System.Windows.Forms.DockStyle.Fill
         Me.grafice_pnl.Location = New System.Drawing.Point(0, 0)
         Me.grafice_pnl.Name = "grafice_pnl"
@@ -224,7 +228,7 @@ Partial Class fereastra_principala_frm
         Legend1.Enabled = False
         Legend1.Name = "Legend1"
         Me.dif_debit_z1_chart.Legends.Add(Legend1)
-        Me.dif_debit_z1_chart.Location = New System.Drawing.Point(216, 34)
+        Me.dif_debit_z1_chart.Location = New System.Drawing.Point(2, 37)
         Me.dif_debit_z1_chart.Name = "dif_debit_z1_chart"
         Me.dif_debit_z1_chart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SemiTransparent
         Series1.ChartArea = "ChartArea1"
@@ -235,26 +239,15 @@ Partial Class fereastra_principala_frm
         Series1.Legend = "Legend1"
         Series1.Name = "valori"
         Me.dif_debit_z1_chart.Series.Add(Series1)
-        Me.dif_debit_z1_chart.Size = New System.Drawing.Size(764, 261)
+        Me.dif_debit_z1_chart.Size = New System.Drawing.Size(801, 263)
         Me.dif_debit_z1_chart.TabIndex = 10
         Me.dif_debit_z1_chart.Text = "Chart1"
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Consolas", 10.0!)
-        Me.Label2.Location = New System.Drawing.Point(229, 205)
-        Me.Label2.MaximumSize = New System.Drawing.Size(800, 0)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(168, 17)
-        Me.Label2.TabIndex = 8
-        Me.Label2.Text = "Z1 - valoare Delta Q"
         '
         'Label1
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Consolas", 14.0!)
-        Me.Label1.Location = New System.Drawing.Point(212, 9)
+        Me.Label1.Location = New System.Drawing.Point(3, 8)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(400, 22)
         Me.Label1.TabIndex = 7
@@ -895,16 +888,16 @@ Partial Class fereastra_principala_frm
         Me.selectie_val_pnl.Controls.Add(Me.lista_masina_lbx)
         Me.selectie_val_pnl.Controls.Add(Me.Label3)
         Me.selectie_val_pnl.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.selectie_val_pnl.Location = New System.Drawing.Point(200, 0)
+        Me.selectie_val_pnl.Location = New System.Drawing.Point(0, 0)
         Me.selectie_val_pnl.Name = "selectie_val_pnl"
-        Me.selectie_val_pnl.Size = New System.Drawing.Size(824, 651)
+        Me.selectie_val_pnl.Size = New System.Drawing.Size(1024, 651)
         Me.selectie_val_pnl.TabIndex = 2
         '
         'Label8
         '
         Me.Label8.AutoSize = True
         Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 16.0!)
-        Me.Label8.Location = New System.Drawing.Point(172, 255)
+        Me.Label8.Location = New System.Drawing.Point(387, 190)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(25, 26)
         Me.Label8.TabIndex = 6
@@ -916,12 +909,13 @@ Partial Class fereastra_principala_frm
         Me.vizualizare_evolutie_btn.IconChar = FontAwesome.Sharp.IconChar.ArrowCircleRight
         Me.vizualizare_evolutie_btn.IconColor = System.Drawing.Color.Black
         Me.vizualizare_evolutie_btn.IconSize = 41
-        Me.vizualizare_evolutie_btn.Location = New System.Drawing.Point(391, 126)
+        Me.vizualizare_evolutie_btn.Location = New System.Drawing.Point(609, 65)
         Me.vizualizare_evolutie_btn.Name = "vizualizare_evolutie_btn"
         Me.vizualizare_evolutie_btn.Rotation = 0R
         Me.vizualizare_evolutie_btn.Size = New System.Drawing.Size(97, 48)
         Me.vizualizare_evolutie_btn.TabIndex = 4
         Me.vizualizare_evolutie_btn.UseVisualStyleBackColor = True
+        Me.vizualizare_evolutie_btn.Visible = False
         '
         'lista_referinte_lbx
         '
@@ -929,7 +923,7 @@ Partial Class fereastra_principala_frm
         Me.lista_referinte_lbx.Font = New System.Drawing.Font("Consolas", 14.0!)
         Me.lista_referinte_lbx.FormattingEnabled = True
         Me.lista_referinte_lbx.ItemHeight = 22
-        Me.lista_referinte_lbx.Location = New System.Drawing.Point(225, 128)
+        Me.lista_referinte_lbx.Location = New System.Drawing.Point(444, 65)
         Me.lista_referinte_lbx.Name = "lista_referinte_lbx"
         Me.lista_referinte_lbx.Size = New System.Drawing.Size(135, 286)
         Me.lista_referinte_lbx.TabIndex = 3
@@ -940,7 +934,7 @@ Partial Class fereastra_principala_frm
         Me.lista_masina_lbx.Font = New System.Drawing.Font("Consolas", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lista_masina_lbx.FormattingEnabled = True
         Me.lista_masina_lbx.ItemHeight = 19
-        Me.lista_masina_lbx.Location = New System.Drawing.Point(20, 126)
+        Me.lista_masina_lbx.Location = New System.Drawing.Point(217, 63)
         Me.lista_masina_lbx.Name = "lista_masina_lbx"
         Me.lista_masina_lbx.Size = New System.Drawing.Size(135, 285)
         Me.lista_masina_lbx.TabIndex = 2
@@ -949,7 +943,7 @@ Partial Class fereastra_principala_frm
         '
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Consolas", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(16, 48)
+        Me.Label3.Location = New System.Drawing.Point(212, 12)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(530, 22)
         Me.Label3.TabIndex = 1
@@ -959,17 +953,71 @@ Partial Class fereastra_principala_frm
         '
         Me.Timer1.Interval = 15000
         '
+        'TabControl1
+        '
+        Me.TabControl1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TabControl1.Controls.Add(Me.TabPage1)
+        Me.TabControl1.Controls.Add(Me.TabPage2)
+        Me.TabControl1.Controls.Add(Me.TabPage3)
+        Me.TabControl1.Controls.Add(Me.TabPage4)
+        Me.TabControl1.Location = New System.Drawing.Point(204, 26)
+        Me.TabControl1.Name = "TabControl1"
+        Me.TabControl1.SelectedIndex = 0
+        Me.TabControl1.Size = New System.Drawing.Size(817, 514)
+        Me.TabControl1.TabIndex = 11
+        '
+        'TabPage1
+        '
+        Me.TabPage1.Controls.Add(Me.dif_debit_z1_chart)
+        Me.TabPage1.Controls.Add(Me.Label1)
+        Me.TabPage1.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage1.Name = "TabPage1"
+        Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage1.Size = New System.Drawing.Size(809, 488)
+        Me.TabPage1.TabIndex = 0
+        Me.TabPage1.Text = "TabPage1"
+        Me.TabPage1.UseVisualStyleBackColor = True
+        '
+        'TabPage2
+        '
+        Me.TabPage2.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage2.Name = "TabPage2"
+        Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage2.Size = New System.Drawing.Size(809, 488)
+        Me.TabPage2.TabIndex = 1
+        Me.TabPage2.Text = "TabPage2"
+        Me.TabPage2.UseVisualStyleBackColor = True
+        '
+        'TabPage3
+        '
+        Me.TabPage3.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage3.Name = "TabPage3"
+        Me.TabPage3.Size = New System.Drawing.Size(809, 488)
+        Me.TabPage3.TabIndex = 2
+        Me.TabPage3.Text = "TabPage3"
+        Me.TabPage3.UseVisualStyleBackColor = True
+        '
+        'TabPage4
+        '
+        Me.TabPage4.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage4.Name = "TabPage4"
+        Me.TabPage4.Size = New System.Drawing.Size(809, 488)
+        Me.TabPage4.TabIndex = 3
+        Me.TabPage4.Text = "TabPage4"
+        Me.TabPage4.UseVisualStyleBackColor = True
+        '
         'fereastra_principala_frm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1024, 651)
-        Me.Controls.Add(Me.selectie_val_pnl)
         Me.Controls.Add(Me.panou_butoane_pnl)
-        Me.Controls.Add(Me.lista_masini_pnl)
-        Me.Controls.Add(Me.lista_atentionari_pnl)
         Me.Controls.Add(Me.grafice_pnl)
         Me.Controls.Add(Me.adauga_valori_pnl)
+        Me.Controls.Add(Me.selectie_val_pnl)
+        Me.Controls.Add(Me.lista_masini_pnl)
+        Me.Controls.Add(Me.lista_atentionari_pnl)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MinimumSize = New System.Drawing.Size(1040, 690)
         Me.Name = "fereastra_principala_frm"
@@ -977,7 +1025,6 @@ Partial Class fereastra_principala_frm
         Me.Text = "Adaugă valori"
         Me.panou_butoane_pnl.ResumeLayout(False)
         Me.grafice_pnl.ResumeLayout(False)
-        Me.grafice_pnl.PerformLayout()
         CType(Me.dif_debit_z1_chart, System.ComponentModel.ISupportInitialize).EndInit()
         Me.adauga_valori_pnl.ResumeLayout(False)
         Me.adauga_valori_pnl.PerformLayout()
@@ -991,6 +1038,9 @@ Partial Class fereastra_principala_frm
         Me.lista_masini_pnl.PerformLayout()
         Me.selectie_val_pnl.ResumeLayout(False)
         Me.selectie_val_pnl.PerformLayout()
+        Me.TabControl1.ResumeLayout(False)
+        Me.TabPage1.ResumeLayout(False)
+        Me.TabPage1.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1017,7 +1067,6 @@ Partial Class fereastra_principala_frm
     Friend WithEvents grafice_pnl As Panel
     Friend WithEvents vizualizare_grafice_btn As FontAwesome.Sharp.IconButton
     Friend WithEvents Label1 As Label
-    Friend WithEvents Label2 As Label
     Friend WithEvents dif_debit_z1_chart As DataVisualization.Charting.Chart
     Friend WithEvents lista_atentionari_btn As FontAwesome.Sharp.IconButton
     Friend WithEvents lista_atentionari_pnl As Panel
@@ -1061,4 +1110,9 @@ Partial Class fereastra_principala_frm
     Friend WithEvents vizualizare_evolutie_btn As FontAwesome.Sharp.IconButton
     Friend WithEvents lista_referinte_lbx As ListBox
     Friend WithEvents Label8 As Label
+    Friend WithEvents TabControl1 As TabControl
+    Friend WithEvents TabPage1 As TabPage
+    Friend WithEvents TabPage2 As TabPage
+    Friend WithEvents TabPage3 As TabPage
+    Friend WithEvents TabPage4 As TabPage
 End Class

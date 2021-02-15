@@ -1,6 +1,37 @@
 ﻿Imports System.Text.RegularExpressions
 Imports Microsoft.Data.Sqlite
+
 Public Class fereastra_principala_frm
+    Private _id_masina As Int16
+    Private _numar_op As String
+    Private _nume_ref As String
+    Public Property id_masina As Int16
+        Get
+            Return _id_masina
+        End Get
+        Set(ByVal val As Int16)
+            _id_masina = val
+        End Set
+    End Property
+
+    Public Property numar_op As String
+        Get
+            Return _numar_op
+        End Get
+        Set(ByVal value As String)
+            _numar_op = value
+        End Set
+    End Property
+
+    Public Property nume_ref As String
+        Get
+            Return _nume_ref
+        End Get
+        Set(value As String)
+            _nume_ref = value
+        End Set
+    End Property
+
     Dim nr_marca_valid As Boolean
     Dim locatie_bd As String = Replace(Application.StartupPath, "bin\Debug", "") & "DeltaQValues.db"
     Private Function testare_regex(regex_text As String, text As String) As Boolean
@@ -508,8 +539,7 @@ Public Class fereastra_principala_frm
 
     Private Sub grafice_pnl_VisibleChanged(sender As Object, e As EventArgs) Handles grafice_pnl.VisibleChanged
         If grafice_pnl.Visible = True Then
-            'grafic = dif_z1_pb.CreateGraphics
-            'dif_debit_z1_chart.Visible = True
+            '## populare grafic diferente debit
             Dim limita_max As New DataVisualization.Charting.StripLine
             Dim limita_min As New DataVisualization.Charting.StripLine
             Dim nominal As New DataVisualization.Charting.StripLine
@@ -523,7 +553,7 @@ Public Class fereastra_principala_frm
             Dim dif() = Nothing, diferenta As Double
 
             conexiune_bd.Open()
-            comanda.CommandText = "select diferenta_max, diferenta_min, diferenta_nominala from referinta where id_referinta = 1"
+            comanda.CommandText = "select diferenta_max, diferenta_min, diferenta_nominala from referinta where nume = '" & nume_ref & "'"
             reader = comanda.ExecuteReader
 
             Using reader
@@ -560,7 +590,7 @@ Public Class fereastra_principala_frm
             dif_debit_z1_chart.ChartAreas(0).AxisY.StripLines.Add(nominal)
 
 
-            comanda.CommandText = "select printf('%.1f', diferenta_calculata_z1) from spc_posalux where masina = 7 order by data_creare desc limit 30"
+            comanda.CommandText = "select printf('%.1f', diferenta_calculata_z1) from spc_posalux where masina = " & id_masina & " order by data_creare desc limit 30"
             reader = comanda.ExecuteReader
 
             Using reader
@@ -1368,6 +1398,7 @@ Public Class fereastra_principala_frm
             lista_masina_lbx.Items.Clear()
             lista_masina_lbx.Tag = ""
             lista_referinte_lbx.Items.Clear()
+            vizualizare_evolutie_btn.Visible = False
         End If
     End Sub
 
@@ -1378,6 +1409,7 @@ Public Class fereastra_principala_frm
         Dim masina As Int16
 
         lista_referinte_lbx.Items.Clear()
+        vizualizare_evolutie_btn.Visible = False
 
         conexiune_bd.Open()
         comanda.CommandText = "select id_masina from masini where nr_operatie = " & lista_masina_lbx.SelectedItem
@@ -1401,11 +1433,16 @@ Public Class fereastra_principala_frm
             End While
         End Using
 
-        lista_masina_lbx.Tag = masina
+        id_masina = masina
         conexiune_bd.Close()
     End Sub
 
     Private Sub lista_referinte_lbx_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lista_referinte_lbx.SelectedIndexChanged
+        nume_ref = lista_referinte_lbx.SelectedItem
+        vizualizare_evolutie_btn.Visible = True
+    End Sub
 
+    Private Sub vizualizare_evolutie_btn_Click(sender As Object, e As EventArgs) Handles vizualizare_evolutie_btn.Click
+        vizibilitate_panou(grafice_pnl)
     End Sub
 End Class
