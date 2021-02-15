@@ -26,6 +26,15 @@ Partial Class fereastra_principala_frm
         Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
         Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
         Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend2 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series2 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea3 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend3 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series3 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea4 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend4 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series4 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim ListViewGroup1 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Diferențe debit între Posalux și Delta Q", System.Windows.Forms.HorizontalAlignment.Left)
         Dim ListViewGroup2 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Delta Q în afara toleranței", System.Windows.Forms.HorizontalAlignment.Left)
@@ -36,8 +45,16 @@ Partial Class fereastra_principala_frm
         Me.vizualizare_grafice_btn = New FontAwesome.Sharp.IconButton()
         Me.adauga_valori_btn = New FontAwesome.Sharp.IconButton()
         Me.grafice_pnl = New System.Windows.Forms.Panel()
+        Me.grafice_tabcontrol = New System.Windows.Forms.TabControl()
+        Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.dif_debit_z1_chart = New System.Windows.Forms.DataVisualization.Charting.Chart()
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.dif_debit_z2_chart = New System.Windows.Forms.DataVisualization.Charting.Chart()
+        Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.dif_debit_z3_chart = New System.Windows.Forms.DataVisualization.Charting.Chart()
+        Me.TabPage4 = New System.Windows.Forms.TabPage()
+        Me.dif_debit_z4_chart = New System.Windows.Forms.DataVisualization.Charting.Chart()
         Me.adauga_valori_pnl = New System.Windows.Forms.Panel()
         Me.deblocare_selectie_btn = New FontAwesome.Sharp.IconButton()
         Me.reactualizare_date_btn = New FontAwesome.Sharp.IconButton()
@@ -96,14 +113,21 @@ Partial Class fereastra_principala_frm
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.buton_refresh_ttp = New System.Windows.Forms.ToolTip(Me.components)
-        Me.TabControl1 = New System.Windows.Forms.TabControl()
-        Me.TabPage1 = New System.Windows.Forms.TabPage()
-        Me.TabPage2 = New System.Windows.Forms.TabPage()
-        Me.TabPage3 = New System.Windows.Forms.TabPage()
-        Me.TabPage4 = New System.Windows.Forms.TabPage()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.Label10 = New System.Windows.Forms.Label()
         Me.panou_butoane_pnl.SuspendLayout()
         Me.grafice_pnl.SuspendLayout()
+        Me.grafice_tabcontrol.SuspendLayout()
+        Me.TabPage1.SuspendLayout()
         CType(Me.dif_debit_z1_chart, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPage2.SuspendLayout()
+        CType(Me.dif_debit_z2_chart, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPage3.SuspendLayout()
+        CType(Me.dif_debit_z3_chart, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPage4.SuspendLayout()
+        CType(Me.dif_debit_z4_chart, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.adauga_valori_pnl.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         CType(Me.tabel_valori_dgv, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -111,8 +135,6 @@ Partial Class fereastra_principala_frm
         Me.TableLayoutPanel2.SuspendLayout()
         Me.lista_masini_pnl.SuspendLayout()
         Me.selectie_val_pnl.SuspendLayout()
-        Me.TabControl1.SuspendLayout()
-        Me.TabPage1.SuspendLayout()
         Me.SuspendLayout()
         '
         'panou_butoane_pnl
@@ -195,13 +217,40 @@ Partial Class fereastra_principala_frm
         '
         Me.grafice_pnl.AutoScroll = True
         Me.grafice_pnl.BackColor = System.Drawing.Color.FromArgb(CType(CType(103, Byte), Integer), CType(CType(106, Byte), Integer), CType(CType(113, Byte), Integer))
-        Me.grafice_pnl.Controls.Add(Me.TabControl1)
+        Me.grafice_pnl.Controls.Add(Me.Label10)
+        Me.grafice_pnl.Controls.Add(Me.grafice_tabcontrol)
         Me.grafice_pnl.Dock = System.Windows.Forms.DockStyle.Fill
         Me.grafice_pnl.Location = New System.Drawing.Point(0, 0)
         Me.grafice_pnl.Name = "grafice_pnl"
         Me.grafice_pnl.Size = New System.Drawing.Size(1024, 651)
         Me.grafice_pnl.TabIndex = 9
         Me.grafice_pnl.Visible = False
+        '
+        'grafice_tabcontrol
+        '
+        Me.grafice_tabcontrol.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.grafice_tabcontrol.Controls.Add(Me.TabPage1)
+        Me.grafice_tabcontrol.Controls.Add(Me.TabPage2)
+        Me.grafice_tabcontrol.Controls.Add(Me.TabPage3)
+        Me.grafice_tabcontrol.Controls.Add(Me.TabPage4)
+        Me.grafice_tabcontrol.Location = New System.Drawing.Point(203, 70)
+        Me.grafice_tabcontrol.Name = "grafice_tabcontrol"
+        Me.grafice_tabcontrol.SelectedIndex = 0
+        Me.grafice_tabcontrol.Size = New System.Drawing.Size(817, 514)
+        Me.grafice_tabcontrol.TabIndex = 11
+        '
+        'TabPage1
+        '
+        Me.TabPage1.Controls.Add(Me.dif_debit_z1_chart)
+        Me.TabPage1.Controls.Add(Me.Label1)
+        Me.TabPage1.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage1.Name = "TabPage1"
+        Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage1.Size = New System.Drawing.Size(809, 488)
+        Me.TabPage1.TabIndex = 0
+        Me.TabPage1.Text = "Z1"
+        Me.TabPage1.UseVisualStyleBackColor = True
         '
         'dif_debit_z1_chart
         '
@@ -252,6 +301,160 @@ Partial Class fereastra_principala_frm
         Me.Label1.Size = New System.Drawing.Size(400, 22)
         Me.Label1.TabIndex = 7
         Me.Label1.Text = "Z1 - diferență debit Posalux vs Delta Q"
+        '
+        'TabPage2
+        '
+        Me.TabPage2.Controls.Add(Me.Label2)
+        Me.TabPage2.Controls.Add(Me.dif_debit_z2_chart)
+        Me.TabPage2.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage2.Name = "TabPage2"
+        Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage2.Size = New System.Drawing.Size(809, 488)
+        Me.TabPage2.TabIndex = 1
+        Me.TabPage2.Text = "Z2"
+        Me.TabPage2.UseVisualStyleBackColor = True
+        '
+        'dif_debit_z2_chart
+        '
+        Me.dif_debit_z2_chart.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        ChartArea2.AxisX.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.[False]
+        ChartArea2.AxisX.MinorGrid.LineColor = System.Drawing.Color.White
+        ChartArea2.AxisX.ScaleView.Size = 30.0R
+        ChartArea2.AxisX2.LineColor = System.Drawing.Color.White
+        ChartArea2.AxisY.Interval = 18.0R
+        ChartArea2.AxisY.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number
+        ChartArea2.AxisY.IsLabelAutoFit = False
+        ChartArea2.AxisY.LineColor = System.Drawing.Color.White
+        ChartArea2.AxisY.MajorGrid.LineColor = System.Drawing.Color.Gainsboro
+        ChartArea2.AxisY.Maximum = 5.0R
+        ChartArea2.AxisY.MaximumAutoSize = 85.0!
+        ChartArea2.AxisY.Minimum = -5.0R
+        ChartArea2.AxisY.TitleFont = New System.Drawing.Font("Microsoft Sans Serif", 20.0!)
+        ChartArea2.AxisY2.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.[False]
+        ChartArea2.AxisY2.LineColor = System.Drawing.Color.White
+        ChartArea2.BackColor = System.Drawing.Color.WhiteSmoke
+        ChartArea2.Name = "ChartArea1"
+        Me.dif_debit_z2_chart.ChartAreas.Add(ChartArea2)
+        Legend2.Enabled = False
+        Legend2.Name = "Legend1"
+        Me.dif_debit_z2_chart.Legends.Add(Legend2)
+        Me.dif_debit_z2_chart.Location = New System.Drawing.Point(2, 37)
+        Me.dif_debit_z2_chart.Name = "dif_debit_z2_chart"
+        Me.dif_debit_z2_chart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SemiTransparent
+        Series2.ChartArea = "ChartArea1"
+        Series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
+        Series2.Color = System.Drawing.Color.Black
+        Series2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Series2.IsVisibleInLegend = False
+        Series2.Legend = "Legend1"
+        Series2.Name = "valori"
+        Me.dif_debit_z2_chart.Series.Add(Series2)
+        Me.dif_debit_z2_chart.Size = New System.Drawing.Size(801, 263)
+        Me.dif_debit_z2_chart.TabIndex = 11
+        Me.dif_debit_z2_chart.Text = "Chart1"
+        '
+        'TabPage3
+        '
+        Me.TabPage3.Controls.Add(Me.Label7)
+        Me.TabPage3.Controls.Add(Me.dif_debit_z3_chart)
+        Me.TabPage3.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage3.Name = "TabPage3"
+        Me.TabPage3.Size = New System.Drawing.Size(809, 488)
+        Me.TabPage3.TabIndex = 2
+        Me.TabPage3.Text = "Z3"
+        Me.TabPage3.UseVisualStyleBackColor = True
+        '
+        'dif_debit_z3_chart
+        '
+        Me.dif_debit_z3_chart.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        ChartArea3.AxisX.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.[False]
+        ChartArea3.AxisX.MinorGrid.LineColor = System.Drawing.Color.White
+        ChartArea3.AxisX.ScaleView.Size = 30.0R
+        ChartArea3.AxisX2.LineColor = System.Drawing.Color.White
+        ChartArea3.AxisY.Interval = 18.0R
+        ChartArea3.AxisY.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number
+        ChartArea3.AxisY.IsLabelAutoFit = False
+        ChartArea3.AxisY.LineColor = System.Drawing.Color.White
+        ChartArea3.AxisY.MajorGrid.LineColor = System.Drawing.Color.Gainsboro
+        ChartArea3.AxisY.Maximum = 5.0R
+        ChartArea3.AxisY.MaximumAutoSize = 85.0!
+        ChartArea3.AxisY.Minimum = -5.0R
+        ChartArea3.AxisY.TitleFont = New System.Drawing.Font("Microsoft Sans Serif", 20.0!)
+        ChartArea3.AxisY2.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.[False]
+        ChartArea3.AxisY2.LineColor = System.Drawing.Color.White
+        ChartArea3.BackColor = System.Drawing.Color.WhiteSmoke
+        ChartArea3.Name = "ChartArea1"
+        Me.dif_debit_z3_chart.ChartAreas.Add(ChartArea3)
+        Legend3.Enabled = False
+        Legend3.Name = "Legend1"
+        Me.dif_debit_z3_chart.Legends.Add(Legend3)
+        Me.dif_debit_z3_chart.Location = New System.Drawing.Point(2, 37)
+        Me.dif_debit_z3_chart.Name = "dif_debit_z3_chart"
+        Me.dif_debit_z3_chart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SemiTransparent
+        Series3.ChartArea = "ChartArea1"
+        Series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
+        Series3.Color = System.Drawing.Color.Black
+        Series3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Series3.IsVisibleInLegend = False
+        Series3.Legend = "Legend1"
+        Series3.Name = "valori"
+        Me.dif_debit_z3_chart.Series.Add(Series3)
+        Me.dif_debit_z3_chart.Size = New System.Drawing.Size(801, 263)
+        Me.dif_debit_z3_chart.TabIndex = 12
+        Me.dif_debit_z3_chart.Text = "Chart1"
+        '
+        'TabPage4
+        '
+        Me.TabPage4.Controls.Add(Me.Label9)
+        Me.TabPage4.Controls.Add(Me.dif_debit_z4_chart)
+        Me.TabPage4.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage4.Name = "TabPage4"
+        Me.TabPage4.Size = New System.Drawing.Size(809, 488)
+        Me.TabPage4.TabIndex = 3
+        Me.TabPage4.Text = "Z4"
+        Me.TabPage4.UseVisualStyleBackColor = True
+        '
+        'dif_debit_z4_chart
+        '
+        Me.dif_debit_z4_chart.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        ChartArea4.AxisX.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.[False]
+        ChartArea4.AxisX.MinorGrid.LineColor = System.Drawing.Color.White
+        ChartArea4.AxisX.ScaleView.Size = 30.0R
+        ChartArea4.AxisX2.LineColor = System.Drawing.Color.White
+        ChartArea4.AxisY.Interval = 18.0R
+        ChartArea4.AxisY.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number
+        ChartArea4.AxisY.IsLabelAutoFit = False
+        ChartArea4.AxisY.LineColor = System.Drawing.Color.White
+        ChartArea4.AxisY.MajorGrid.LineColor = System.Drawing.Color.Gainsboro
+        ChartArea4.AxisY.Maximum = 5.0R
+        ChartArea4.AxisY.MaximumAutoSize = 85.0!
+        ChartArea4.AxisY.Minimum = -5.0R
+        ChartArea4.AxisY.TitleFont = New System.Drawing.Font("Microsoft Sans Serif", 20.0!)
+        ChartArea4.AxisY2.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.[False]
+        ChartArea4.AxisY2.LineColor = System.Drawing.Color.White
+        ChartArea4.BackColor = System.Drawing.Color.WhiteSmoke
+        ChartArea4.Name = "ChartArea1"
+        Me.dif_debit_z4_chart.ChartAreas.Add(ChartArea4)
+        Legend4.Enabled = False
+        Legend4.Name = "Legend1"
+        Me.dif_debit_z4_chart.Legends.Add(Legend4)
+        Me.dif_debit_z4_chart.Location = New System.Drawing.Point(2, 37)
+        Me.dif_debit_z4_chart.Name = "dif_debit_z4_chart"
+        Me.dif_debit_z4_chart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SemiTransparent
+        Series4.ChartArea = "ChartArea1"
+        Series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
+        Series4.Color = System.Drawing.Color.Black
+        Series4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Series4.IsVisibleInLegend = False
+        Series4.Legend = "Legend1"
+        Series4.Name = "valori"
+        Me.dif_debit_z4_chart.Series.Add(Series4)
+        Me.dif_debit_z4_chart.Size = New System.Drawing.Size(801, 263)
+        Me.dif_debit_z4_chart.TabIndex = 13
+        Me.dif_debit_z4_chart.Text = "Chart1"
         '
         'adauga_valori_pnl
         '
@@ -953,59 +1156,44 @@ Partial Class fereastra_principala_frm
         '
         Me.Timer1.Interval = 15000
         '
-        'TabControl1
+        'Label2
         '
-        Me.TabControl1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TabControl1.Controls.Add(Me.TabPage1)
-        Me.TabControl1.Controls.Add(Me.TabPage2)
-        Me.TabControl1.Controls.Add(Me.TabPage3)
-        Me.TabControl1.Controls.Add(Me.TabPage4)
-        Me.TabControl1.Location = New System.Drawing.Point(204, 26)
-        Me.TabControl1.Name = "TabControl1"
-        Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(817, 514)
-        Me.TabControl1.TabIndex = 11
+        Me.Label2.AutoSize = True
+        Me.Label2.Font = New System.Drawing.Font("Consolas", 14.0!)
+        Me.Label2.Location = New System.Drawing.Point(3, 8)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(400, 22)
+        Me.Label2.TabIndex = 12
+        Me.Label2.Text = "Z2 - diferență debit Posalux vs Delta Q"
         '
-        'TabPage1
+        'Label7
         '
-        Me.TabPage1.Controls.Add(Me.dif_debit_z1_chart)
-        Me.TabPage1.Controls.Add(Me.Label1)
-        Me.TabPage1.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage1.Name = "TabPage1"
-        Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(809, 488)
-        Me.TabPage1.TabIndex = 0
-        Me.TabPage1.Text = "TabPage1"
-        Me.TabPage1.UseVisualStyleBackColor = True
+        Me.Label7.AutoSize = True
+        Me.Label7.Font = New System.Drawing.Font("Consolas", 14.0!)
+        Me.Label7.Location = New System.Drawing.Point(3, 8)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(400, 22)
+        Me.Label7.TabIndex = 13
+        Me.Label7.Text = "Z3 - diferență debit Posalux vs Delta Q"
         '
-        'TabPage2
+        'Label9
         '
-        Me.TabPage2.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage2.Name = "TabPage2"
-        Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(809, 488)
-        Me.TabPage2.TabIndex = 1
-        Me.TabPage2.Text = "TabPage2"
-        Me.TabPage2.UseVisualStyleBackColor = True
+        Me.Label9.AutoSize = True
+        Me.Label9.Font = New System.Drawing.Font("Consolas", 14.0!)
+        Me.Label9.Location = New System.Drawing.Point(3, 8)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(400, 22)
+        Me.Label9.TabIndex = 14
+        Me.Label9.Text = "Z4 - diferență debit Posalux vs Delta Q"
         '
-        'TabPage3
+        'Label10
         '
-        Me.TabPage3.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage3.Name = "TabPage3"
-        Me.TabPage3.Size = New System.Drawing.Size(809, 488)
-        Me.TabPage3.TabIndex = 2
-        Me.TabPage3.Text = "TabPage3"
-        Me.TabPage3.UseVisualStyleBackColor = True
-        '
-        'TabPage4
-        '
-        Me.TabPage4.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage4.Name = "TabPage4"
-        Me.TabPage4.Size = New System.Drawing.Size(809, 488)
-        Me.TabPage4.TabIndex = 3
-        Me.TabPage4.Text = "TabPage4"
-        Me.TabPage4.UseVisualStyleBackColor = True
+        Me.Label10.AutoSize = True
+        Me.Label10.Location = New System.Drawing.Point(203, 25)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(41, 13)
+        Me.Label10.TabIndex = 12
+        Me.Label10.Text = "Masina"
         '
         'fereastra_principala_frm
         '
@@ -1025,7 +1213,20 @@ Partial Class fereastra_principala_frm
         Me.Text = "Adaugă valori"
         Me.panou_butoane_pnl.ResumeLayout(False)
         Me.grafice_pnl.ResumeLayout(False)
+        Me.grafice_pnl.PerformLayout()
+        Me.grafice_tabcontrol.ResumeLayout(False)
+        Me.TabPage1.ResumeLayout(False)
+        Me.TabPage1.PerformLayout()
         CType(Me.dif_debit_z1_chart, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabPage2.ResumeLayout(False)
+        Me.TabPage2.PerformLayout()
+        CType(Me.dif_debit_z2_chart, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabPage3.ResumeLayout(False)
+        Me.TabPage3.PerformLayout()
+        CType(Me.dif_debit_z3_chart, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabPage4.ResumeLayout(False)
+        Me.TabPage4.PerformLayout()
+        CType(Me.dif_debit_z4_chart, System.ComponentModel.ISupportInitialize).EndInit()
         Me.adauga_valori_pnl.ResumeLayout(False)
         Me.adauga_valori_pnl.PerformLayout()
         Me.TableLayoutPanel1.ResumeLayout(False)
@@ -1038,9 +1239,6 @@ Partial Class fereastra_principala_frm
         Me.lista_masini_pnl.PerformLayout()
         Me.selectie_val_pnl.ResumeLayout(False)
         Me.selectie_val_pnl.PerformLayout()
-        Me.TabControl1.ResumeLayout(False)
-        Me.TabPage1.ResumeLayout(False)
-        Me.TabPage1.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1110,9 +1308,16 @@ Partial Class fereastra_principala_frm
     Friend WithEvents vizualizare_evolutie_btn As FontAwesome.Sharp.IconButton
     Friend WithEvents lista_referinte_lbx As ListBox
     Friend WithEvents Label8 As Label
-    Friend WithEvents TabControl1 As TabControl
+    Friend WithEvents grafice_tabcontrol As TabControl
     Friend WithEvents TabPage1 As TabPage
     Friend WithEvents TabPage2 As TabPage
     Friend WithEvents TabPage3 As TabPage
     Friend WithEvents TabPage4 As TabPage
+    Friend WithEvents dif_debit_z2_chart As DataVisualization.Charting.Chart
+    Friend WithEvents dif_debit_z3_chart As DataVisualization.Charting.Chart
+    Friend WithEvents dif_debit_z4_chart As DataVisualization.Charting.Chart
+    Friend WithEvents Label2 As Label
+    Friend WithEvents Label7 As Label
+    Friend WithEvents Label9 As Label
+    Friend WithEvents Label10 As Label
 End Class

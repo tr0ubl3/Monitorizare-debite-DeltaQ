@@ -540,88 +540,10 @@ Public Class fereastra_principala_frm
     Private Sub grafice_pnl_VisibleChanged(sender As Object, e As EventArgs) Handles grafice_pnl.VisibleChanged
         If grafice_pnl.Visible = True Then
             '## populare grafic diferente debit
-            Dim limita_max As New DataVisualization.Charting.StripLine
-            Dim limita_min As New DataVisualization.Charting.StripLine
-            Dim nominal As New DataVisualization.Charting.StripLine
-            Dim punct As New DataVisualization.Charting.DataPoint
-
-            'de implementat intr-o functie
-            Dim conexiune_bd As New SqliteConnection("data source=" & locatie_bd)
-            Dim comanda = conexiune_bd.CreateCommand
-            Dim reader As SqliteDataReader
-            Dim lim_max, lim_min, lim_nom, interval_tol, incr As Integer
-            Dim dif() = Nothing, diferenta As Double
-
-            conexiune_bd.Open()
-            comanda.CommandText = "select diferenta_max, diferenta_min, diferenta_nominala from referinta where nume = '" & nume_ref & "'"
-            reader = comanda.ExecuteReader
-
-            Using reader
-                While reader.Read
-                    lim_max = reader.GetValue(0)
-                    lim_min = reader.GetValue(1)
-                    lim_nom = reader.GetValue(2)
-                End While
-            End Using
-            reader.Close()
-
-            limita_max.BorderDashStyle = DataVisualization.Charting.ChartDashStyle.DashDot
-            limita_max.BorderColor = Color.Red
-            limita_max.BorderWidth = 2
-            limita_max.IntervalOffset = lim_max
-
-            limita_min.BorderDashStyle = DataVisualization.Charting.ChartDashStyle.DashDot
-            limita_min.BorderColor = Color.Red
-            limita_min.BorderWidth = 2
-            limita_min.IntervalOffset = lim_min
-
-            nominal.BorderDashStyle = DataVisualization.Charting.ChartDashStyle.DashDot
-            nominal.BorderColor = Color.Green
-            nominal.BorderWidth = 2
-            nominal.IntervalOffset = lim_nom
-            interval_tol = (lim_max - lim_min)
-            dif_debit_z1_chart.ChartAreas(0).AxisY.Interval = interval_tol / 4
-            dif_debit_z1_chart.ChartAreas(0).AxisY.Minimum = lim_min - interval_tol * 0.1 '666 - 72 * 0.1
-            dif_debit_z1_chart.ChartAreas(0).AxisY.Maximum = lim_max + interval_tol * 0.1 '738 + 72 * 0.1
-            dif_debit_z1_chart.ChartAreas(0).AxisY.IntervalOffset = 1
-
-            dif_debit_z1_chart.ChartAreas(0).AxisY.StripLines.Add(limita_max)
-            dif_debit_z1_chart.ChartAreas(0).AxisY.StripLines.Add(limita_min)
-            dif_debit_z1_chart.ChartAreas(0).AxisY.StripLines.Add(nominal)
-
-
-            comanda.CommandText = "select printf('%.1f', diferenta_calculata_z1) from spc_posalux where masina = " & id_masina & " order by data_creare desc limit 30"
-            reader = comanda.ExecuteReader
-
-            Using reader
-                While reader.Read
-                    ReDim Preserve dif(incr)
-                    dif(incr) = reader.GetValue(0)
-                    incr += 1
-                End While
-            End Using
-            reader.Close()
-            dif_debit_z1_chart.Series("valori").Points.Clear()
-
-            For Each diferenta In dif
-                'punct.IsValueShownAsLabel = True
-                punct.SetValueY(diferenta)
-                punct.ToolTip = diferenta
-                If diferenta > lim_max Then
-                    punct.Color = Color.Red
-                    punct.SetValueY(5.5)
-                ElseIf diferenta < lim_min Then
-                    punct.Color = Color.Red
-                    punct.SetValueY(-5.5)
-                ElseIf lim_max > diferenta And diferenta > lim_min Then
-                    punct.Color = Color.Black
-                End If
-                dif_debit_z1_chart.Series("valori").Points.Add(punct)
-                punct = New DataVisualization.Charting.DataPoint
-            Next
-
-            'dif_debit_z1_chart.Series("valori").Points.AddY(4)
-            conexiune_bd.Close()
+            populare_grafic(1)
+            Label10.Text = "Masina " & numar_op & " referinta " & nume_ref
+        Else
+            Label10.Text = ""
         End If
     End Sub
 
@@ -1412,12 +1334,13 @@ Public Class fereastra_principala_frm
         vizualizare_evolutie_btn.Visible = False
 
         conexiune_bd.Open()
-        comanda.CommandText = "select id_masina from masini where nr_operatie = " & lista_masina_lbx.SelectedItem
+        comanda.CommandText = "select id_masina, nr_operatie from masini where nr_operatie = " & lista_masina_lbx.SelectedItem
         reader = comanda.ExecuteReader()
 
         Using reader
             While reader.Read()
                 masina = reader.GetInt16(0)
+                numar_op = reader.GetString(1)
             End While
         End Using
 
@@ -1444,5 +1367,218 @@ Public Class fereastra_principala_frm
 
     Private Sub vizualizare_evolutie_btn_Click(sender As Object, e As EventArgs) Handles vizualizare_evolutie_btn.Click
         vizibilitate_panou(grafice_pnl)
+    End Sub
+
+    Private Sub populare_grafic(spindle As Int16)
+        Dim limita_max As New DataVisualization.Charting.StripLine
+        Dim limita_min As New DataVisualization.Charting.StripLine
+        Dim nominal As New DataVisualization.Charting.StripLine
+        Dim punct As New DataVisualization.Charting.DataPoint
+
+        'de implementat intr-o functie
+        Dim conexiune_bd As New SqliteConnection("data source=" & locatie_bd)
+        Dim comanda = conexiune_bd.CreateCommand
+        Dim reader As SqliteDataReader
+        Dim lim_max, lim_min, lim_nom, interval_tol, incr As Integer
+        Dim dif() = Nothing, diferenta As Double
+
+        conexiune_bd.Open()
+        comanda.CommandText = "select diferenta_max, diferenta_min, diferenta_nominala from referinta where nume = '" & nume_ref & "'"
+        reader = comanda.ExecuteReader
+
+        Using reader
+            While reader.Read
+                lim_max = reader.GetValue(0)
+                lim_min = reader.GetValue(1)
+                lim_nom = reader.GetValue(2)
+            End While
+        End Using
+        reader.Close()
+
+        limita_max.BorderDashStyle = DataVisualization.Charting.ChartDashStyle.DashDot
+        limita_max.BorderColor = Color.Red
+        limita_max.BorderWidth = 2
+        limita_max.IntervalOffset = lim_max
+
+        limita_min.BorderDashStyle = DataVisualization.Charting.ChartDashStyle.DashDot
+        limita_min.BorderColor = Color.Red
+        limita_min.BorderWidth = 2
+        limita_min.IntervalOffset = lim_min
+
+        nominal.BorderDashStyle = DataVisualization.Charting.ChartDashStyle.DashDot
+        nominal.BorderColor = Color.Green
+        nominal.BorderWidth = 2
+        nominal.IntervalOffset = lim_nom
+        interval_tol = (lim_max - lim_min)
+        Select Case spindle
+            Case 1
+                dif_debit_z1_chart.ChartAreas(0).AxisY.Interval = interval_tol / 4
+                dif_debit_z1_chart.ChartAreas(0).AxisY.Minimum = lim_min - interval_tol * 0.1 '666 - 72 * 0.1
+                dif_debit_z1_chart.ChartAreas(0).AxisY.Maximum = lim_max + interval_tol * 0.1 '738 + 72 * 0.1
+                dif_debit_z1_chart.ChartAreas(0).AxisY.IntervalOffset = 1
+
+                dif_debit_z1_chart.ChartAreas(0).AxisY.StripLines.Add(limita_max)
+                dif_debit_z1_chart.ChartAreas(0).AxisY.StripLines.Add(limita_min)
+                dif_debit_z1_chart.ChartAreas(0).AxisY.StripLines.Add(nominal)
+
+                comanda.CommandText = "select printf('%.1f', diferenta_calculata_z1) from spc_posalux where masina = " & id_masina & " order by data_creare desc limit 30"
+                reader = comanda.ExecuteReader
+
+                Using reader
+                    While reader.Read
+                        ReDim Preserve dif(incr)
+                        dif(incr) = reader.GetValue(0)
+                        incr += 1
+                    End While
+                End Using
+                reader.Close()
+                dif_debit_z1_chart.Series("valori").Points.Clear()
+
+                For Each diferenta In dif
+                    punct.SetValueY(diferenta)
+                    punct.ToolTip = diferenta
+                    If diferenta > lim_max Then
+                        punct.Color = Color.Red
+                        punct.SetValueY(5.5)
+                    ElseIf diferenta < lim_min Then
+                        punct.Color = Color.Red
+                        punct.SetValueY(-5.5)
+                    ElseIf lim_max > diferenta And diferenta > lim_min Then
+                        punct.Color = Color.Black
+                    End If
+                    dif_debit_z1_chart.Series("valori").Points.Add(punct)
+                    punct = New DataVisualization.Charting.DataPoint
+                Next
+            Case 2
+                dif_debit_z2_chart.ChartAreas(0).AxisY.Interval = interval_tol / 4
+                dif_debit_z2_chart.ChartAreas(0).AxisY.Minimum = lim_min - interval_tol * 0.1 '666 - 72 * 0.1
+                dif_debit_z2_chart.ChartAreas(0).AxisY.Maximum = lim_max + interval_tol * 0.1 '738 + 72 * 0.1
+                dif_debit_z2_chart.ChartAreas(0).AxisY.IntervalOffset = 1
+
+                dif_debit_z2_chart.ChartAreas(0).AxisY.StripLines.Add(limita_max)
+                dif_debit_z2_chart.ChartAreas(0).AxisY.StripLines.Add(limita_min)
+                dif_debit_z2_chart.ChartAreas(0).AxisY.StripLines.Add(nominal)
+
+                comanda.CommandText = "select printf('%.1f', diferenta_calculata_z2) from spc_posalux where masina = " & id_masina & " order by data_creare desc limit 30"
+                reader = comanda.ExecuteReader
+
+                Using reader
+                    While reader.Read
+                        ReDim Preserve dif(incr)
+                        dif(incr) = reader.GetValue(0)
+                        incr += 1
+                    End While
+                End Using
+                reader.Close()
+                dif_debit_z2_chart.Series("valori").Points.Clear()
+
+                For Each diferenta In dif
+                    punct.SetValueY(diferenta)
+                    punct.ToolTip = diferenta
+                    If diferenta > lim_max Then
+                        punct.Color = Color.Red
+                        punct.SetValueY(5.5)
+                    ElseIf diferenta < lim_min Then
+                        punct.Color = Color.Red
+                        punct.SetValueY(-5.5)
+                    ElseIf lim_max > diferenta And diferenta > lim_min Then
+                        punct.Color = Color.Black
+                    End If
+                    dif_debit_z2_chart.Series("valori").Points.Add(punct)
+                    punct = New DataVisualization.Charting.DataPoint
+                Next
+            Case 3
+                dif_debit_z3_chart.ChartAreas(0).AxisY.Interval = interval_tol / 4
+                dif_debit_z3_chart.ChartAreas(0).AxisY.Minimum = lim_min - interval_tol * 0.1 '666 - 72 * 0.1
+                dif_debit_z3_chart.ChartAreas(0).AxisY.Maximum = lim_max + interval_tol * 0.1 '738 + 72 * 0.1
+                dif_debit_z3_chart.ChartAreas(0).AxisY.IntervalOffset = 1
+
+                dif_debit_z3_chart.ChartAreas(0).AxisY.StripLines.Add(limita_max)
+                dif_debit_z3_chart.ChartAreas(0).AxisY.StripLines.Add(limita_min)
+                dif_debit_z3_chart.ChartAreas(0).AxisY.StripLines.Add(nominal)
+
+                comanda.CommandText = "select printf('%.1f', diferenta_calculata_z3) from spc_posalux where masina = " & id_masina & " order by data_creare desc limit 30"
+                reader = comanda.ExecuteReader
+
+                Using reader
+                    While reader.Read
+                        ReDim Preserve dif(incr)
+                        dif(incr) = reader.GetValue(0)
+                        incr += 1
+                    End While
+                End Using
+                reader.Close()
+                dif_debit_z3_chart.Series("valori").Points.Clear()
+
+                For Each diferenta In dif
+                    punct.SetValueY(diferenta)
+                    punct.ToolTip = diferenta
+                    If diferenta > lim_max Then
+                        punct.Color = Color.Red
+                        punct.SetValueY(5.5)
+                    ElseIf diferenta < lim_min Then
+                        punct.Color = Color.Red
+                        punct.SetValueY(-5.5)
+                    ElseIf lim_max > diferenta And diferenta > lim_min Then
+                        punct.Color = Color.Black
+                    End If
+                    dif_debit_z3_chart.Series("valori").Points.Add(punct)
+                    punct = New DataVisualization.Charting.DataPoint
+                Next
+            Case 4
+                dif_debit_z4_chart.ChartAreas(0).AxisY.Interval = interval_tol / 4
+                dif_debit_z4_chart.ChartAreas(0).AxisY.Minimum = lim_min - interval_tol * 0.1 '666 - 72 * 0.1
+                dif_debit_z4_chart.ChartAreas(0).AxisY.Maximum = lim_max + interval_tol * 0.1 '738 + 72 * 0.1
+                dif_debit_z4_chart.ChartAreas(0).AxisY.IntervalOffset = 1
+
+                dif_debit_z4_chart.ChartAreas(0).AxisY.StripLines.Add(limita_max)
+                dif_debit_z4_chart.ChartAreas(0).AxisY.StripLines.Add(limita_min)
+                dif_debit_z4_chart.ChartAreas(0).AxisY.StripLines.Add(nominal)
+
+                comanda.CommandText = "select printf('%.1f', diferenta_calculata_z4) from spc_posalux where masina = " & id_masina & " order by data_creare desc limit 30"
+                reader = comanda.ExecuteReader
+
+                Using reader
+                    While reader.Read
+                        ReDim Preserve dif(incr)
+                        dif(incr) = reader.GetValue(0)
+                        incr += 1
+                    End While
+                End Using
+                reader.Close()
+                dif_debit_z4_chart.Series("valori").Points.Clear()
+
+                For Each diferenta In dif
+                    punct.SetValueY(diferenta)
+                    punct.ToolTip = diferenta
+                    If diferenta > lim_max Then
+                        punct.Color = Color.Red
+                        punct.SetValueY(5.5)
+                    ElseIf diferenta < lim_min Then
+                        punct.Color = Color.Red
+                        punct.SetValueY(-5.5)
+                    ElseIf lim_max > diferenta And diferenta > lim_min Then
+                        punct.Color = Color.Black
+                    End If
+                    dif_debit_z4_chart.Series("valori").Points.Add(punct)
+                    punct = New DataVisualization.Charting.DataPoint
+                Next
+        End Select
+
+
+        'dif_debit_z1_chart.Series("valori").Points.AddY(4)
+        conexiune_bd.Close()
+    End Sub
+    Private Sub grafice_tabcontrol_SelectedIndexChanged(sender As Object, e As EventArgs) Handles grafice_tabcontrol.SelectedIndexChanged
+        Select Case grafice_tabcontrol.SelectedIndex
+            Case 0
+                populare_grafic(1)
+            Case 1
+                populare_grafic(2)
+            Case 2
+                populare_grafic(3)
+            Case 3
+                populare_grafic(4)
+        End Select
     End Sub
 End Class
