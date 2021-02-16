@@ -1421,7 +1421,7 @@ Public Class fereastra_principala_frm
                 dif_debit_z1_chart.ChartAreas(0).AxisY.StripLines.Add(limita_min)
                 dif_debit_z1_chart.ChartAreas(0).AxisY.StripLines.Add(nominal)
 
-                comanda.CommandText = "select printf('%.1f', diferenta_calculata_z1) from spc_posalux where masina = " & id_masina & " order by data_creare desc limit 30"
+                comanda.CommandText = "select printf('%.1f', diferenta_calculata_z1) from spc_posalux where masina = " & id_masina & " and referinta = '" & nume_ref & "' order by data_creare asc limit 30"
                 reader = comanda.ExecuteReader
 
                 Using reader
@@ -1459,7 +1459,7 @@ Public Class fereastra_principala_frm
                 dif_debit_z2_chart.ChartAreas(0).AxisY.StripLines.Add(limita_min)
                 dif_debit_z2_chart.ChartAreas(0).AxisY.StripLines.Add(nominal)
 
-                comanda.CommandText = "select printf('%.1f', diferenta_calculata_z2) from spc_posalux where masina = " & id_masina & " order by data_creare desc limit 30"
+                comanda.CommandText = "select printf('%.1f', diferenta_calculata_z2) from spc_posalux where masina = " & id_masina & " and referinta = '" & nume_ref & "' order by data_creare asc limit 30"
                 reader = comanda.ExecuteReader
 
                 Using reader
@@ -1497,7 +1497,7 @@ Public Class fereastra_principala_frm
                 dif_debit_z3_chart.ChartAreas(0).AxisY.StripLines.Add(limita_min)
                 dif_debit_z3_chart.ChartAreas(0).AxisY.StripLines.Add(nominal)
 
-                comanda.CommandText = "select printf('%.1f', diferenta_calculata_z3) from spc_posalux where masina = " & id_masina & " order by data_creare desc limit 30"
+                comanda.CommandText = "select printf('%.1f', diferenta_calculata_z3) from spc_posalux where masina = " & id_masina & " and referinta = '" & nume_ref & "' order by data_creare asc limit 30"
                 reader = comanda.ExecuteReader
 
                 Using reader
@@ -1535,7 +1535,7 @@ Public Class fereastra_principala_frm
                 dif_debit_z4_chart.ChartAreas(0).AxisY.StripLines.Add(limita_min)
                 dif_debit_z4_chart.ChartAreas(0).AxisY.StripLines.Add(nominal)
 
-                comanda.CommandText = "select printf('%.1f', diferenta_calculata_z4) from spc_posalux where masina = " & id_masina & " order by data_creare desc limit 30"
+                comanda.CommandText = "select printf('%.1f', diferenta_calculata_z4) from spc_posalux where masina = " & id_masina & " and referinta = '" & nume_ref & "' order by data_creare asc limit 30"
                 reader = comanda.ExecuteReader
 
                 Using reader
@@ -1564,9 +1564,6 @@ Public Class fereastra_principala_frm
                     punct = New DataVisualization.Charting.DataPoint
                 Next
         End Select
-
-
-        'dif_debit_z1_chart.Series("valori").Points.AddY(4)
         conexiune_bd.Close()
     End Sub
     Private Sub grafice_tabcontrol_SelectedIndexChanged(sender As Object, e As EventArgs) Handles grafice_tabcontrol.SelectedIndexChanged
