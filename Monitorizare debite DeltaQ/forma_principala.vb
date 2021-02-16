@@ -1381,6 +1381,8 @@ Public Class fereastra_principala_frm
         Dim reader As SqliteDataReader
         Dim lim_max, lim_min, lim_nom, interval_tol, incr As Integer
         Dim dif() = Nothing, diferenta As Double
+        Dim data_spc() As DateTime = Nothing
+
 
         conexiune_bd.Open()
         comanda.CommandText = "select diferenta_max, diferenta_min, diferenta_nominala from referinta where nume = '" & nume_ref & "'"
@@ -1421,22 +1423,33 @@ Public Class fereastra_principala_frm
                 dif_debit_z1_chart.ChartAreas(0).AxisY.StripLines.Add(limita_min)
                 dif_debit_z1_chart.ChartAreas(0).AxisY.StripLines.Add(nominal)
 
-                comanda.CommandText = "select printf('%.1f', diferenta_calculata_z1) from spc_posalux where masina = " & id_masina & " and referinta = '" & nume_ref & "' order by data_creare asc limit 30"
+                comanda.CommandText = "select * from (
+                                           select spc_posalux.data_creare,
+                                           printf('%.1f', diferenta_calculata_z1),
+                                           valori.delta_q from valori 
+                                           inner join spc_posalux on spc_posalux.spc_id = valori.spc_id where  
+                                                valori.referinta = '" & nume_ref & "' and
+                                                spc_posalux.masina = '" & id_masina & "' and
+                                                valori.nr_cuib = 1
+                                            order by spc_posalux.data_creare desc
+                                            limit 30
+                                       ) order by data_creare asc"
                 reader = comanda.ExecuteReader
-
+                incr = 0
                 Using reader
                     While reader.Read
-                        ReDim Preserve dif(incr)
-                        dif(incr) = reader.GetValue(0)
+                        ReDim Preserve dif(incr), data_spc(incr)
+                        data_spc(incr) = reader.GetValue(0)
+                        dif(incr) = reader.GetValue(1)
                         incr += 1
                     End While
                 End Using
                 reader.Close()
                 dif_debit_z1_chart.Series("valori").Points.Clear()
-
+                incr = 0
                 For Each diferenta In dif
                     punct.SetValueY(diferenta)
-                    punct.ToolTip = diferenta
+                    punct.ToolTip = data_spc(incr).AddHours(2) & vbNewLine & diferenta
                     If diferenta > lim_max Then
                         punct.Color = Color.Red
                         punct.SetValueY(5.5)
@@ -1448,6 +1461,7 @@ Public Class fereastra_principala_frm
                     End If
                     dif_debit_z1_chart.Series("valori").Points.Add(punct)
                     punct = New DataVisualization.Charting.DataPoint
+                    incr += 1
                 Next
             Case 2
                 dif_debit_z2_chart.ChartAreas(0).AxisY.Interval = interval_tol / 4
@@ -1459,22 +1473,33 @@ Public Class fereastra_principala_frm
                 dif_debit_z2_chart.ChartAreas(0).AxisY.StripLines.Add(limita_min)
                 dif_debit_z2_chart.ChartAreas(0).AxisY.StripLines.Add(nominal)
 
-                comanda.CommandText = "select printf('%.1f', diferenta_calculata_z2) from spc_posalux where masina = " & id_masina & " and referinta = '" & nume_ref & "' order by data_creare asc limit 30"
+                comanda.CommandText = "select * from (
+                                           select spc_posalux.data_creare,
+                                           printf('%.1f', diferenta_calculata_z2),
+                                           valori.delta_q from valori 
+                                           inner join spc_posalux on spc_posalux.spc_id = valori.spc_id where  
+                                                valori.referinta = '" & nume_ref & "' and
+                                                spc_posalux.masina = '" & id_masina & "' and
+                                                valori.nr_cuib = 2
+                                            order by spc_posalux.data_creare desc
+                                            limit 30
+                                       ) order by data_creare asc"
                 reader = comanda.ExecuteReader
-
+                incr = 0
                 Using reader
                     While reader.Read
-                        ReDim Preserve dif(incr)
-                        dif(incr) = reader.GetValue(0)
+                        ReDim Preserve dif(incr), data_spc(incr)
+                        data_spc(incr) = reader.GetValue(0)
+                        dif(incr) = reader.GetValue(1)
                         incr += 1
                     End While
                 End Using
                 reader.Close()
                 dif_debit_z2_chart.Series("valori").Points.Clear()
-
+                incr = 0
                 For Each diferenta In dif
                     punct.SetValueY(diferenta)
-                    punct.ToolTip = diferenta
+                    punct.ToolTip = data_spc(incr).AddHours(2) & vbNewLine & diferenta
                     If diferenta > lim_max Then
                         punct.Color = Color.Red
                         punct.SetValueY(5.5)
@@ -1486,6 +1511,7 @@ Public Class fereastra_principala_frm
                     End If
                     dif_debit_z2_chart.Series("valori").Points.Add(punct)
                     punct = New DataVisualization.Charting.DataPoint
+                    incr += 1
                 Next
             Case 3
                 dif_debit_z3_chart.ChartAreas(0).AxisY.Interval = interval_tol / 4
@@ -1497,22 +1523,33 @@ Public Class fereastra_principala_frm
                 dif_debit_z3_chart.ChartAreas(0).AxisY.StripLines.Add(limita_min)
                 dif_debit_z3_chart.ChartAreas(0).AxisY.StripLines.Add(nominal)
 
-                comanda.CommandText = "select printf('%.1f', diferenta_calculata_z3) from spc_posalux where masina = " & id_masina & " and referinta = '" & nume_ref & "' order by data_creare asc limit 30"
+                comanda.CommandText = "select * from (
+                                           select spc_posalux.data_creare,
+                                           printf('%.1f', diferenta_calculata_z3),
+                                           valori.delta_q from valori 
+                                           inner join spc_posalux on spc_posalux.spc_id = valori.spc_id where  
+                                                valori.referinta = '" & nume_ref & "' and
+                                                spc_posalux.masina = '" & id_masina & "' and
+                                                valori.nr_cuib = 3
+                                            order by spc_posalux.data_creare desc
+                                            limit 30
+                                       ) order by data_creare asc"
                 reader = comanda.ExecuteReader
-
+                incr = 0
                 Using reader
                     While reader.Read
-                        ReDim Preserve dif(incr)
-                        dif(incr) = reader.GetValue(0)
+                        ReDim Preserve dif(incr), data_spc(incr)
+                        data_spc(incr) = reader.GetValue(0)
+                        dif(incr) = reader.GetValue(1)
                         incr += 1
                     End While
                 End Using
                 reader.Close()
                 dif_debit_z3_chart.Series("valori").Points.Clear()
-
+                incr = 0
                 For Each diferenta In dif
                     punct.SetValueY(diferenta)
-                    punct.ToolTip = diferenta
+                    punct.ToolTip = data_spc(incr).AddHours(2) & vbNewLine & diferenta
                     If diferenta > lim_max Then
                         punct.Color = Color.Red
                         punct.SetValueY(5.5)
@@ -1524,6 +1561,7 @@ Public Class fereastra_principala_frm
                     End If
                     dif_debit_z3_chart.Series("valori").Points.Add(punct)
                     punct = New DataVisualization.Charting.DataPoint
+                    incr += 1
                 Next
             Case 4
                 dif_debit_z4_chart.ChartAreas(0).AxisY.Interval = interval_tol / 4
@@ -1546,23 +1584,22 @@ Public Class fereastra_principala_frm
                                             order by spc_posalux.data_creare desc
                                             limit 30
                                        ) order by data_creare asc"
-                '"select printf('%.1f', diferenta_calculata_z4), delta_q from valori join spc_posalux on spc_posalux.spc_id = valori.spc_id 
-                ' where spc_posalux.masina = " & id_masina & " and valori.referinta = '" & nume_ref & "' order by spc_posalux.data_creare asc limit 30"
                 reader = comanda.ExecuteReader
                 incr = 0
                 Using reader
                     While reader.Read
-                        ReDim Preserve dif(incr)
+                        ReDim Preserve dif(incr), data_spc(incr)
+                        data_spc(incr) = reader.GetValue(0)
                         dif(incr) = reader.GetValue(1)
                         incr += 1
                     End While
                 End Using
                 reader.Close()
                 dif_debit_z4_chart.Series("valori").Points.Clear()
-
+                incr = 0
                 For Each diferenta In dif
                     punct.SetValueY(diferenta)
-                    punct.ToolTip = diferenta & vbNewLine & "test"
+                    punct.ToolTip = data_spc(incr).AddHours(2) & vbNewLine & diferenta
                     If diferenta > lim_max Then
                         punct.Color = Color.Red
                         punct.SetValueY(5.5)
@@ -1574,6 +1611,7 @@ Public Class fereastra_principala_frm
                     End If
                     dif_debit_z4_chart.Series("valori").Points.Add(punct)
                     punct = New DataVisualization.Charting.DataPoint
+                    incr += 1
                 Next
         End Select
         conexiune_bd.Close()
