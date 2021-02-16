@@ -1535,13 +1535,25 @@ Public Class fereastra_principala_frm
                 dif_debit_z4_chart.ChartAreas(0).AxisY.StripLines.Add(limita_min)
                 dif_debit_z4_chart.ChartAreas(0).AxisY.StripLines.Add(nominal)
 
-                comanda.CommandText = "select printf('%.1f', diferenta_calculata_z4) from spc_posalux where masina = " & id_masina & " and referinta = '" & nume_ref & "' order by data_creare asc limit 30"
+                comanda.CommandText = "select * from (
+                                           select spc_posalux.data_creare,
+                                           printf('%.1f', diferenta_calculata_z4),
+                                           valori.delta_q from valori 
+                                           inner join spc_posalux on spc_posalux.spc_id = valori.spc_id where  
+                                                valori.referinta = '" & nume_ref & "' and
+                                                spc_posalux.masina = '" & id_masina & "' and
+                                                valori.nr_cuib = 4
+                                            order by spc_posalux.data_creare desc
+                                            limit 30
+                                       ) order by data_creare asc"
+                '"select printf('%.1f', diferenta_calculata_z4), delta_q from valori join spc_posalux on spc_posalux.spc_id = valori.spc_id 
+                ' where spc_posalux.masina = " & id_masina & " and valori.referinta = '" & nume_ref & "' order by spc_posalux.data_creare asc limit 30"
                 reader = comanda.ExecuteReader
-
+                incr = 0
                 Using reader
                     While reader.Read
                         ReDim Preserve dif(incr)
-                        dif(incr) = reader.GetValue(0)
+                        dif(incr) = reader.GetValue(1)
                         incr += 1
                     End While
                 End Using
@@ -1550,7 +1562,7 @@ Public Class fereastra_principala_frm
 
                 For Each diferenta In dif
                     punct.SetValueY(diferenta)
-                    punct.ToolTip = diferenta
+                    punct.ToolTip = diferenta & vbNewLine & "test"
                     If diferenta > lim_max Then
                         punct.Color = Color.Red
                         punct.SetValueY(5.5)
