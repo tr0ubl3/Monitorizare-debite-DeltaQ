@@ -1420,6 +1420,7 @@ Public Class fereastra_principala_frm
         nominal.BorderWidth = 2
         nominal.IntervalOffset = lim_nom
         interval_tol = (lim_max - lim_min)
+
         Select Case spindle
             Case 1
                 If grafic_de_populat = 1 Then
@@ -1431,6 +1432,7 @@ Public Class fereastra_principala_frm
                     dif_debit_z1_chart.ChartAreas(0).AxisY.StripLines.Add(limita_max)
                     dif_debit_z1_chart.ChartAreas(0).AxisY.StripLines.Add(limita_min)
                     dif_debit_z1_chart.ChartAreas(0).AxisY.StripLines.Add(nominal)
+
                 ElseIf grafic_de_populat = 2 Then
                     delta_q_z1_chart.ChartAreas(0).AxisY.Interval = interval_tol / 4
                     delta_q_z1_chart.ChartAreas(0).AxisY.Minimum = lim_min - interval_tol * 0.1 '666 - 72 * 0.1
@@ -1454,6 +1456,7 @@ Public Class fereastra_principala_frm
                                             limit 30
                                        ) order by data_creare asc"
                 reader = comanda.ExecuteReader
+
                 incr = 0
                 Using reader
                     While reader.Read
@@ -1464,11 +1467,13 @@ Public Class fereastra_principala_frm
                         incr += 1
                     End While
                 End Using
-                reader.Close()
                 comanda.Dispose()
+                reader.Close()
+
                 If grafic_de_populat = 1 Then
                     incr = 0
-                    punct = New DataVisualization.Charting.DataPoint
+                    dif_debit_z1_chart.Series("valori").Points.Clear()
+
                     For Each diferenta In dif
                         punct.SetValueY(diferenta)
                         punct.ToolTip = data_spc(incr).AddHours(2) & vbNewLine & diferenta
