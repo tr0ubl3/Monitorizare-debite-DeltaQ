@@ -545,6 +545,17 @@ Public Class fereastra_principala_frm
             Label10.Text = "Masina " & numar_op & " referinta " & nume_ref
         Else
             Label10.Text = ""
+            grafice_tabcontrol.SelectedIndex = 0
+            If dif_debit_z1_chart.Series.Count > 0 Then
+                dif_debit_z1_chart.Series("valori").Points.Clear()
+                dif_debit_z2_chart.Series("valori").Points.Clear()
+                dif_debit_z3_chart.Series("valori").Points.Clear()
+                dif_debit_z4_chart.Series("valori").Points.Clear()
+                delta_q_z1_chart.Series("valori").Points.Clear()
+                delta_q_z2_chart.Series("valori").Points.Clear()
+                delta_q_z3_chart.Series("valori").Points.Clear()
+                delta_q_z4_chart.Series("valori").Points.Clear()
+            End If
         End If
     End Sub
 

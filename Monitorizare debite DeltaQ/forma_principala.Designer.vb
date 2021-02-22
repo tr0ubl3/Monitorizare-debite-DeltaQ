@@ -35,9 +35,15 @@ Partial Class fereastra_principala_frm
         Dim ChartArea4 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
         Dim Legend4 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
         Dim Series4 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea5 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend5 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series5 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Dim ChartArea6 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
         Dim Legend6 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
         Dim Series6 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea7 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend7 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series7 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Dim ChartArea8 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
         Dim Legend8 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
         Dim Series8 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
@@ -45,12 +51,6 @@ Partial Class fereastra_principala_frm
         Dim ListViewGroup1 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Diferențe debit între Posalux și Delta Q", System.Windows.Forms.HorizontalAlignment.Left)
         Dim ListViewGroup2 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Delta Q în afara toleranței", System.Windows.Forms.HorizontalAlignment.Left)
         Dim ListViewGroup3 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Diferența Delta Q mai mare decât limita impusă", System.Windows.Forms.HorizontalAlignment.Left)
-        Dim ChartArea5 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend5 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series5 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim ChartArea7 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend7 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series7 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(fereastra_principala_frm))
         Me.panou_butoane_pnl = New System.Windows.Forms.Panel()
         Me.lista_atentionari_btn = New FontAwesome.Sharp.IconButton()
@@ -70,9 +70,13 @@ Partial Class fereastra_principala_frm
         Me.Label2 = New System.Windows.Forms.Label()
         Me.dif_debit_z2_chart = New System.Windows.Forms.DataVisualization.Charting.Chart()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.Label13 = New System.Windows.Forms.Label()
+        Me.delta_q_z3_chart = New System.Windows.Forms.DataVisualization.Charting.Chart()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.dif_debit_z3_chart = New System.Windows.Forms.DataVisualization.Charting.Chart()
         Me.TabPage4 = New System.Windows.Forms.TabPage()
+        Me.delta_q_z4_chart = New System.Windows.Forms.DataVisualization.Charting.Chart()
+        Me.Label14 = New System.Windows.Forms.Label()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.dif_debit_z4_chart = New System.Windows.Forms.DataVisualization.Charting.Chart()
         Me.adauga_valori_pnl = New System.Windows.Forms.Panel()
@@ -133,10 +137,6 @@ Partial Class fereastra_principala_frm
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.buton_refresh_ttp = New System.Windows.Forms.ToolTip(Me.components)
-        Me.delta_q_z3_chart = New System.Windows.Forms.DataVisualization.Charting.Chart()
-        Me.Label13 = New System.Windows.Forms.Label()
-        Me.Label14 = New System.Windows.Forms.Label()
-        Me.delta_q_z4_chart = New System.Windows.Forms.DataVisualization.Charting.Chart()
         Me.panou_butoane_pnl.SuspendLayout()
         Me.grafice_pnl.SuspendLayout()
         Me.grafice_tabcontrol.SuspendLayout()
@@ -147,8 +147,10 @@ Partial Class fereastra_principala_frm
         CType(Me.delta_q_z2_chart, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dif_debit_z2_chart, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage3.SuspendLayout()
+        CType(Me.delta_q_z3_chart, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dif_debit_z3_chart, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage4.SuspendLayout()
+        CType(Me.delta_q_z4_chart, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dif_debit_z4_chart, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.adauga_valori_pnl.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
@@ -157,8 +159,6 @@ Partial Class fereastra_principala_frm
         Me.TableLayoutPanel2.SuspendLayout()
         Me.lista_masini_pnl.SuspendLayout()
         Me.selectie_val_pnl.SuspendLayout()
-        CType(Me.delta_q_z3_chart, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.delta_q_z4_chart, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'panou_butoane_pnl
@@ -336,7 +336,7 @@ Partial Class fereastra_principala_frm
         Series1.Legend = "Legend1"
         Series1.Name = "valori"
         Me.delta_q_z1_chart.Series.Add(Series1)
-        Me.delta_q_z1_chart.Size = New System.Drawing.Size(750, 263)
+        Me.delta_q_z1_chart.Size = New System.Drawing.Size(733, 263)
         Me.delta_q_z1_chart.TabIndex = 11
         Me.delta_q_z1_chart.Text = "Chart1"
         '
@@ -376,7 +376,7 @@ Partial Class fereastra_principala_frm
         Series2.Legend = "Legend1"
         Series2.Name = "valori"
         Me.dif_debit_z1_chart.Series.Add(Series2)
-        Me.dif_debit_z1_chart.Size = New System.Drawing.Size(750, 263)
+        Me.dif_debit_z1_chart.Size = New System.Drawing.Size(733, 263)
         Me.dif_debit_z1_chart.TabIndex = 10
         Me.dif_debit_z1_chart.Text = "Chart1"
         '
@@ -451,7 +451,7 @@ Partial Class fereastra_principala_frm
         Series3.Legend = "Legend1"
         Series3.Name = "valori"
         Me.delta_q_z2_chart.Series.Add(Series3)
-        Me.delta_q_z2_chart.Size = New System.Drawing.Size(749, 263)
+        Me.delta_q_z2_chart.Size = New System.Drawing.Size(732, 263)
         Me.delta_q_z2_chart.TabIndex = 13
         Me.delta_q_z2_chart.Text = "Chart1"
         '
@@ -501,7 +501,7 @@ Partial Class fereastra_principala_frm
         Series4.Legend = "Legend1"
         Series4.Name = "valori"
         Me.dif_debit_z2_chart.Series.Add(Series4)
-        Me.dif_debit_z2_chart.Size = New System.Drawing.Size(750, 263)
+        Me.dif_debit_z2_chart.Size = New System.Drawing.Size(733, 263)
         Me.dif_debit_z2_chart.TabIndex = 11
         Me.dif_debit_z2_chart.Text = "Chart1"
         '
@@ -518,6 +518,56 @@ Partial Class fereastra_principala_frm
         Me.TabPage3.TabIndex = 2
         Me.TabPage3.Text = "Z3"
         Me.TabPage3.UseVisualStyleBackColor = True
+        '
+        'Label13
+        '
+        Me.Label13.AutoSize = True
+        Me.Label13.Font = New System.Drawing.Font("Consolas", 14.0!)
+        Me.Label13.Location = New System.Drawing.Point(3, 300)
+        Me.Label13.Name = "Label13"
+        Me.Label13.Size = New System.Drawing.Size(80, 22)
+        Me.Label13.TabIndex = 15
+        Me.Label13.Text = "Delta Q"
+        '
+        'delta_q_z3_chart
+        '
+        Me.delta_q_z3_chart.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        ChartArea5.AxisX.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.[False]
+        ChartArea5.AxisX.MinorGrid.LineColor = System.Drawing.Color.White
+        ChartArea5.AxisX.ScaleView.Size = 30.0R
+        ChartArea5.AxisX2.LineColor = System.Drawing.Color.White
+        ChartArea5.AxisY.Interval = 18.0R
+        ChartArea5.AxisY.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number
+        ChartArea5.AxisY.IsLabelAutoFit = False
+        ChartArea5.AxisY.LineColor = System.Drawing.Color.White
+        ChartArea5.AxisY.MajorGrid.LineColor = System.Drawing.Color.Gainsboro
+        ChartArea5.AxisY.Maximum = 5.0R
+        ChartArea5.AxisY.MaximumAutoSize = 85.0!
+        ChartArea5.AxisY.Minimum = -5.0R
+        ChartArea5.AxisY.TitleFont = New System.Drawing.Font("Microsoft Sans Serif", 20.0!)
+        ChartArea5.AxisY2.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.[False]
+        ChartArea5.AxisY2.LineColor = System.Drawing.Color.White
+        ChartArea5.BackColor = System.Drawing.Color.WhiteSmoke
+        ChartArea5.Name = "ChartArea1"
+        Me.delta_q_z3_chart.ChartAreas.Add(ChartArea5)
+        Legend5.Enabled = False
+        Legend5.Name = "Legend1"
+        Me.delta_q_z3_chart.Legends.Add(Legend5)
+        Me.delta_q_z3_chart.Location = New System.Drawing.Point(3, 325)
+        Me.delta_q_z3_chart.Name = "delta_q_z3_chart"
+        Me.delta_q_z3_chart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SemiTransparent
+        Series5.ChartArea = "ChartArea1"
+        Series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
+        Series5.Color = System.Drawing.Color.Black
+        Series5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Series5.IsVisibleInLegend = False
+        Series5.Legend = "Legend1"
+        Series5.Name = "valori"
+        Me.delta_q_z3_chart.Series.Add(Series5)
+        Me.delta_q_z3_chart.Size = New System.Drawing.Size(733, 263)
+        Me.delta_q_z3_chart.TabIndex = 14
+        Me.delta_q_z3_chart.Text = "Chart1"
         '
         'Label7
         '
@@ -565,7 +615,7 @@ Partial Class fereastra_principala_frm
         Series6.Legend = "Legend1"
         Series6.Name = "valori"
         Me.dif_debit_z3_chart.Series.Add(Series6)
-        Me.dif_debit_z3_chart.Size = New System.Drawing.Size(750, 263)
+        Me.dif_debit_z3_chart.Size = New System.Drawing.Size(733, 263)
         Me.dif_debit_z3_chart.TabIndex = 12
         Me.dif_debit_z3_chart.Text = "Chart1"
         '
@@ -582,6 +632,56 @@ Partial Class fereastra_principala_frm
         Me.TabPage4.TabIndex = 3
         Me.TabPage4.Text = "Z4"
         Me.TabPage4.UseVisualStyleBackColor = True
+        '
+        'delta_q_z4_chart
+        '
+        Me.delta_q_z4_chart.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        ChartArea7.AxisX.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.[False]
+        ChartArea7.AxisX.MinorGrid.LineColor = System.Drawing.Color.White
+        ChartArea7.AxisX.ScaleView.Size = 30.0R
+        ChartArea7.AxisX2.LineColor = System.Drawing.Color.White
+        ChartArea7.AxisY.Interval = 18.0R
+        ChartArea7.AxisY.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number
+        ChartArea7.AxisY.IsLabelAutoFit = False
+        ChartArea7.AxisY.LineColor = System.Drawing.Color.White
+        ChartArea7.AxisY.MajorGrid.LineColor = System.Drawing.Color.Gainsboro
+        ChartArea7.AxisY.Maximum = 5.0R
+        ChartArea7.AxisY.MaximumAutoSize = 85.0!
+        ChartArea7.AxisY.Minimum = -5.0R
+        ChartArea7.AxisY.TitleFont = New System.Drawing.Font("Microsoft Sans Serif", 20.0!)
+        ChartArea7.AxisY2.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.[False]
+        ChartArea7.AxisY2.LineColor = System.Drawing.Color.White
+        ChartArea7.BackColor = System.Drawing.Color.WhiteSmoke
+        ChartArea7.Name = "ChartArea1"
+        Me.delta_q_z4_chart.ChartAreas.Add(ChartArea7)
+        Legend7.Enabled = False
+        Legend7.Name = "Legend1"
+        Me.delta_q_z4_chart.Legends.Add(Legend7)
+        Me.delta_q_z4_chart.Location = New System.Drawing.Point(3, 325)
+        Me.delta_q_z4_chart.Name = "delta_q_z4_chart"
+        Me.delta_q_z4_chart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SemiTransparent
+        Series7.ChartArea = "ChartArea1"
+        Series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
+        Series7.Color = System.Drawing.Color.Black
+        Series7.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
+        Series7.IsVisibleInLegend = False
+        Series7.Legend = "Legend1"
+        Series7.Name = "valori"
+        Me.delta_q_z4_chart.Series.Add(Series7)
+        Me.delta_q_z4_chart.Size = New System.Drawing.Size(733, 263)
+        Me.delta_q_z4_chart.TabIndex = 17
+        Me.delta_q_z4_chart.Text = "Chart1"
+        '
+        'Label14
+        '
+        Me.Label14.AutoSize = True
+        Me.Label14.Font = New System.Drawing.Font("Consolas", 14.0!)
+        Me.Label14.Location = New System.Drawing.Point(3, 300)
+        Me.Label14.Name = "Label14"
+        Me.Label14.Size = New System.Drawing.Size(80, 22)
+        Me.Label14.TabIndex = 16
+        Me.Label14.Text = "Delta Q"
         '
         'Label9
         '
@@ -629,7 +729,7 @@ Partial Class fereastra_principala_frm
         Series8.Legend = "Legend1"
         Series8.Name = "valori"
         Me.dif_debit_z4_chart.Series.Add(Series8)
-        Me.dif_debit_z4_chart.Size = New System.Drawing.Size(750, 263)
+        Me.dif_debit_z4_chart.Size = New System.Drawing.Size(733, 263)
         Me.dif_debit_z4_chart.TabIndex = 13
         Me.dif_debit_z4_chart.Text = "Chart1"
         '
@@ -1333,106 +1433,6 @@ Partial Class fereastra_principala_frm
         '
         Me.Timer1.Interval = 15000
         '
-        'delta_q_z3_chart
-        '
-        Me.delta_q_z3_chart.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        ChartArea5.AxisX.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.[False]
-        ChartArea5.AxisX.MinorGrid.LineColor = System.Drawing.Color.White
-        ChartArea5.AxisX.ScaleView.Size = 30.0R
-        ChartArea5.AxisX2.LineColor = System.Drawing.Color.White
-        ChartArea5.AxisY.Interval = 18.0R
-        ChartArea5.AxisY.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number
-        ChartArea5.AxisY.IsLabelAutoFit = False
-        ChartArea5.AxisY.LineColor = System.Drawing.Color.White
-        ChartArea5.AxisY.MajorGrid.LineColor = System.Drawing.Color.Gainsboro
-        ChartArea5.AxisY.Maximum = 5.0R
-        ChartArea5.AxisY.MaximumAutoSize = 85.0!
-        ChartArea5.AxisY.Minimum = -5.0R
-        ChartArea5.AxisY.TitleFont = New System.Drawing.Font("Microsoft Sans Serif", 20.0!)
-        ChartArea5.AxisY2.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.[False]
-        ChartArea5.AxisY2.LineColor = System.Drawing.Color.White
-        ChartArea5.BackColor = System.Drawing.Color.WhiteSmoke
-        ChartArea5.Name = "ChartArea1"
-        Me.delta_q_z3_chart.ChartAreas.Add(ChartArea5)
-        Legend5.Enabled = False
-        Legend5.Name = "Legend1"
-        Me.delta_q_z3_chart.Legends.Add(Legend5)
-        Me.delta_q_z3_chart.Location = New System.Drawing.Point(3, 325)
-        Me.delta_q_z3_chart.Name = "delta_q_z3_chart"
-        Me.delta_q_z3_chart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SemiTransparent
-        Series5.ChartArea = "ChartArea1"
-        Series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
-        Series5.Color = System.Drawing.Color.Black
-        Series5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
-        Series5.IsVisibleInLegend = False
-        Series5.Legend = "Legend1"
-        Series5.Name = "valori"
-        Me.delta_q_z3_chart.Series.Add(Series5)
-        Me.delta_q_z3_chart.Size = New System.Drawing.Size(750, 263)
-        Me.delta_q_z3_chart.TabIndex = 14
-        Me.delta_q_z3_chart.Text = "Chart1"
-        '
-        'Label13
-        '
-        Me.Label13.AutoSize = True
-        Me.Label13.Font = New System.Drawing.Font("Consolas", 14.0!)
-        Me.Label13.Location = New System.Drawing.Point(3, 300)
-        Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(80, 22)
-        Me.Label13.TabIndex = 15
-        Me.Label13.Text = "Delta Q"
-        '
-        'Label14
-        '
-        Me.Label14.AutoSize = True
-        Me.Label14.Font = New System.Drawing.Font("Consolas", 14.0!)
-        Me.Label14.Location = New System.Drawing.Point(3, 303)
-        Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(80, 22)
-        Me.Label14.TabIndex = 16
-        Me.Label14.Text = "Delta Q"
-        '
-        'delta_q_z4_chart
-        '
-        Me.delta_q_z4_chart.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        ChartArea7.AxisX.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.[False]
-        ChartArea7.AxisX.MinorGrid.LineColor = System.Drawing.Color.White
-        ChartArea7.AxisX.ScaleView.Size = 30.0R
-        ChartArea7.AxisX2.LineColor = System.Drawing.Color.White
-        ChartArea7.AxisY.Interval = 18.0R
-        ChartArea7.AxisY.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Number
-        ChartArea7.AxisY.IsLabelAutoFit = False
-        ChartArea7.AxisY.LineColor = System.Drawing.Color.White
-        ChartArea7.AxisY.MajorGrid.LineColor = System.Drawing.Color.Gainsboro
-        ChartArea7.AxisY.Maximum = 5.0R
-        ChartArea7.AxisY.MaximumAutoSize = 85.0!
-        ChartArea7.AxisY.Minimum = -5.0R
-        ChartArea7.AxisY.TitleFont = New System.Drawing.Font("Microsoft Sans Serif", 20.0!)
-        ChartArea7.AxisY2.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.[False]
-        ChartArea7.AxisY2.LineColor = System.Drawing.Color.White
-        ChartArea7.BackColor = System.Drawing.Color.WhiteSmoke
-        ChartArea7.Name = "ChartArea1"
-        Me.delta_q_z4_chart.ChartAreas.Add(ChartArea7)
-        Legend7.Enabled = False
-        Legend7.Name = "Legend1"
-        Me.delta_q_z4_chart.Legends.Add(Legend7)
-        Me.delta_q_z4_chart.Location = New System.Drawing.Point(3, 325)
-        Me.delta_q_z4_chart.Name = "delta_q_z4_chart"
-        Me.delta_q_z4_chart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SemiTransparent
-        Series7.ChartArea = "ChartArea1"
-        Series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
-        Series7.Color = System.Drawing.Color.Black
-        Series7.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
-        Series7.IsVisibleInLegend = False
-        Series7.Legend = "Legend1"
-        Series7.Name = "valori"
-        Me.delta_q_z4_chart.Series.Add(Series7)
-        Me.delta_q_z4_chart.Size = New System.Drawing.Size(750, 263)
-        Me.delta_q_z4_chart.TabIndex = 17
-        Me.delta_q_z4_chart.Text = "Chart1"
-        '
         'fereastra_principala_frm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1463,9 +1463,11 @@ Partial Class fereastra_principala_frm
         CType(Me.dif_debit_z2_chart, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage3.ResumeLayout(False)
         Me.TabPage3.PerformLayout()
+        CType(Me.delta_q_z3_chart, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.dif_debit_z3_chart, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage4.ResumeLayout(False)
         Me.TabPage4.PerformLayout()
+        CType(Me.delta_q_z4_chart, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.dif_debit_z4_chart, System.ComponentModel.ISupportInitialize).EndInit()
         Me.adauga_valori_pnl.ResumeLayout(False)
         Me.adauga_valori_pnl.PerformLayout()
@@ -1479,8 +1481,6 @@ Partial Class fereastra_principala_frm
         Me.lista_masini_pnl.PerformLayout()
         Me.selectie_val_pnl.ResumeLayout(False)
         Me.selectie_val_pnl.PerformLayout()
-        CType(Me.delta_q_z3_chart, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.delta_q_z4_chart, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
