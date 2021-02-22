@@ -1595,14 +1595,26 @@ Public Class fereastra_principala_frm
                     Next
                 End If
             Case 3
-                dif_debit_z3_chart.ChartAreas(0).AxisY.Interval = interval_tol / 4
-                dif_debit_z3_chart.ChartAreas(0).AxisY.Minimum = lim_min - interval_tol * 0.1 '666 - 72 * 0.1
-                dif_debit_z3_chart.ChartAreas(0).AxisY.Maximum = lim_max + interval_tol * 0.1 '738 + 72 * 0.1
-                dif_debit_z3_chart.ChartAreas(0).AxisY.IntervalOffset = 1
+                If grafic_de_populat = 1 Then
+                    dif_debit_z3_chart.ChartAreas(0).AxisY.Interval = interval_tol / 4
+                    dif_debit_z3_chart.ChartAreas(0).AxisY.Minimum = lim_min - interval_tol * 0.1 '666 - 72 * 0.1
+                    dif_debit_z3_chart.ChartAreas(0).AxisY.Maximum = lim_max + interval_tol * 0.1 '738 + 72 * 0.1
+                    dif_debit_z3_chart.ChartAreas(0).AxisY.IntervalOffset = 1
 
-                dif_debit_z3_chart.ChartAreas(0).AxisY.StripLines.Add(limita_max)
-                dif_debit_z3_chart.ChartAreas(0).AxisY.StripLines.Add(limita_min)
-                dif_debit_z3_chart.ChartAreas(0).AxisY.StripLines.Add(nominal)
+                    dif_debit_z3_chart.ChartAreas(0).AxisY.StripLines.Add(limita_max)
+                    dif_debit_z3_chart.ChartAreas(0).AxisY.StripLines.Add(limita_min)
+                    dif_debit_z3_chart.ChartAreas(0).AxisY.StripLines.Add(nominal)
+
+                ElseIf grafic_de_populat = 2 Then
+                    delta_q_z3_chart.ChartAreas(0).AxisY.Interval = interval_tol / 4
+                    delta_q_z3_chart.ChartAreas(0).AxisY.Minimum = lim_min - interval_tol * 0.1 '666 - 72 * 0.1
+                    delta_q_z3_chart.ChartAreas(0).AxisY.Maximum = lim_max + interval_tol * 0.1 '738 + 72 * 0.1
+                    delta_q_z3_chart.ChartAreas(0).AxisY.IntervalOffset = 1
+                    delta_q_z3_chart.ChartAreas(0).AxisY.StripLines.Add(limita_max)
+                    delta_q_z3_chart.ChartAreas(0).AxisY.StripLines.Add(limita_min)
+                    delta_q_z3_chart.ChartAreas(0).AxisY.StripLines.Add(nominal)
+
+                End If
 
                 comanda.CommandText = "select * from (
                                            select spc_posalux.data_creare,
@@ -1619,42 +1631,73 @@ Public Class fereastra_principala_frm
                 incr = 0
                 Using reader
                     While reader.Read
-                        ReDim Preserve dif(incr), data_spc(incr)
+                        ReDim Preserve dif(incr), data_spc(incr), dq(incr)
                         data_spc(incr) = reader.GetValue(0)
                         dif(incr) = reader.GetValue(1)
+                        dq(incr) = reader.GetValue(2)
                         incr += 1
                     End While
                 End Using
                 reader.Close()
                 comanda.Dispose()
 
-                dif_debit_z3_chart.Series("valori").Points.Clear()
-                incr = 0
-                For Each diferenta In dif
-                    punct.SetValueY(diferenta)
-                    punct.ToolTip = data_spc(incr).AddHours(2) & vbNewLine & diferenta
-                    If diferenta > lim_max Then
-                        punct.Color = Color.Red
-                        punct.SetValueY(5.5)
-                    ElseIf diferenta < lim_min Then
-                        punct.Color = Color.Red
-                        punct.SetValueY(-5.5)
-                    ElseIf lim_max > diferenta And diferenta > lim_min Then
-                        punct.Color = Color.Black
-                    End If
-                    dif_debit_z3_chart.Series("valori").Points.Add(punct)
-                    punct = New DataVisualization.Charting.DataPoint
-                    incr += 1
-                Next
+                If grafic_de_populat = 1 Then
+                    dif_debit_z3_chart.Series("valori").Points.Clear()
+                    incr = 0
+                    For Each diferenta In dif
+                        punct.SetValueY(diferenta)
+                        punct.ToolTip = data_spc(incr).AddHours(2) & vbNewLine & diferenta
+                        If diferenta > lim_max Then
+                            punct.Color = Color.Red
+                            punct.SetValueY(5.5)
+                        ElseIf diferenta < lim_min Then
+                            punct.Color = Color.Red
+                            punct.SetValueY(-5.5)
+                        ElseIf lim_max > diferenta And diferenta > lim_min Then
+                            punct.Color = Color.Black
+                        End If
+                        dif_debit_z3_chart.Series("valori").Points.Add(punct)
+                        punct = New DataVisualization.Charting.DataPoint
+                        incr += 1
+                    Next
+                ElseIf grafic_de_populat = 2 Then
+                    incr = 0
+                    delta_q_z3_chart.Series("valori").Points.Clear()
+                    For Each valoare In dq
+                        punct.SetValueY(valoare)
+                        punct.ToolTip = data_spc(incr).AddHours(2) & vbNewLine & valoare
+                        If valoare > lim_max Then
+                            punct.Color = Color.Red
+                            punct.SetValueY(lim_max + 0.5)
+                        ElseIf valoare < lim_min Then
+                            punct.Color = Color.Red
+                            punct.SetValueY(lim_min - 0.5)
+                        ElseIf lim_max > valoare > lim_min Then
+                            punct.Color = Color.Black
+                        End If
+                        delta_q_z3_chart.Series("valori").Points.Add(punct)
+                        punct = New DataVisualization.Charting.DataPoint
+                        incr += 1
+                    Next
+                End If
             Case 4
-                dif_debit_z4_chart.ChartAreas(0).AxisY.Interval = interval_tol / 4
-                dif_debit_z4_chart.ChartAreas(0).AxisY.Minimum = lim_min - interval_tol * 0.1 '666 - 72 * 0.1
-                dif_debit_z4_chart.ChartAreas(0).AxisY.Maximum = lim_max + interval_tol * 0.1 '738 + 72 * 0.1
-                dif_debit_z4_chart.ChartAreas(0).AxisY.IntervalOffset = 1
-
-                dif_debit_z4_chart.ChartAreas(0).AxisY.StripLines.Add(limita_max)
-                dif_debit_z4_chart.ChartAreas(0).AxisY.StripLines.Add(limita_min)
-                dif_debit_z4_chart.ChartAreas(0).AxisY.StripLines.Add(nominal)
+                If grafic_de_populat = 1 Then
+                    dif_debit_z4_chart.ChartAreas(0).AxisY.Interval = interval_tol / 4
+                    dif_debit_z4_chart.ChartAreas(0).AxisY.Minimum = lim_min - interval_tol * 0.1 '666 - 72 * 0.1
+                    dif_debit_z4_chart.ChartAreas(0).AxisY.Maximum = lim_max + interval_tol * 0.1 '738 + 72 * 0.1
+                    dif_debit_z4_chart.ChartAreas(0).AxisY.IntervalOffset = 1
+                    dif_debit_z4_chart.ChartAreas(0).AxisY.StripLines.Add(limita_max)
+                    dif_debit_z4_chart.ChartAreas(0).AxisY.StripLines.Add(limita_min)
+                    dif_debit_z4_chart.ChartAreas(0).AxisY.StripLines.Add(nominal)
+                ElseIf grafic_de_populat = 2 Then
+                    delta_q_z4_chart.ChartAreas(0).AxisY.Interval = interval_tol / 4
+                    delta_q_z4_chart.ChartAreas(0).AxisY.Minimum = lim_min - interval_tol * 0.1 '666 - 72 * 0.1
+                    delta_q_z4_chart.ChartAreas(0).AxisY.Maximum = lim_max + interval_tol * 0.1 '738 + 72 * 0.1
+                    delta_q_z4_chart.ChartAreas(0).AxisY.IntervalOffset = 1
+                    delta_q_z4_chart.ChartAreas(0).AxisY.StripLines.Add(limita_max)
+                    delta_q_z4_chart.ChartAreas(0).AxisY.StripLines.Add(limita_min)
+                    delta_q_z4_chart.ChartAreas(0).AxisY.StripLines.Add(nominal)
+                End If
 
                 comanda.CommandText = "select * from (
                                            select spc_posalux.data_creare,
@@ -1671,33 +1714,55 @@ Public Class fereastra_principala_frm
                 incr = 0
                 Using reader
                     While reader.Read
-                        ReDim Preserve dif(incr), data_spc(incr)
+                        ReDim Preserve dif(incr), data_spc(incr), dq(incr)
                         data_spc(incr) = reader.GetValue(0)
                         dif(incr) = reader.GetValue(1)
+                        dq(incr) = reader.GetValue(2)
                         incr += 1
                     End While
                 End Using
                 reader.Close()
                 comanda.Dispose()
 
-                dif_debit_z4_chart.Series("valori").Points.Clear()
-                incr = 0
-                For Each diferenta In dif
-                    punct.SetValueY(diferenta)
-                    punct.ToolTip = data_spc(incr).AddHours(2) & vbNewLine & diferenta
-                    If diferenta > lim_max Then
-                        punct.Color = Color.Red
-                        punct.SetValueY(5.5)
-                    ElseIf diferenta < lim_min Then
-                        punct.Color = Color.Red
-                        punct.SetValueY(-5.5)
-                    ElseIf lim_max > diferenta And diferenta > lim_min Then
-                        punct.Color = Color.Black
-                    End If
-                    dif_debit_z4_chart.Series("valori").Points.Add(punct)
-                    punct = New DataVisualization.Charting.DataPoint
-                    incr += 1
-                Next
+                If grafic_de_populat = 1 Then
+                    dif_debit_z4_chart.Series("valori").Points.Clear()
+                    incr = 0
+                    For Each diferenta In dif
+                        punct.SetValueY(diferenta)
+                        punct.ToolTip = data_spc(incr).AddHours(2) & vbNewLine & diferenta
+                        If diferenta > lim_max Then
+                            punct.Color = Color.Red
+                            punct.SetValueY(5.5)
+                        ElseIf diferenta < lim_min Then
+                            punct.Color = Color.Red
+                            punct.SetValueY(-5.5)
+                        ElseIf lim_max > diferenta And diferenta > lim_min Then
+                            punct.Color = Color.Black
+                        End If
+                        dif_debit_z4_chart.Series("valori").Points.Add(punct)
+                        punct = New DataVisualization.Charting.DataPoint
+                        incr += 1
+                    Next
+                ElseIf grafic_de_populat = 2 Then
+                    incr = 0
+                    delta_q_z4_chart.Series("valori").Points.Clear()
+                    For Each valoare In dq
+                        punct.SetValueY(valoare)
+                        punct.ToolTip = data_spc(incr).AddHours(2) & vbNewLine & valoare
+                        If valoare > lim_max Then
+                            punct.Color = Color.Red
+                            punct.SetValueY(lim_max + 0.5)
+                        ElseIf valoare < lim_min Then
+                            punct.Color = Color.Red
+                            punct.SetValueY(lim_min - 0.5)
+                        ElseIf lim_max > valoare > lim_min Then
+                            punct.Color = Color.Black
+                        End If
+                        delta_q_z4_chart.Series("valori").Points.Add(punct)
+                        punct = New DataVisualization.Charting.DataPoint
+                        incr += 1
+                    Next
+                End If
         End Select
         conexiune_bd.Close()
     End Sub
@@ -1711,8 +1776,10 @@ Public Class fereastra_principala_frm
                 populare_grafic(2, 2)
             Case 2
                 populare_grafic(3, 1)
+                populare_grafic(3, 2)
             Case 3
                 populare_grafic(4, 1)
+                populare_grafic(4, 2)
         End Select
     End Sub
 
