@@ -807,6 +807,9 @@ Public Class fereastra_principala_frm
 
                 date_extrase = date_atentionare(id_masina)
 
+                nume_ref = date_extrase.Item("referinta")
+                numar_op = date_extrase.Item("nr_operatie")
+                Me.id_masina = id_masina
                 id_atentionare_lbl.Text = date_extrase.Item("id_atent") '"Atenționare " & date_extrase.Item("id_atent") & " spc masurat acum " & durata(date_extrase.Item("data_spc"))
                 data_ora_atentionare_lbl.Text = date_extrase.Item("data_spc") & " " & "(" & durata(date_extrase.Item("data_spc")) & ")"
                 referinta_atentionare_lbl.Text = date_extrase.Item("referinta")
@@ -1794,4 +1797,7 @@ Public Class fereastra_principala_frm
         End Select
     End Sub
 
+    Private Sub vizualizare_evolutie_atentionare_btn_Click(sender As Object, e As EventArgs) Handles vizualizare_evolutie_atentionare_btn.Click
+        vizibilitate_panou(grafice_pnl)
+    End Sub
 End Class
