@@ -1487,44 +1487,47 @@ Public Class fereastra_principala_frm
                 If grafic_de_populat = 1 Then
                     incr = 0
                     dif_debit_z1_chart.Series("valori").Points.Clear()
-
-                    For Each diferenta In dif
-                        punct.SetValueY(diferenta)
-                        punct.ToolTip = data_spc(incr).AddHours(2) & vbNewLine & diferenta
-                        If diferenta > lim_max Then
-                            punct.Color = Color.Red
-                            punct.SetValueY(5.5)
-                        ElseIf diferenta < lim_min Then
-                            punct.Color = Color.Red
-                            punct.SetValueY(-5.5)
-                        ElseIf lim_max > diferenta And diferenta > lim_min Then
-                            punct.Color = Color.Black
-                        End If
-                        dif_debit_z1_chart.Series("valori").Points.Add(punct)
-                        punct = New DataVisualization.Charting.DataPoint
-                        incr += 1
-                    Next
+                    If dif IsNot Nothing Then
+                        For Each diferenta In dif
+                            punct.SetValueY(diferenta)
+                            punct.ToolTip = data_spc(incr).AddHours(2) & vbNewLine & diferenta
+                            If diferenta > lim_max Then
+                                punct.Color = Color.Red
+                                punct.SetValueY(5.5)
+                            ElseIf diferenta < lim_min Then
+                                punct.Color = Color.Red
+                                punct.SetValueY(-5.5)
+                            ElseIf lim_max > diferenta And diferenta > lim_min Then
+                                punct.Color = Color.Black
+                            End If
+                            dif_debit_z1_chart.Series("valori").Points.Add(punct)
+                            punct = New DataVisualization.Charting.DataPoint
+                            incr += 1
+                        Next
+                    End If
                 ElseIf grafic_de_populat = 2 Then
-                    incr = 0
+                        incr = 0
                     delta_q_z1_chart.Series("valori").Points.Clear()
-                    For Each valoare In dq
-                        punct.SetValueY(valoare)
-                        punct.ToolTip = data_spc(incr).AddHours(2) & vbNewLine & valoare
-                        If valoare > lim_max Then
-                            punct.Color = Color.Red
-                            punct.SetValueY(lim_max + 0.5)
-                        ElseIf valoare < lim_min Then
-                            punct.Color = Color.Red
-                            punct.SetValueY(lim_min - 0.5)
-                        ElseIf lim_max > valoare > lim_min Then
-                            punct.Color = Color.Black
-                        End If
-                        delta_q_z1_chart.Series("valori").Points.Add(punct)
-                        punct = New DataVisualization.Charting.DataPoint
-                        incr += 1
-                    Next
+                    If dq IsNot Nothing Then
+                        For Each valoare In dq
+                            punct.SetValueY(valoare)
+                            punct.ToolTip = data_spc(incr).AddHours(2) & vbNewLine & valoare
+                            If valoare > lim_max Then
+                                punct.Color = Color.Red
+                                punct.SetValueY(lim_max + 0.5)
+                            ElseIf valoare < lim_min Then
+                                punct.Color = Color.Red
+                                punct.SetValueY(lim_min - 0.5)
+                            ElseIf lim_max > valoare > lim_min Then
+                                punct.Color = Color.Black
+                            End If
+                            delta_q_z1_chart.Series("valori").Points.Add(punct)
+                            punct = New DataVisualization.Charting.DataPoint
+                            incr += 1
+                        Next
+                    End If
                 End If
-            Case 2
+                    Case 2
                 If grafic_de_populat = 1 Then
                     dif_debit_z2_chart.ChartAreas(0).AxisY.Interval = interval_tol / 4
                     dif_debit_z2_chart.ChartAreas(0).AxisY.Minimum = lim_min - interval_tol * 0.1 '666 - 72 * 0.1
@@ -1572,43 +1575,47 @@ Public Class fereastra_principala_frm
                 If grafic_de_populat = 1 Then
                     dif_debit_z2_chart.Series("valori").Points.Clear()
                     incr = 0
-                    For Each diferenta In dif
-                        punct.SetValueY(diferenta)
-                        punct.ToolTip = data_spc(incr).AddHours(2) & vbNewLine & diferenta
-                        If diferenta > lim_max Then
-                            punct.Color = Color.Red
-                            punct.SetValueY(5.5)
-                        ElseIf diferenta < lim_min Then
-                            punct.Color = Color.Red
-                            punct.SetValueY(-5.5)
-                        ElseIf lim_max > diferenta And diferenta > lim_min Then
-                            punct.Color = Color.Black
-                        End If
-                        dif_debit_z2_chart.Series("valori").Points.Add(punct)
-                        punct = New DataVisualization.Charting.DataPoint
-                        incr += 1
-                    Next
+                    If dif IsNot Nothing Then
+                        For Each diferenta In dif
+                            punct.SetValueY(diferenta)
+                            punct.ToolTip = data_spc(incr).AddHours(2) & vbNewLine & diferenta
+                            If diferenta > lim_max Then
+                                punct.Color = Color.Red
+                                punct.SetValueY(5.5)
+                            ElseIf diferenta < lim_min Then
+                                punct.Color = Color.Red
+                                punct.SetValueY(-5.5)
+                            ElseIf lim_max > diferenta And diferenta > lim_min Then
+                                punct.Color = Color.Black
+                            End If
+                            dif_debit_z2_chart.Series("valori").Points.Add(punct)
+                            punct = New DataVisualization.Charting.DataPoint
+                            incr += 1
+                        Next
+                    End If
                 ElseIf grafic_de_populat = 2 Then
-                    incr = 0
+                        incr = 0
                     delta_q_z2_chart.Series("valori").Points.Clear()
-                    For Each valoare In dq
-                        punct.SetValueY(valoare)
-                        punct.ToolTip = data_spc(incr).AddHours(2) & vbNewLine & valoare
-                        If valoare > lim_max Then
-                            punct.Color = Color.Red
-                            punct.SetValueY(lim_max + 0.5)
-                        ElseIf valoare < lim_min Then
-                            punct.Color = Color.Red
-                            punct.SetValueY(lim_min - 0.5)
-                        ElseIf lim_max > valoare > lim_min Then
-                            punct.Color = Color.Black
-                        End If
-                        delta_q_z2_chart.Series("valori").Points.Add(punct)
-                        punct = New DataVisualization.Charting.DataPoint
-                        incr += 1
-                    Next
+                    If dq IsNot Nothing Then
+                        For Each valoare In dq
+                            punct.SetValueY(valoare)
+                            punct.ToolTip = data_spc(incr).AddHours(2) & vbNewLine & valoare
+                            If valoare > lim_max Then
+                                punct.Color = Color.Red
+                                punct.SetValueY(lim_max + 0.5)
+                            ElseIf valoare < lim_min Then
+                                punct.Color = Color.Red
+                                punct.SetValueY(lim_min - 0.5)
+                            ElseIf lim_max > valoare > lim_min Then
+                                punct.Color = Color.Black
+                            End If
+                            delta_q_z2_chart.Series("valori").Points.Add(punct)
+                            punct = New DataVisualization.Charting.DataPoint
+                            incr += 1
+                        Next
+                    End If
                 End If
-            Case 3
+                    Case 3
                 If grafic_de_populat = 1 Then
                     dif_debit_z3_chart.ChartAreas(0).AxisY.Interval = interval_tol / 4
                     dif_debit_z3_chart.ChartAreas(0).AxisY.Minimum = lim_min - interval_tol * 0.1 '666 - 72 * 0.1
@@ -1658,43 +1665,47 @@ Public Class fereastra_principala_frm
                 If grafic_de_populat = 1 Then
                     dif_debit_z3_chart.Series("valori").Points.Clear()
                     incr = 0
-                    For Each diferenta In dif
-                        punct.SetValueY(diferenta)
-                        punct.ToolTip = data_spc(incr).AddHours(2) & vbNewLine & diferenta
-                        If diferenta > lim_max Then
-                            punct.Color = Color.Red
-                            punct.SetValueY(5.5)
-                        ElseIf diferenta < lim_min Then
-                            punct.Color = Color.Red
-                            punct.SetValueY(-5.5)
-                        ElseIf lim_max > diferenta And diferenta > lim_min Then
-                            punct.Color = Color.Black
-                        End If
-                        dif_debit_z3_chart.Series("valori").Points.Add(punct)
-                        punct = New DataVisualization.Charting.DataPoint
-                        incr += 1
-                    Next
+                    If dif IsNot Nothing Then
+                        For Each diferenta In dif
+                            punct.SetValueY(diferenta)
+                            punct.ToolTip = data_spc(incr).AddHours(2) & vbNewLine & diferenta
+                            If diferenta > lim_max Then
+                                punct.Color = Color.Red
+                                punct.SetValueY(5.5)
+                            ElseIf diferenta < lim_min Then
+                                punct.Color = Color.Red
+                                punct.SetValueY(-5.5)
+                            ElseIf lim_max > diferenta And diferenta > lim_min Then
+                                punct.Color = Color.Black
+                            End If
+                            dif_debit_z3_chart.Series("valori").Points.Add(punct)
+                            punct = New DataVisualization.Charting.DataPoint
+                            incr += 1
+                        Next
+                    End If
                 ElseIf grafic_de_populat = 2 Then
-                    incr = 0
+                        incr = 0
                     delta_q_z3_chart.Series("valori").Points.Clear()
-                    For Each valoare In dq
-                        punct.SetValueY(valoare)
-                        punct.ToolTip = data_spc(incr).AddHours(2) & vbNewLine & valoare
-                        If valoare > lim_max Then
-                            punct.Color = Color.Red
-                            punct.SetValueY(lim_max + 0.5)
-                        ElseIf valoare < lim_min Then
-                            punct.Color = Color.Red
-                            punct.SetValueY(lim_min - 0.5)
-                        ElseIf lim_max > valoare > lim_min Then
-                            punct.Color = Color.Black
-                        End If
-                        delta_q_z3_chart.Series("valori").Points.Add(punct)
-                        punct = New DataVisualization.Charting.DataPoint
-                        incr += 1
-                    Next
+                    If dq IsNot Nothing Then
+                        For Each valoare In dq
+                            punct.SetValueY(valoare)
+                            punct.ToolTip = data_spc(incr).AddHours(2) & vbNewLine & valoare
+                            If valoare > lim_max Then
+                                punct.Color = Color.Red
+                                punct.SetValueY(lim_max + 0.5)
+                            ElseIf valoare < lim_min Then
+                                punct.Color = Color.Red
+                                punct.SetValueY(lim_min - 0.5)
+                            ElseIf lim_max > valoare > lim_min Then
+                                punct.Color = Color.Black
+                            End If
+                            delta_q_z3_chart.Series("valori").Points.Add(punct)
+                            punct = New DataVisualization.Charting.DataPoint
+                            incr += 1
+                        Next
+                    End If
                 End If
-            Case 4
+                    Case 4
                 If grafic_de_populat = 1 Then
                     dif_debit_z4_chart.ChartAreas(0).AxisY.Interval = interval_tol / 4
                     dif_debit_z4_chart.ChartAreas(0).AxisY.Minimum = lim_min - interval_tol * 0.1 '666 - 72 * 0.1
@@ -1741,41 +1752,45 @@ Public Class fereastra_principala_frm
                 If grafic_de_populat = 1 Then
                     dif_debit_z4_chart.Series("valori").Points.Clear()
                     incr = 0
-                    For Each diferenta In dif
-                        punct.SetValueY(diferenta)
-                        punct.ToolTip = data_spc(incr).AddHours(2) & vbNewLine & diferenta
-                        If diferenta > lim_max Then
-                            punct.Color = Color.Red
-                            punct.SetValueY(5.5)
-                        ElseIf diferenta < lim_min Then
-                            punct.Color = Color.Red
-                            punct.SetValueY(-5.5)
-                        ElseIf lim_max > diferenta And diferenta > lim_min Then
-                            punct.Color = Color.Black
-                        End If
-                        dif_debit_z4_chart.Series("valori").Points.Add(punct)
-                        punct = New DataVisualization.Charting.DataPoint
-                        incr += 1
-                    Next
+                    If dif IsNot Nothing Then
+                        For Each diferenta In dif
+                            punct.SetValueY(diferenta)
+                            punct.ToolTip = data_spc(incr).AddHours(2) & vbNewLine & diferenta
+                            If diferenta > lim_max Then
+                                punct.Color = Color.Red
+                                punct.SetValueY(5.5)
+                            ElseIf diferenta < lim_min Then
+                                punct.Color = Color.Red
+                                punct.SetValueY(-5.5)
+                            ElseIf lim_max > diferenta And diferenta > lim_min Then
+                                punct.Color = Color.Black
+                            End If
+                            dif_debit_z4_chart.Series("valori").Points.Add(punct)
+                            punct = New DataVisualization.Charting.DataPoint
+                            incr += 1
+                        Next
+                    End If
                 ElseIf grafic_de_populat = 2 Then
-                    incr = 0
+                        incr = 0
                     delta_q_z4_chart.Series("valori").Points.Clear()
-                    For Each valoare In dq
-                        punct.SetValueY(valoare)
-                        punct.ToolTip = data_spc(incr).AddHours(2) & vbNewLine & valoare
-                        If valoare > lim_max Then
-                            punct.Color = Color.Red
-                            punct.SetValueY(lim_max + 0.5)
-                        ElseIf valoare < lim_min Then
-                            punct.Color = Color.Red
-                            punct.SetValueY(lim_min - 0.5)
-                        ElseIf lim_max > valoare > lim_min Then
-                            punct.Color = Color.Black
-                        End If
-                        delta_q_z4_chart.Series("valori").Points.Add(punct)
-                        punct = New DataVisualization.Charting.DataPoint
-                        incr += 1
-                    Next
+                    If dq IsNot Nothing Then
+                        For Each valoare In dq
+                            punct.SetValueY(valoare)
+                            punct.ToolTip = data_spc(incr).AddHours(2) & vbNewLine & valoare
+                            If valoare > lim_max Then
+                                punct.Color = Color.Red
+                                punct.SetValueY(lim_max + 0.5)
+                            ElseIf valoare < lim_min Then
+                                punct.Color = Color.Red
+                                punct.SetValueY(lim_min - 0.5)
+                            ElseIf lim_max > valoare > lim_min Then
+                                punct.Color = Color.Black
+                            End If
+                            delta_q_z4_chart.Series("valori").Points.Add(punct)
+                            punct = New DataVisualization.Charting.DataPoint
+                            incr += 1
+                        Next
+                    End If
                 End If
         End Select
         conexiune_bd.Close()
