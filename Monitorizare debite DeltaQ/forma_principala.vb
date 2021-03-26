@@ -1390,7 +1390,6 @@ Public Class fereastra_principala_frm
         Dim nominal As New DataVisualization.Charting.StripLine
         Dim punct As New DataVisualization.Charting.DataPoint
 
-        'de implementat intr-o functie
         Dim conexiune_bd As New SqliteConnection("data source=" & locatie_bd)
         Dim comanda = conexiune_bd.CreateCommand
         Dim reader As SqliteDataReader
@@ -1398,26 +1397,45 @@ Public Class fereastra_principala_frm
         Dim dif() = Nothing, diferenta As Double
         Dim dq() = Nothing
         Dim data_spc() As DateTime = Nothing
+        Dim referinta_exista As Int16
 
 
         conexiune_bd.Open()
-        If grafic_de_populat = 1 Then
-            comanda.CommandText = "select diferenta_max, diferenta_min, diferenta_nominala from referinta where nume = '" & nume_ref & "'"
-        ElseIf grafic_de_populat = 2 Then
-            comanda.CommandText = "select delta_q_max, delta_q_min, delta_q_nominal from referinta where nume = '" & nume_ref & "'"
-        End If
+        comanda.CommandText = "select count(nume) from referinta where nume = '" & nume_ref & "'"
         reader = comanda.ExecuteReader
-
-        'atribuire date referinta
         Using reader
             While reader.Read
-                lim_max = reader.GetValue(0)
-                lim_min = reader.GetValue(1)
-                lim_nom = reader.GetValue(2)
+                referinta_exista = reader.GetValue(0)
             End While
         End Using
         reader.Close()
         comanda.Dispose()
+
+        If referinta_exista = 1 Then
+            referinta_exista_lbl.Visible = False
+            If grafic_de_populat = 1 Then
+                comanda.CommandText = "select diferenta_max, diferenta_min, diferenta_nominala from referinta where nume = '" & nume_ref & "'"
+            ElseIf grafic_de_populat = 2 Then
+                comanda.CommandText = "select delta_q_max, delta_q_min, delta_q_nominal from referinta where nume = '" & nume_ref & "'"
+            End If
+            reader = comanda.ExecuteReader
+
+            'atribuire date referinta
+            Using reader
+                While reader.Read
+                    lim_max = reader.GetValue(0)
+                    lim_min = reader.GetValue(1)
+                    lim_nom = reader.GetValue(2)
+                End While
+            End Using
+            reader.Close()
+            comanda.Dispose()
+        ElseIf referinta_exista = 0 Then
+            lim_max = 5
+            lim_min = -5
+            lim_nom = 0
+            referinta_exista_lbl.Visible = True
+        End If
 
         limita_max.BorderDashStyle = DataVisualization.Charting.ChartDashStyle.DashDot
         limita_max.BorderColor = Color.Red

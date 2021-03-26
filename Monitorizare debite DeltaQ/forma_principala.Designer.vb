@@ -108,6 +108,7 @@ Partial Class fereastra_principala_frm
         Me.nr_marca_tb = New System.Windows.Forms.TextBox()
         Me.salveaza_valori_btn = New FontAwesome.Sharp.IconButton()
         Me.lista_atentionari_pnl = New System.Windows.Forms.Panel()
+        Me.vizualizare_evolutie_atentionare_btn = New FontAwesome.Sharp.IconButton()
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
         Me.operator_lbl = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
@@ -137,7 +138,7 @@ Partial Class fereastra_principala_frm
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.buton_refresh_ttp = New System.Windows.Forms.ToolTip(Me.components)
-        Me.vizualizare_evolutie_atentionare_btn = New FontAwesome.Sharp.IconButton()
+        Me.referinta_exista_lbl = New System.Windows.Forms.Label()
         Me.panou_butoane_pnl.SuspendLayout()
         Me.grafice_pnl.SuspendLayout()
         Me.grafice_tabcontrol.SuspendLayout()
@@ -242,6 +243,7 @@ Partial Class fereastra_principala_frm
         '
         Me.grafice_pnl.AutoScroll = True
         Me.grafice_pnl.BackColor = System.Drawing.Color.FromArgb(CType(CType(103, Byte), Integer), CType(CType(106, Byte), Integer), CType(CType(113, Byte), Integer))
+        Me.grafice_pnl.Controls.Add(Me.referinta_exista_lbl)
         Me.grafice_pnl.Controls.Add(Me.Label10)
         Me.grafice_pnl.Controls.Add(Me.grafice_tabcontrol)
         Me.grafice_pnl.Dock = System.Windows.Forms.DockStyle.Fill
@@ -337,7 +339,7 @@ Partial Class fereastra_principala_frm
         Series1.Legend = "Legend1"
         Series1.Name = "valori"
         Me.delta_q_z1_chart.Series.Add(Series1)
-        Me.delta_q_z1_chart.Size = New System.Drawing.Size(716, 263)
+        Me.delta_q_z1_chart.Size = New System.Drawing.Size(699, 263)
         Me.delta_q_z1_chart.TabIndex = 11
         Me.delta_q_z1_chart.Text = "Chart1"
         '
@@ -377,7 +379,7 @@ Partial Class fereastra_principala_frm
         Series2.Legend = "Legend1"
         Series2.Name = "valori"
         Me.dif_debit_z1_chart.Series.Add(Series2)
-        Me.dif_debit_z1_chart.Size = New System.Drawing.Size(716, 263)
+        Me.dif_debit_z1_chart.Size = New System.Drawing.Size(699, 263)
         Me.dif_debit_z1_chart.TabIndex = 10
         Me.dif_debit_z1_chart.Text = "Chart1"
         '
@@ -452,7 +454,7 @@ Partial Class fereastra_principala_frm
         Series3.Legend = "Legend1"
         Series3.Name = "valori"
         Me.delta_q_z2_chart.Series.Add(Series3)
-        Me.delta_q_z2_chart.Size = New System.Drawing.Size(715, 263)
+        Me.delta_q_z2_chart.Size = New System.Drawing.Size(698, 263)
         Me.delta_q_z2_chart.TabIndex = 13
         Me.delta_q_z2_chart.Text = "Chart1"
         '
@@ -502,7 +504,7 @@ Partial Class fereastra_principala_frm
         Series4.Legend = "Legend1"
         Series4.Name = "valori"
         Me.dif_debit_z2_chart.Series.Add(Series4)
-        Me.dif_debit_z2_chart.Size = New System.Drawing.Size(716, 263)
+        Me.dif_debit_z2_chart.Size = New System.Drawing.Size(699, 263)
         Me.dif_debit_z2_chart.TabIndex = 11
         Me.dif_debit_z2_chart.Text = "Chart1"
         '
@@ -566,7 +568,7 @@ Partial Class fereastra_principala_frm
         Series5.Legend = "Legend1"
         Series5.Name = "valori"
         Me.delta_q_z3_chart.Series.Add(Series5)
-        Me.delta_q_z3_chart.Size = New System.Drawing.Size(716, 263)
+        Me.delta_q_z3_chart.Size = New System.Drawing.Size(699, 263)
         Me.delta_q_z3_chart.TabIndex = 14
         Me.delta_q_z3_chart.Text = "Chart1"
         '
@@ -616,7 +618,7 @@ Partial Class fereastra_principala_frm
         Series6.Legend = "Legend1"
         Series6.Name = "valori"
         Me.dif_debit_z3_chart.Series.Add(Series6)
-        Me.dif_debit_z3_chart.Size = New System.Drawing.Size(716, 263)
+        Me.dif_debit_z3_chart.Size = New System.Drawing.Size(699, 263)
         Me.dif_debit_z3_chart.TabIndex = 12
         Me.dif_debit_z3_chart.Text = "Chart1"
         '
@@ -670,7 +672,7 @@ Partial Class fereastra_principala_frm
         Series7.Legend = "Legend1"
         Series7.Name = "valori"
         Me.delta_q_z4_chart.Series.Add(Series7)
-        Me.delta_q_z4_chart.Size = New System.Drawing.Size(716, 263)
+        Me.delta_q_z4_chart.Size = New System.Drawing.Size(699, 263)
         Me.delta_q_z4_chart.TabIndex = 17
         Me.delta_q_z4_chart.Text = "Chart1"
         '
@@ -730,7 +732,7 @@ Partial Class fereastra_principala_frm
         Series8.Legend = "Legend1"
         Series8.Name = "valori"
         Me.dif_debit_z4_chart.Series.Add(Series8)
-        Me.dif_debit_z4_chart.Size = New System.Drawing.Size(716, 263)
+        Me.dif_debit_z4_chart.Size = New System.Drawing.Size(699, 263)
         Me.dif_debit_z4_chart.TabIndex = 13
         Me.dif_debit_z4_chart.Text = "Chart1"
         '
@@ -1114,6 +1116,24 @@ Partial Class fereastra_principala_frm
         Me.lista_atentionari_pnl.Size = New System.Drawing.Size(1024, 651)
         Me.lista_atentionari_pnl.TabIndex = 11
         '
+        'vizualizare_evolutie_atentionare_btn
+        '
+        Me.vizualizare_evolutie_atentionare_btn.Flip = FontAwesome.Sharp.FlipOrientation.Normal
+        Me.vizualizare_evolutie_atentionare_btn.Font = New System.Drawing.Font("Consolas", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.vizualizare_evolutie_atentionare_btn.IconChar = FontAwesome.Sharp.IconChar.ChartBar
+        Me.vizualizare_evolutie_atentionare_btn.IconColor = System.Drawing.Color.Black
+        Me.vizualizare_evolutie_atentionare_btn.IconSize = 40
+        Me.vizualizare_evolutie_atentionare_btn.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.vizualizare_evolutie_atentionare_btn.Location = New System.Drawing.Point(209, 546)
+        Me.vizualizare_evolutie_atentionare_btn.Name = "vizualizare_evolutie_atentionare_btn"
+        Me.vizualizare_evolutie_atentionare_btn.Rotation = 0R
+        Me.vizualizare_evolutie_atentionare_btn.Size = New System.Drawing.Size(128, 44)
+        Me.vizualizare_evolutie_atentionare_btn.TabIndex = 6
+        Me.vizualizare_evolutie_atentionare_btn.Text = "Evoluție"
+        Me.vizualizare_evolutie_atentionare_btn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.vizualizare_evolutie_atentionare_btn.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
+        Me.vizualizare_evolutie_atentionare_btn.UseVisualStyleBackColor = True
+        '
         'TableLayoutPanel2
         '
         Me.TableLayoutPanel2.ColumnCount = 2
@@ -1435,23 +1455,17 @@ Partial Class fereastra_principala_frm
         '
         Me.Timer1.Interval = 15000
         '
-        'vizualizare_evolutie_atentionare_btn
+        'referinta_exista_lbl
         '
-        Me.vizualizare_evolutie_atentionare_btn.Flip = FontAwesome.Sharp.FlipOrientation.Normal
-        Me.vizualizare_evolutie_atentionare_btn.Font = New System.Drawing.Font("Consolas", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.vizualizare_evolutie_atentionare_btn.IconChar = FontAwesome.Sharp.IconChar.ChartBar
-        Me.vizualizare_evolutie_atentionare_btn.IconColor = System.Drawing.Color.Black
-        Me.vizualizare_evolutie_atentionare_btn.IconSize = 40
-        Me.vizualizare_evolutie_atentionare_btn.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.vizualizare_evolutie_atentionare_btn.Location = New System.Drawing.Point(209, 546)
-        Me.vizualizare_evolutie_atentionare_btn.Name = "vizualizare_evolutie_atentionare_btn"
-        Me.vizualizare_evolutie_atentionare_btn.Rotation = 0R
-        Me.vizualizare_evolutie_atentionare_btn.Size = New System.Drawing.Size(128, 44)
-        Me.vizualizare_evolutie_atentionare_btn.TabIndex = 6
-        Me.vizualizare_evolutie_atentionare_btn.Text = "Evoluție"
-        Me.vizualizare_evolutie_atentionare_btn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.vizualizare_evolutie_atentionare_btn.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage
-        Me.vizualizare_evolutie_atentionare_btn.UseVisualStyleBackColor = True
+        Me.referinta_exista_lbl.AutoSize = True
+        Me.referinta_exista_lbl.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.0!)
+        Me.referinta_exista_lbl.ForeColor = System.Drawing.Color.Red
+        Me.referinta_exista_lbl.Location = New System.Drawing.Point(712, 57)
+        Me.referinta_exista_lbl.Name = "referinta_exista_lbl"
+        Me.referinta_exista_lbl.Size = New System.Drawing.Size(297, 24)
+        Me.referinta_exista_lbl.TabIndex = 13
+        Me.referinta_exista_lbl.Text = "Referinta nu exista in baza de date"
+        Me.referinta_exista_lbl.Visible = False
         '
         'fereastra_principala_frm
         '
@@ -1459,11 +1473,11 @@ Partial Class fereastra_principala_frm
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1024, 651)
         Me.Controls.Add(Me.panou_butoane_pnl)
-        Me.Controls.Add(Me.lista_atentionari_pnl)
         Me.Controls.Add(Me.grafice_pnl)
         Me.Controls.Add(Me.adauga_valori_pnl)
         Me.Controls.Add(Me.selectie_val_pnl)
         Me.Controls.Add(Me.lista_masini_pnl)
+        Me.Controls.Add(Me.lista_atentionari_pnl)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MinimumSize = New System.Drawing.Size(1040, 690)
         Me.Name = "fereastra_principala_frm"
@@ -1591,4 +1605,5 @@ Partial Class fereastra_principala_frm
     Friend WithEvents delta_q_z4_chart As DataVisualization.Charting.Chart
     Friend WithEvents Label14 As Label
     Friend WithEvents vizualizare_evolutie_atentionare_btn As FontAwesome.Sharp.IconButton
+    Friend WithEvents referinta_exista_lbl As Label
 End Class
