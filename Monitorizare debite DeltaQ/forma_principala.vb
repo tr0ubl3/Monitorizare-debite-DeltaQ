@@ -1461,6 +1461,7 @@ Public Class fereastra_principala_frm
                     dif_debit_z1_chart.ChartAreas(0).AxisY.Maximum = lim_max + interval_tol * 0.1 '738 + 72 * 0.1
                     dif_debit_z1_chart.ChartAreas(0).AxisY.IntervalOffset = 1
 
+                    dif_debit_z1_chart.ChartAreas(0).AxisY.StripLines.Clear()
                     dif_debit_z1_chart.ChartAreas(0).AxisY.StripLines.Add(limita_max)
                     dif_debit_z1_chart.ChartAreas(0).AxisY.StripLines.Add(limita_min)
                     dif_debit_z1_chart.ChartAreas(0).AxisY.StripLines.Add(nominal)
@@ -1471,6 +1472,7 @@ Public Class fereastra_principala_frm
                     delta_q_z1_chart.ChartAreas(0).AxisY.Maximum = lim_max + interval_tol * 0.1 '738 + 72 * 0.1
                     delta_q_z1_chart.ChartAreas(0).AxisY.IntervalOffset = 1
 
+                    delta_q_z1_chart.ChartAreas(0).AxisY.StripLines.Clear()
                     delta_q_z1_chart.ChartAreas(0).AxisY.StripLines.Add(limita_max)
                     delta_q_z1_chart.ChartAreas(0).AxisY.StripLines.Add(limita_min)
                     delta_q_z1_chart.ChartAreas(0).AxisY.StripLines.Add(nominal)
@@ -1552,6 +1554,7 @@ Public Class fereastra_principala_frm
                     dif_debit_z2_chart.ChartAreas(0).AxisY.Maximum = lim_max + interval_tol * 0.1 '738 + 72 * 0.1
                     dif_debit_z2_chart.ChartAreas(0).AxisY.IntervalOffset = 1
 
+                    dif_debit_z2_chart.ChartAreas(0).AxisY.StripLines.Clear()
                     dif_debit_z2_chart.ChartAreas(0).AxisY.StripLines.Add(limita_max)
                     dif_debit_z2_chart.ChartAreas(0).AxisY.StripLines.Add(limita_min)
                     dif_debit_z2_chart.ChartAreas(0).AxisY.StripLines.Add(nominal)
@@ -1561,6 +1564,7 @@ Public Class fereastra_principala_frm
                     delta_q_z2_chart.ChartAreas(0).AxisY.Maximum = lim_max + interval_tol * 0.1 '738 + 72 * 0.1
                     delta_q_z2_chart.ChartAreas(0).AxisY.IntervalOffset = 1
 
+                    delta_q_z2_chart.ChartAreas(0).AxisY.StripLines.Clear()
                     delta_q_z2_chart.ChartAreas(0).AxisY.StripLines.Add(limita_max)
                     delta_q_z2_chart.ChartAreas(0).AxisY.StripLines.Add(limita_min)
                     delta_q_z2_chart.ChartAreas(0).AxisY.StripLines.Add(nominal)
@@ -1640,6 +1644,7 @@ Public Class fereastra_principala_frm
                     dif_debit_z3_chart.ChartAreas(0).AxisY.Maximum = lim_max + interval_tol * 0.1 '738 + 72 * 0.1
                     dif_debit_z3_chart.ChartAreas(0).AxisY.IntervalOffset = 1
 
+                    dif_debit_z3_chart.ChartAreas(0).AxisY.StripLines.Clear()
                     dif_debit_z3_chart.ChartAreas(0).AxisY.StripLines.Add(limita_max)
                     dif_debit_z3_chart.ChartAreas(0).AxisY.StripLines.Add(limita_min)
                     dif_debit_z3_chart.ChartAreas(0).AxisY.StripLines.Add(nominal)
@@ -1649,6 +1654,8 @@ Public Class fereastra_principala_frm
                     delta_q_z3_chart.ChartAreas(0).AxisY.Minimum = lim_min - interval_tol * 0.1 '666 - 72 * 0.1
                     delta_q_z3_chart.ChartAreas(0).AxisY.Maximum = lim_max + interval_tol * 0.1 '738 + 72 * 0.1
                     delta_q_z3_chart.ChartAreas(0).AxisY.IntervalOffset = 1
+
+                    delta_q_z3_chart.ChartAreas(0).AxisY.StripLines.Clear()
                     delta_q_z3_chart.ChartAreas(0).AxisY.StripLines.Add(limita_max)
                     delta_q_z3_chart.ChartAreas(0).AxisY.StripLines.Add(limita_min)
                     delta_q_z3_chart.ChartAreas(0).AxisY.StripLines.Add(nominal)
@@ -1729,6 +1736,8 @@ Public Class fereastra_principala_frm
                     dif_debit_z4_chart.ChartAreas(0).AxisY.Minimum = lim_min - interval_tol * 0.1 '666 - 72 * 0.1
                     dif_debit_z4_chart.ChartAreas(0).AxisY.Maximum = lim_max + interval_tol * 0.1 '738 + 72 * 0.1
                     dif_debit_z4_chart.ChartAreas(0).AxisY.IntervalOffset = 1
+
+                    dif_debit_z4_chart.ChartAreas(0).AxisY.StripLines.Clear()
                     dif_debit_z4_chart.ChartAreas(0).AxisY.StripLines.Add(limita_max)
                     dif_debit_z4_chart.ChartAreas(0).AxisY.StripLines.Add(limita_min)
                     dif_debit_z4_chart.ChartAreas(0).AxisY.StripLines.Add(nominal)
@@ -1737,6 +1746,8 @@ Public Class fereastra_principala_frm
                     delta_q_z4_chart.ChartAreas(0).AxisY.Minimum = lim_min - interval_tol * 0.1 '666 - 72 * 0.1
                     delta_q_z4_chart.ChartAreas(0).AxisY.Maximum = lim_max + interval_tol * 0.1 '738 + 72 * 0.1
                     delta_q_z4_chart.ChartAreas(0).AxisY.IntervalOffset = 1
+
+                    delta_q_z4_chart.ChartAreas(0).AxisY.StripLines.Clear()
                     delta_q_z4_chart.ChartAreas(0).AxisY.StripLines.Add(limita_max)
                     delta_q_z4_chart.ChartAreas(0).AxisY.StripLines.Add(limita_min)
                     delta_q_z4_chart.ChartAreas(0).AxisY.StripLines.Add(nominal)
